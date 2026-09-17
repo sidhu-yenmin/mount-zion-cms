@@ -1,11 +1,19 @@
 import { getPayload } from 'payload'
 import React from 'react'
 import config from '@/payload.config'
+import { notFound } from 'next/navigation'
 import { HeaderComponent } from '@/components/HeaderComponent'
 import { RenderBlocks } from '@/components/RenderBlocks'
 import type { Page, Header } from '@/payload-types'
 
-export default async function HomePage() {
+interface PageProps {
+  params: Promise<{
+    slug: string
+  }>
+}
+
+export default async function DynamicPage({ params }: PageProps) {
+  const { slug } = await params
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
@@ -16,38 +24,32 @@ export default async function HomePage() {
       slug: 'header',
       depth: 2,
     })
-    console.log('--- HEADER DATA ---', JSON.stringify(headerData))
   } catch (e) {
-    console.log('Header not found yet', e)
+    console.log('Header not found yet')
   }
 
-  // 2. Fetch Home Page from Pages collection
+  // 2. Fetch Page by Slug
   const pagesResult = await payload.find({
     collection: 'pages',
     where: {
       slug: {
-        equals: 'home',
+        equals: slug,
       },
     },
     limit: 1,
     depth: 2,
   })
 
-  const homePage = pagesResult.docs?.[0] as Page | undefined
+  const page = pagesResult.docs?.[0] as Page | undefined
 
-  if (!homePage) {
-    return (
-      <div style={{ padding: '4rem', textAlign: 'center', fontFamily: 'sans-serif' }}>
-        <h2>Home Page not found in CMS yet!</h2>
-        <p>Please open <a href="/admin/collections/pages/create">/admin/collections/pages/create</a> and create a page with slug <b>"home"</b>.</p>
-      </div>
-    )
+  if (!page) {
+    return notFound()
   }
 
   return (
     <main style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
-      {homePage.headerVariant !== 'hidden' && <HeaderComponent header={headerData} />}
-      <RenderBlocks blocks={homePage.layout} />
+      {page.headerVariant !== 'hidden' && <HeaderComponent header={headerData} />}
+      <RenderBlocks blocks={page.layout} />
     </main>
   )
 }
