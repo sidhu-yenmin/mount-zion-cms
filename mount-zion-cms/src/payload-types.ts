@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    pages: Page;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,17 +79,24 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    header: Header;
+    footer: Footer;
+  };
+  globalsSelect: {
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -122,7 +130,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -147,7 +155,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -163,10 +171,197 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * e.g. "home" for landing page, "about-us", etc.
+   */
+  slug: string;
+  headerVariant?: ('transparent' | 'solid-green' | 'solid-white' | 'hidden') | null;
+  layout?:
+    | (
+        | {
+            badge?: string | null;
+            heading: string;
+            backgroundImage: number | Media;
+            primaryButtonText?: string | null;
+            primaryButtonUrl?: string | null;
+            secondaryButtonText?: string | null;
+            secondaryButtonUrl?: string | null;
+            /**
+             * Link to YouTube, Vimeo, or video modal
+             */
+            videoUrl?: string | null;
+            stats?:
+              | {
+                  icon?: ('book' | 'students' | 'teacher' | 'trophy') | null;
+                  value: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            badge?: string | null;
+            heading: string;
+            description?: string | null;
+            buttonText?: string | null;
+            buttonUrl?: string | null;
+            mainImage?: (number | null) | Media;
+            secondaryImage?: (number | null) | Media;
+            stats?:
+              | {
+                  value?: string | null;
+                  label?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'programs';
+          }
+        | {
+            badge?: string | null;
+            heading: string;
+            description?: string | null;
+            imageOne?: (number | null) | Media;
+            imageTwo?: (number | null) | Media;
+            buttonText?: string | null;
+            buttonUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'featureSplit';
+          }
+        | {
+            badge?: string | null;
+            heading: string;
+            description?: string | null;
+            tabs?:
+              | {
+                  tabName: string;
+                  images?:
+                    | {
+                        image: number | Media;
+                        caption?: string | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'facilities';
+          }
+        | {
+            badge?: string | null;
+            heading: string;
+            academicYears?:
+              | {
+                  year: string;
+                  rankHolders?:
+                    | {
+                        studentName: string;
+                        rank: string;
+                        score: string;
+                        standard?: string | null;
+                        photo?: (number | null) | Media;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'toppers';
+          }
+        | {
+            badge?: string | null;
+            heading: string;
+            viewMoreLink?: string | null;
+            galleryImages?:
+              | {
+                  image: number | Media;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            ctaBar?: {
+              showCtaBar?: boolean | null;
+              tagline?: string | null;
+              heading?: string | null;
+              studentImage?: (number | null) | Media;
+              buttonText?: string | null;
+              buttonUrl?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'campusLife';
+          }
+        | {
+            badge?: string | null;
+            heading: string;
+            testimonials?:
+              | {
+                  cardStyle?: ('green' | 'yellow') | null;
+                  rating?: number | null;
+                  quote: string;
+                  authorName: string;
+                  authorRole: string;
+                  authorPhoto?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonials';
+          }
+        | {
+            badge?: string | null;
+            heading: string;
+            viewAllUrl?: string | null;
+            items?:
+              | {
+                  date: string;
+                  title: string;
+                  image?: (number | null) | Media;
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'newsEvents';
+          }
+        | {
+            tagline?: string | null;
+            heading: string;
+            description?: string | null;
+            buttonText?: string | null;
+            buttonUrl?: string | null;
+            backgroundImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaBanner';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -183,20 +378,24 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -206,10 +405,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -229,7 +428,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -277,6 +476,197 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  headerVariant?: T;
+  layout?:
+    | T
+    | {
+        hero?:
+          | T
+          | {
+              badge?: T;
+              heading?: T;
+              backgroundImage?: T;
+              primaryButtonText?: T;
+              primaryButtonUrl?: T;
+              secondaryButtonText?: T;
+              secondaryButtonUrl?: T;
+              videoUrl?: T;
+              stats?:
+                | T
+                | {
+                    icon?: T;
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        programs?:
+          | T
+          | {
+              badge?: T;
+              heading?: T;
+              description?: T;
+              buttonText?: T;
+              buttonUrl?: T;
+              mainImage?: T;
+              secondaryImage?: T;
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        featureSplit?:
+          | T
+          | {
+              badge?: T;
+              heading?: T;
+              description?: T;
+              imageOne?: T;
+              imageTwo?: T;
+              buttonText?: T;
+              buttonUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        facilities?:
+          | T
+          | {
+              badge?: T;
+              heading?: T;
+              description?: T;
+              tabs?:
+                | T
+                | {
+                    tabName?: T;
+                    images?:
+                      | T
+                      | {
+                          image?: T;
+                          caption?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        toppers?:
+          | T
+          | {
+              badge?: T;
+              heading?: T;
+              academicYears?:
+                | T
+                | {
+                    year?: T;
+                    rankHolders?:
+                      | T
+                      | {
+                          studentName?: T;
+                          rank?: T;
+                          score?: T;
+                          standard?: T;
+                          photo?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        campusLife?:
+          | T
+          | {
+              badge?: T;
+              heading?: T;
+              viewMoreLink?: T;
+              galleryImages?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              ctaBar?:
+                | T
+                | {
+                    showCtaBar?: T;
+                    tagline?: T;
+                    heading?: T;
+                    studentImage?: T;
+                    buttonText?: T;
+                    buttonUrl?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        testimonials?:
+          | T
+          | {
+              badge?: T;
+              heading?: T;
+              testimonials?:
+                | T
+                | {
+                    cardStyle?: T;
+                    rating?: T;
+                    quote?: T;
+                    authorName?: T;
+                    authorRole?: T;
+                    authorPhoto?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        newsEvents?:
+          | T
+          | {
+              badge?: T;
+              heading?: T;
+              viewAllUrl?: T;
+              items?:
+                | T
+                | {
+                    date?: T;
+                    title?: T;
+                    image?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        ctaBanner?:
+          | T
+          | {
+              tagline?: T;
+              heading?: T;
+              description?: T;
+              buttonText?: T;
+              buttonUrl?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -314,6 +704,142 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  topBar?: {
+    showTopBar?: boolean | null;
+    phone?: string | null;
+    email?: string | null;
+  };
+  logo?: (number | null) | Media;
+  navItems?:
+    | {
+        label: string;
+        link: string;
+        hasDropdown?: boolean | null;
+        subItems?:
+          | {
+              label: string;
+              link: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  ctaButton?: {
+    label?: string | null;
+    url?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  logo?: (number | null) | Media;
+  description?: string | null;
+  contactInfo?: {
+    address?: string | null;
+    phone?: string | null;
+    email?: string | null;
+  };
+  quickLinks?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  socialLinks?:
+    | {
+        platform: 'facebook' | 'instagram' | 'youtube' | 'twitter' | 'linkedin';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  copyright?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  topBar?:
+    | T
+    | {
+        showTopBar?: T;
+        phone?: T;
+        email?: T;
+      };
+  logo?: T;
+  navItems?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+        hasDropdown?: T;
+        subItems?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  ctaButton?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  logo?: T;
+  description?: T;
+  contactInfo?:
+    | T
+    | {
+        address?: T;
+        phone?: T;
+        email?: T;
+      };
+  quickLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  copyright?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
