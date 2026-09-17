@@ -3,22 +3,40 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { X } from 'lucide-react'
+import { ArrowUpRight, X } from 'lucide-react'
 import { SchoolLogo } from '../layout/SchoolLogo'
 import { DiscoverMoreBadge } from '../ui/DiscoverMoreBadge'
 import { StatsStrip } from './StatsStrip'
+import { HeroData } from '@/types/cms'
+import { mockHeroData } from '@/data/mockData'
 
-export function HeroSection() {
+interface HeroSectionProps {
+  data?: HeroData
+}
+
+export function HeroSection({ data = mockHeroData }: HeroSectionProps) {
   const [videoModalOpen, setVideoModalOpen] = useState(false)
+
+  const {
+    tag = 'MOUNTZION',
+    headingLine1 = 'Nurturing Minds.',
+    headingLine2 = 'Building Character.',
+    headingLine3 = 'Inspiring Future Leaders.',
+    primaryCtaText = 'Explore',
+    primaryCtaLink = '#explore',
+    secondaryCtaText = 'Admission',
+    secondaryCtaLink = '#admission',
+    backgroundImage = '/images/hero-student.png',
+  } = data
 
   return (
     <section className="relative w-full bg-white">
       {/* Hero Visual Area */}
       <div className="relative min-h-[680px] sm:min-h-[740px] lg:min-h-[800px] w-full flex flex-col justify-between overflow-hidden bg-[#0c2e26]">
-        {/* Background Image */}
+        {/* 1. Background Image (Allowed Image Asset) */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/hero-student.png"
+            src={backgroundImage}
             alt="Mount Zion International School student in classroom"
             fill
             priority
@@ -27,7 +45,7 @@ export function HeroSection() {
             sizes="100vw"
           />
 
-          {/* Gradients & Vignette Overlays matching Figma */}
+          {/* Gradients & Vignette Overlays */}
           {/* Left dark gradient for punchy text visibility */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#041914]/95 via-[#06241d]/75 via-45% to-transparent sm:w-[82%] lg:w-[68%]" />
 
@@ -41,65 +59,72 @@ export function HeroSection() {
           <div className="absolute top-1/3 right-1/4 w-[420px] h-[420px] bg-amber-400/15 rounded-full blur-[100px] pointer-events-none" />
         </div>
 
-        {/* Overlay Navbar (School Logo + Figma Apply Now Button) */}
+        {/* Overlay Navbar */}
         <div className="relative z-20 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 pt-6 sm:pt-8 flex items-center justify-between">
-          {/* Logo & School Name */}
+          {/* 2. School Logo (Allowed Image Asset) */}
           <Link href="/" className="hover:opacity-95 transition-opacity">
             <SchoolLogo />
           </Link>
 
-          {/* Figma Exported Apply Now Pill Image */}
+          {/* Apply Now Button (Text / Code Only) */}
           <Link
             href="#apply"
-            className="cursor-pointer transition-transform duration-200 hover:scale-105 active:scale-95 drop-shadow-md"
-            title="Apply Now"
+            className="inline-flex items-center gap-1.5 bg-white hover:bg-neutral-100 text-neutral-900 font-bold text-xs sm:text-sm px-6 py-2.5 sm:py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 cursor-pointer"
           >
-            <Image
-              src="/images/apply-now.png"
-              alt="Apply Now"
-              width={197}
-              height={58}
-              priority
-              unoptimized
-              className="h-10 sm:h-12 w-auto object-contain"
-            />
+            <span>Apply Now</span>
+            <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
           </Link>
         </div>
 
-        {/* Center Hero Content (Figma Exported Hero Text Image) */}
+        {/* Center Hero Content (All Pure Text & HTML Buttons) */}
         <div className="relative z-20 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-14 my-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left Content: Hero Text Image */}
+            {/* Left Content Column */}
             <div className="lg:col-span-8 max-w-3xl">
-              <div className="relative inline-block w-full max-w-[740px]">
-                {/* 100% Exact Figma Hero Text PNG */}
-                <Image
-                  src="/images/hero-text.png"
-                  alt="MOUNTZION Nurturing Minds. Building Character. Inspiring Future Leaders."
-                  width={741}
-                  height={322}
-                  priority
-                  unoptimized
-                  className="w-full h-auto object-contain drop-shadow-xl select-none"
-                />
+              {/* Category Tag */}
+              <div className="flex items-center gap-2.5 mb-4 sm:mb-6">
+                <span className="text-[#f5a623] font-bold tracking-widest text-xs uppercase">
+                  {tag}
+                </span>
+                <span className="w-10 h-[2px] bg-[#f5a623] inline-block" />
+              </div>
 
-                {/* Interactive Click Hotspots for Explore & Admission */}
-                <div className="absolute bottom-0 left-0 flex items-center gap-4 h-14 w-full">
-                  <Link
-                    href="#explore"
-                    className="w-36 h-full cursor-pointer rounded-full"
-                    title="Explore"
-                  />
-                  <Link
-                    href="#admission"
-                    className="w-40 h-full cursor-pointer rounded-full"
-                    title="Admission"
-                  />
-                </div>
+              {/* Main Headline (Pure Text) */}
+              <h1 className="text-white tracking-tight leading-[1.12] mb-8 select-none">
+                <span className="block font-light text-4xl sm:text-5xl lg:text-[54px] xl:text-[58px] text-white/95">
+                  {headingLine1}
+                </span>
+                <span className="block font-extrabold text-4xl sm:text-5xl lg:text-[54px] xl:text-[58px] text-white mt-1">
+                  {headingLine2}
+                </span>
+                <span className="block font-extrabold text-4xl sm:text-5xl lg:text-[54px] xl:text-[58px] text-white mt-1">
+                  {headingLine3}
+                </span>
+              </h1>
+
+              {/* Action Buttons (Pure HTML Buttons) */}
+              <div className="flex flex-wrap items-center gap-4">
+                {/* Explore Pill Button */}
+                <Link
+                  href={primaryCtaLink}
+                  className="inline-flex items-center gap-2 bg-[#f5a623] hover:bg-[#e29517] text-[#111] font-bold text-sm sm:text-base px-7 sm:px-8 py-3 sm:py-3.5 rounded-full transition-all duration-200 shadow-lg hover:shadow-amber-500/30 active:scale-95"
+                >
+                  <span>{primaryCtaText}</span>
+                  <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
+                </Link>
+
+                {/* Admission Ghost Pill Button */}
+                <Link
+                  href={secondaryCtaLink}
+                  className="inline-flex items-center gap-2 border border-white/80 hover:border-white text-white hover:bg-white/10 font-semibold text-sm sm:text-base px-7 sm:px-8 py-3 sm:py-3.5 rounded-full transition-all duration-200 backdrop-blur-xs active:scale-95"
+                >
+                  <span>{secondaryCtaText}</span>
+                  <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
+                </Link>
               </div>
             </div>
 
-            {/* Right Interactive Discover More Badge Column */}
+            {/* Right Interactive Discover More Badge Column (Pure SVG / Code) */}
             <div className="hidden lg:flex lg:col-span-4 justify-center xl:justify-end xl:pr-12">
               <DiscoverMoreBadge onClick={() => setVideoModalOpen(true)} />
             </div>
@@ -110,7 +135,7 @@ export function HeroSection() {
         <div className="h-20 sm:h-24" />
       </div>
 
-      {/* Floating Stats Strip */}
+      {/* 3. Floating Stats Strip (Allowed Image Asset: metrics.png) */}
       <div className="relative z-30 -mt-14 sm:-mt-16 pb-16 sm:pb-20">
         <StatsStrip />
       </div>
