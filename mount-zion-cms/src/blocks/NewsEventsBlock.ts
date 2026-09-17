@@ -1,0 +1,62 @@
+import type { Block } from 'payload'
+
+export const NewsEventsBlock: Block = {
+  slug: 'newsEvents',
+  labels: {
+    singular: 'News & Academic Events Listing',
+    plural: 'News & Academic Events Listings',
+  },
+  fields: [
+    {
+      name: 'badge',
+      type: 'text',
+      label: 'Badge / Tagline',
+      defaultValue: 'HAPPENINGS & NEWS',
+    },
+    {
+      name: 'heading',
+      type: 'text',
+      label: 'Section Heading',
+      defaultValue: 'Explore Our World-Class Academic Programs',
+      required: true,
+    },
+    {
+      name: 'viewAllUrl',
+      type: 'text',
+      label: 'View All URL',
+      defaultValue: '/news',
+    },
+    {
+      name: 'items',
+      type: 'array',
+      label: 'News / Event Items',
+      minRows: 1,
+      fields: [
+        {
+          name: 'date',
+          type: 'text',
+          label: 'Date (e.g. 10TH JAN, 11TH FEB, 25TH APR)',
+          required: true,
+        },
+        {
+          name: 'title',
+          type: 'text',
+          label: 'News / Event Title',
+          required: true,
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Optional Thumbnail / Preview Image',
+        },
+        {
+          name: 'link',
+          type: 'text',
+          label: 'Target URL',
+          defaultValue: '#',
+        },
+      ],
+    },
+  ],
+}
