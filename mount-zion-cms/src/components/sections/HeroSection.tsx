@@ -63,7 +63,7 @@ export function HeroSection({ data = mockHeroData }: HeroSectionProps) {
         <div className="relative z-20 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 pt-6 sm:pt-8 flex items-center justify-between">
           {/* 2. School Logo (Allowed Image Asset) */}
           <Link href="/" className="hover:opacity-95 transition-opacity">
-            <SchoolLogo />
+            <SchoolLogo logoUrl={data.logoUrl} />
           </Link>
 
           {/* Apply Now Button (Text / Code Only) */}

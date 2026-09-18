@@ -50,6 +50,7 @@ export interface HeroData {
   backgroundImage: string
   discoverMoreText?: string
   videoUrl?: string
+  logoUrl?: string
   statsData?: StatsStripData
 }
 

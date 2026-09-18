@@ -1,11 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
 
-export function SchoolLogo({ className = '' }: { className?: string }) {
+export function SchoolLogo({ logoUrl, className = '' }: { logoUrl?: string; className?: string }) {
+  const src = logoUrl || '/images/school-logo.png'
+
   return (
     <div className={`flex items-center select-none ${className}`}>
       <Image
-        src="/images/school-logo.png"
+        src={src}
         alt="Mount Zion International School - CBSE"
         width={299}
         height={83}
