@@ -1,174 +1,196 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import Image from 'next/image'
-import type { Page } from '@/payload-types'
+import Link from 'next/link'
+import { ArrowUpRight, X } from 'lucide-react'
+import { SchoolLogo } from '../layout/SchoolLogo'
+import { DiscoverMoreBadge } from '../ui/DiscoverMoreBadge'
+import { StatsStrip } from '../sections/StatsStrip'
+import type { Page, Media } from '@/payload-types'
 
-type HeroProps = Extract<NonNullable<Page['layout']>[number], { blockType: 'hero' }>
+export type HeroBlockProps = Omit<
+  Extract<NonNullable<Page['layout']>[number], { blockType: 'hero' }>,
+  'backgroundImage'
+> & {
+  backgroundImage?: number | Media | string | null
+}
 
-export const HeroBlockComponent: React.FC<HeroProps> = ({
-  badge,
-  heading,
+export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
+  badge = 'MOUNTZION',
+  heading = 'Nurturing Minds. Building Character. Inspiring Future Leaders.',
   backgroundImage,
-  primaryButtonText,
-  primaryButtonUrl,
-  secondaryButtonText,
-  secondaryButtonUrl,
+  primaryButtonText = 'Explore',
+  primaryButtonUrl = '#explore',
+  secondaryButtonText = 'Admission',
+  secondaryButtonUrl = '#admission',
   videoUrl,
   stats,
 }) => {
-  const imageUrl =
+  const [videoModalOpen, setVideoModalOpen] = useState(false)
+
+  // 1. Resolve Background Image (CMS Media object or string path)
+  const bgImage =
     typeof backgroundImage === 'object' && backgroundImage?.url
       ? backgroundImage.url
-      : null
-  const imageAlt =
-    typeof backgroundImage === 'object' && backgroundImage?.alt
-      ? backgroundImage.alt
-      : 'Hero Background'
+      : typeof backgroundImage === 'string' && backgroundImage
+        ? backgroundImage
+        : '/images/hero-student.png'
+
+  // 2. Parse Heading into 3 lines for the Figma styled typography
+  const rawHeading = (heading || '').trim()
+  let lines = rawHeading.includes('\n')
+    ? rawHeading.split('\n').map((l) => l.trim()).filter(Boolean)
+    : rawHeading.split('. ').map((s: string, idx: number, arr: string[]) => (idx < arr.length - 1 ? s + '.' : s))
+
+  if (lines.length < 3) {
+    lines = [
+      lines[0] || 'Nurturing Minds.',
+      lines[1] || 'Building Character.',
+      lines[2] || 'Inspiring Future Leaders.',
+    ]
+  }
 
   return (
-    <section className="hero-section" style={{
-      position: 'relative',
-      minHeight: '85vh',
-      backgroundColor: '#052e16',
-      color: '#ffffff',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      padding: '4rem 2rem 2rem 2rem',
-      overflow: 'hidden',
-    }}>
-      {/* Background Graphic / Image */}
-      {imageUrl && (
-        <div style={{
-          position: 'absolute',
-          right: '5%',
-          bottom: '10%',
-          width: '450px',
-          height: '450px',
-          zIndex: 1,
-          opacity: 0.9,
-        }}>
+    <section className="relative w-full bg-white">
+      {/* Hero Visual Area */}
+      <div className="relative min-h-[680px] sm:min-h-[740px] lg:min-h-[800px] w-full flex flex-col justify-between overflow-hidden bg-[#0c2e26]">
+        {/* 1. Background Image */}
+        <div className="absolute inset-0 z-0">
           <Image
-            src={imageUrl}
-            alt={imageAlt}
+            src={bgImage}
+            alt="Mount Zion International School student in classroom"
             fill
-            style={{ objectFit: 'contain' }}
             priority
+            unoptimized
+            className="object-cover object-center sm:object-[66%_center] lg:object-[60%_center]"
+            sizes="100vw"
           />
+
+          {/* Gradients & Vignette Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#041914]/95 via-[#06241d]/75 via-45% to-transparent sm:w-[82%] lg:w-[68%]" />
+          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/55 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#041914]/80 to-transparent pointer-events-none" />
+          <div className="absolute top-1/3 right-1/4 w-[420px] h-[420px] bg-amber-400/15 rounded-full blur-[100px] pointer-events-none" />
         </div>
-      )}
 
-      {/* Hero Content Left */}
-      <div style={{ maxWidth: '650px', zIndex: 2, marginTop: 'auto', marginBottom: 'auto' }}>
-        {badge && (
-          <div style={{
-            display: 'inline-block',
-            color: '#facc15',
-            fontWeight: 700,
-            fontSize: '0.875rem',
-            letterSpacing: '0.1em',
-            marginBottom: '1rem',
-            textTransform: 'uppercase',
-          }}>
-            {badge} ———
-          </div>
-        )}
+        {/* Overlay Navbar */}
+        <div className="relative z-20 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 pt-6 sm:pt-8 flex items-center justify-between">
+          <Link href="/" className="hover:opacity-95 transition-opacity">
+            <SchoolLogo />
+          </Link>
 
-        <h1 style={{
-          fontSize: '3rem',
-          lineHeight: '1.2',
-          fontWeight: 800,
-          marginBottom: '1.5rem',
-          fontFamily: 'sans-serif',
-        }}>
-          {heading}
-        </h1>
-
-        {/* Buttons Row */}
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
-          {primaryButtonText && (
-            <a
-              href={primaryButtonUrl || '#'}
-              style={{
-                backgroundColor: '#f59e0b',
-                color: '#000',
-                padding: '0.875rem 2rem',
-                borderRadius: '9999px',
-                fontWeight: 600,
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-              }}
-            >
-              {primaryButtonText} ↗
-            </a>
-          )}
-
-          {secondaryButtonText && (
-            <a
-              href={secondaryButtonUrl || '#'}
-              style={{
-                backgroundColor: 'transparent',
-                border: '1px solid rgba(255,255,255,0.4)',
-                color: '#fff',
-                padding: '0.875rem 2rem',
-                borderRadius: '9999px',
-                fontWeight: 600,
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-              }}
-            >
-              {secondaryButtonText} ↗
-            </a>
-          )}
-
-          {videoUrl && (
-            <a
-              href={videoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: '#facc15',
-                textDecoration: 'none',
-                marginLeft: '1rem',
-                fontWeight: 600,
-              }}
-            >
-              ▶ Discover More
-            </a>
-          )}
+          <Link
+            href="#apply"
+            className="inline-flex items-center gap-1.5 bg-white hover:bg-neutral-100 text-neutral-900 font-bold text-xs sm:text-sm px-6 py-2.5 sm:py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 cursor-pointer"
+          >
+            <span>Apply Now</span>
+            <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+          </Link>
         </div>
-      </div>
 
-      {/* Bottom Stats Counter Bar */}
-      {stats && stats.length > 0 && (
-        <div style={{
-          zIndex: 2,
-          marginTop: '3rem',
-          backgroundColor: 'rgba(6, 78, 59, 0.85)',
-          backdropFilter: 'blur(10px)',
-          borderRadius: '1.5rem',
-          padding: '1.5rem 2rem',
-          display: 'grid',
-          gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
-          gap: '1.5rem',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-        }}>
-          {stats.map((stat, idx) => (
-            <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <div style={{ fontSize: '2rem' }}>📖</div>
-              <div>
-                <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#ffffff' }}>
-                  {stat.value}
+        {/* Center Hero Content */}
+        <div className="relative z-20 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-14 my-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left Content Column */}
+            <div className="lg:col-span-8 max-w-3xl">
+              {/* Category Tag */}
+              {badge && (
+                <div className="flex items-center gap-2.5 mb-4 sm:mb-6">
+                  <span className="text-[#f5a623] font-bold tracking-widest text-xs uppercase">
+                    {badge}
+                  </span>
+                  <span className="w-10 h-[2px] bg-[#f5a623] inline-block" />
                 </div>
-                <div style={{ fontSize: '0.875rem', color: '#cbd5e1' }}>
-                  {stat.label}
-                </div>
+              )}
+
+              {/* Main Headline */}
+              <h1 className="text-white tracking-tight leading-[1.12] mb-8 select-none">
+                <span className="block font-light text-4xl sm:text-5xl lg:text-[54px] xl:text-[58px] text-white/95">
+                  {lines[0]}
+                </span>
+                <span className="block font-extrabold text-4xl sm:text-5xl lg:text-[54px] xl:text-[58px] text-white mt-1">
+                  {lines[1]}
+                </span>
+                <span className="block font-extrabold text-4xl sm:text-5xl lg:text-[54px] xl:text-[58px] text-white mt-1">
+                  {lines[2]}
+                </span>
+              </h1>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-4">
+                {primaryButtonText && (
+                  <Link
+                    href={primaryButtonUrl || '#explore'}
+                    className="inline-flex items-center gap-2 bg-[#f5a623] hover:bg-[#e29517] text-[#111] font-bold text-sm sm:text-base px-7 sm:px-8 py-3 sm:py-3.5 rounded-full transition-all duration-200 shadow-lg hover:shadow-amber-500/30 active:scale-95"
+                  >
+                    <span>{primaryButtonText}</span>
+                    <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
+                  </Link>
+                )}
+
+                {secondaryButtonText && (
+                  <Link
+                    href={secondaryButtonUrl || '#admission'}
+                    className="inline-flex items-center gap-2 border border-white/80 hover:border-white text-white hover:bg-white/10 font-semibold text-sm sm:text-base px-7 sm:px-8 py-3 sm:py-3.5 rounded-full transition-all duration-200 backdrop-blur-xs active:scale-95"
+                  >
+                    <span>{secondaryButtonText}</span>
+                    <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
+                  </Link>
+                )}
               </div>
             </div>
-          ))}
+
+            {/* Right Interactive Discover More Badge */}
+            <div className="hidden lg:flex lg:col-span-4 justify-center xl:justify-end xl:pr-12">
+              <DiscoverMoreBadge onClick={() => setVideoModalOpen(true)} />
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom spacing for stats overlap */}
+        <div className="h-20 sm:h-24" />
+      </div>
+
+      {/* Floating Stats Strip */}
+      <div className="relative z-30 -mt-14 sm:-mt-16 pb-16 sm:pb-20">
+        <StatsStrip stats={stats} />
+      </div>
+
+      {/* Video Modal Popup */}
+      {videoModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="relative w-full max-w-3xl bg-neutral-900 border border-white/15 rounded-2xl overflow-hidden shadow-2xl p-6">
+            <button
+              onClick={() => setVideoModalOpen(false)}
+              className="absolute top-4 right-4 text-white/70 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors"
+              aria-label="Close modal"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <h3 className="text-xl font-bold text-white mb-3">Discover Mount Zion</h3>
+            <p className="text-neutral-300 text-sm mb-4">
+              Take a virtual walkthrough of our state-of-the-art campus, classrooms, and sports arena.
+            </p>
+            <div className="aspect-video bg-neutral-800 rounded-xl overflow-hidden flex items-center justify-center border border-white/10">
+              {videoUrl && (videoUrl.includes('youtube') || videoUrl.includes('youtu.be') || videoUrl.includes('vimeo')) ? (
+                <iframe
+                  src={videoUrl.replace('watch?v=', 'embed/')}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : (
+                <div className="text-center p-8">
+                  <div className="w-16 h-16 rounded-full bg-[#f5a623] flex items-center justify-center mx-auto mb-3 shadow-lg">
+                    <span className="text-neutral-950 font-bold text-2xl">▶</span>
+                  </div>
+                  <p className="text-white font-medium">Virtual Campus Tour 2026</p>
+                  <p className="text-white/60 text-xs mt-1">Excellence in education, character & sports</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </section>
