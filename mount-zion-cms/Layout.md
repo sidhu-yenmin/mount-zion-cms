@@ -98,3 +98,33 @@ Image Style: 475 x 528px; Radius: 30px;
 Learning • Innovation • Achievement
 Text Style: Font-Roboto; Weight-600; Style-Italic; Size-20.82px; Line Height-30.07px;
 Letter Spacing-0%; Vertical Alignment-middle; Color-#FFFFFF;
+
+
+# Campus Experience
+
+Campus experience & Beyond academics
+Style: Font-Roboto; Weight-700; Style-Bold; Size-18px; Line Height-56px; Letter Spacing-0%;   Vertical Alignment: Middle; Case-Uppercase; Color: #03594E;
+
+Where Learning, Discovery & Growth Come Together
+Style: Font-Roboto; Weight-700; Style-Bold; Size-46px; Line Height-52px; Letter Spacing-0%;   Vertical Alignment: Middle; Color: #000000; 
+
+At our school, every corner of the campus is designed to inspire learning 
+and personal growth. From state-of-the-art classrooms and creative 
+studios to sports facilities and collaborative spaces, students enjoy 
+an environment that nurtures academic excellence alongside creativity, 
+leadership, teamwork, and well-being.
+Text Style: Font-Roboto; Weight-400; Style-Regular; Size-18px; Line Height-26px; Letter Spacing-0%; Color: #000000; 
+
+Facilities Options
+
+Btn
+Style: Height-42px; Radius-12px; Padding-8px 30px; Gap-10px; Active Btn color: #03594E;
+Inactive Btn color: #03594E Opacity: 5%;
+
+Classrooms, Self Defence, Swimming, Dance & Music, Sports, Arts, Fitness
+Text Style: Font-Roboto; Weight-400; Style-Regular; Size-18px; Line Height-26px;
+Letter Spacing-0%; Vertical Alignment-Middle; Active Btn Text: #FFFFFF; Inactive Btn Text: #000000;
+
+Facilities Image1: 540 x 308; Radius: 30px;
+
+Facilities Image2: 541 x 308; Radius: 30px;

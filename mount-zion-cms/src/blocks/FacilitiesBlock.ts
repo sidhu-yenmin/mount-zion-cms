@@ -11,7 +11,7 @@ export const FacilitiesBlock: Block = {
       name: 'badge',
       type: 'text',
       label: 'Badge / Tagline',
-      defaultValue: 'FACILITIES AND INFRASTRUCTURE',
+      defaultValue: 'CAMPUS EXPERIENCE & BEYOND ACADEMICS',
     },
     {
       name: 'heading',
@@ -24,6 +24,8 @@ export const FacilitiesBlock: Block = {
       name: 'description',
       type: 'textarea',
       label: 'Section Description',
+      defaultValue:
+        'At our school, every corner of the campus is designed to inspire learning and personal growth. From state-of-the-art classrooms and creative studios to sports facilities and collaborative spaces, students enjoy an environment that nurtures academic excellence alongside creativity, leadership, teamwork, and well-being.',
     },
     {
       name: 'tabs',
@@ -34,7 +36,7 @@ export const FacilitiesBlock: Block = {
         {
           name: 'tabName',
           type: 'text',
-          label: 'Category Name (e.g. ALL, SCIENCE LAB, LIBRARY, PLAYGROUND)',
+          label: 'Category Name (e.g. Classrooms, Swimming, Sports)',
           required: true,
         },
         {

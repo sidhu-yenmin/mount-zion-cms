@@ -3,6 +3,7 @@ import type { Page } from '@/payload-types'
 import { HeroBlockComponent } from './blocks/HeroBlockComponent'
 import { AboutUsBlockComponent } from './blocks/AboutUsBlockComponent'
 import { ProgramsBlockComponent } from './blocks/ProgramsBlockComponent'
+import { FacilitiesBlockComponent } from './blocks/FacilitiesBlockComponent'
 
 type Blocks = NonNullable<Page['layout']>
 
@@ -11,6 +12,7 @@ const componentsMap: Record<string, React.FC<any>> = {
   aboutUs: AboutUsBlockComponent,
   featureSplit: AboutUsBlockComponent,
   programs: ProgramsBlockComponent,
+  facilities: FacilitiesBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{ blocks?: Blocks | null }> = ({ blocks }) => {
