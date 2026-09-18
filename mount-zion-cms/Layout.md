@@ -128,3 +128,47 @@ Letter Spacing-0%; Vertical Alignment-Middle; Active Btn Text: #FFFFFF; Inactive
 Facilities Image1: 540 x 308; Radius: 30px;
 
 Facilities Image2: 541 x 308; Radius: 30px;
+
+
+
+# Achievements
+
+BG Image: academics-bg-color, academics-bg-pattern
+
+Left Horizontal Line
+Style: Width-38px; Height-0px; Border-2px #FFFFFF Center Alignment;
+
+STUDENT SUCCESS
+Style: Font-Roboto; Weight-700; Style-Bold; Size-18px; Line Height-56px; Letter Spacing-0%;   Horizontal Alignment: Center; Vertical Alignment: Middle; Color: #FFFFFF; Case: Uppercase;
+
+Right Horizontal Line
+Style: Width-38px; Height-0px; Border-2px #FFFFFF Center Alignment;
+
+Building Bright Minds for Tomorrow
+Style: Font-Roboto; Weight-700; Style-Bold; Size-46px; Line Height-52px; Letter Spacing-0%;   Horizontal Alignment: Center; Vertical Alignment: Middle; Color: #FFFFFF;
+
+Years Btn: 2026, 2025, 2024, 2023
+Btn Style: Active Btn Width-197; Inactive Btn Width-172px; Height 63px; Radius-20px; Justify: space-between; Padding-15px 25px; Active Btn Color-#F8C62F; Inactive Btn Color-#FFFFFF;
+
+Btn Year Text: Font-Roboto; Weight-500; Style-Medium; Size-18px; Line Height-33px;
+Letter Spacing-0%; Vertical Alignment-Middle; Active Text Color: #0F172A;
+Inactive Text Color: #03594E;
+
+Year Btn Arrow; 24 x 24;
+active-arrow, inactive-arrow;
+
+Student Card: 420 x 291px; Radius-20px; Border-1px #F8C62F; Bg-color: #03594E;
+Medal Image: 72 x 88.11px;
+Mark: 485/500, 483/500
+483 Text Style: Font-Roboto; Weight-500; Style-Medium; Size-64px; Line Height-40.58px;
+Letter Spacing-0%; Horizontal Alignment-Center; Vertical Alignment-Middle; Color:#F8C62F
+Span (/) Text Style: Font-Roboto; Weight-500; Style-Medium; Size-20px; Line Height-40.58px;
+Letter Spacing-0%; Horizontal Alignment-Center; Vertical Alignment-Middle; Color:#F8C62F
+500 Text Style: Font-Roboto; Weight-400; Style-Regular; Size-20px; Line Height-40.58px;
+Letter Spacing-0%; Horizontal Alignment-Center; Vertical Alignment-Middle; Color:#F8C62F
+IN GRADE 10:
+Text Style: Font-Roboto; Weight-400; Style-Regular; Size-12px; Line Height-13.53px;
+Letter Spacing-0%; Vertical Alignment-Middle; Case-Uppercase; Color:#FFFFFF;
+Kishore Kumar
+Text Style: Font-Roboto; Weight-600; Style:Semi-bold; Size-20px; Line Height-23.67px;
+Letter Spacing-0%; Vertical Alignment-Middle; Color: #FFFFFF; 

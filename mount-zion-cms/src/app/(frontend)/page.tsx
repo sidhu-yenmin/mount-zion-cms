@@ -5,6 +5,7 @@ import { RenderBlocks } from '@/components/RenderBlocks'
 import { WhyMountZionSection } from '@/components/sections/WhyMountZionSection'
 import { ProgramsBlockComponent } from '@/components/blocks/ProgramsBlockComponent'
 import { FacilitiesBlockComponent } from '@/components/blocks/FacilitiesBlockComponent'
+import { ToppersBlockComponent } from '@/components/blocks/ToppersBlockComponent'
 import type { Page } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
@@ -48,6 +49,7 @@ export default async function HomePage() {
   const hasAboutUs = layout?.some((b) => b.blockType === 'aboutUs' || (b as any).blockType === 'featureSplit')
   const hasPrograms = layout?.some((b) => b.blockType === 'programs')
   const hasFacilities = layout?.some((b) => b.blockType === 'facilities')
+  const hasToppers = layout?.some((b) => b.blockType === 'toppers')
 
   return (
     <div className="w-full min-h-screen bg-[#f8fafc]">
@@ -62,6 +64,9 @@ export default async function HomePage() {
 
       {/* Fallback for Facilities section until added to CMS layout */}
       {!hasFacilities && <FacilitiesBlockComponent />}
+
+      {/* Fallback for Toppers & Achievements section until added to CMS layout */}
+      {!hasToppers && <ToppersBlockComponent />}
     </div>
   )
 }
