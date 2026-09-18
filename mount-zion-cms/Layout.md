@@ -54,3 +54,47 @@ Style: Font-Inter; Weight-500; Style-Medium; Size-50px; Line Height-100%; Letter
 Experience
 Style: Font-Roboto; Weight-700; Style-Bold; Size-24px; Line Height-56px; Letter Spacing-0%;Vertical Alignment: Middle; Color: #0F172A;
 
+
+
+# Academics Excellence
+
+Left Horizontal line
+Style: Width-38px; Height-0px; Border-2px #FFFFFF Center Alignment
+
+Academic Excellence
+Style: Font-Roboto; Weight-700; Style-Bold; Size-18px; Line Height-56px; Letter Spacing-0%;Vertical Alignment: Middle; Case-Uppercase; Color: #FFFFFF;
+
+Right Horizontal line
+Style: Width-38px; Height-0px; Border-2px #FFFFFF Center Alignment
+
+Shaping Bright Minds for Tomorrow's World
+Style: Font-Roboto; Weight-700; Style-Bold; Size-46px; Line Height-52px; Letter Spacing-0%;   Horizontal Alignment: Center; Vertical Alignment: Middle; Color: #FFFFFF;
+
+Academics Image1
+Image Style: 591 x 298px; Radius: 30px;
+
+Through a balanced blend of academics, technology, creativity, and values, we inspire students to think independently, solve real-world challenges, and achieve excellence in every stage of their educational journey.
+Text Style: Font-Roboto; Weight-400; Style-Regular; Size-18px; Line Height-26px; Letter Spacing-0%;Vertical Alignment: Middle; Color: #FFFFFF; 
+
+Explore Academics Btn
+Btn Style: Width-Hug(277px); Height-Hug(58px); Radius-100px; Border-1px #919191; 
+Padding-20px 40px 20px 40px; Gap-10px; Color-#FFFFFF;
+
+Explore Academics
+Btn Text Style: Font-Inter; Weight-500; Style-Medium; Size-18px; Line Height-56px;
+Letter Spacing-0%; Horizontal Alignment-Center; Vertical Alignment-Middle; Color-#353535;
+
+Btn Arrow Image: know-more-btn-icon.png;
+Image Style: 11 x 12px;
+
+Sun Image
+Image Style: 92.48 x 92.48; 
+Blurry Bg Container: Width-375px; Height-70px; Radius: Top-right-18.16px; Bottom-right-18.16px; Bg-color-#FFFFFF; opacity:10%; Border: Left-3.5px; Color-#F8C62F; 
+Backgorund Blur-7;
+
+Academics Image 2
+Image Style: 475 x 528px; Radius: 30px;
+
+Learning • Innovation • Achievement
+Text Style: Font-Roboto; Weight-600; Style-Italic; Size-20.82px; Line Height-30.07px;
+Letter Spacing-0%; Vertical Alignment-middle; Color-#FFFFFF;

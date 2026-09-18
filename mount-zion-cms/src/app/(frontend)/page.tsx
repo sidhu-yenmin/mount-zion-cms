@@ -3,6 +3,7 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { RenderBlocks } from '@/components/RenderBlocks'
 import { WhyMountZionSection } from '@/components/sections/WhyMountZionSection'
+import { ProgramsBlockComponent } from '@/components/blocks/ProgramsBlockComponent'
 import type { Page } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
@@ -44,6 +45,7 @@ export default async function HomePage() {
   }
 
   const hasAboutUs = layout?.some((b) => b.blockType === 'aboutUs' || (b as any).blockType === 'featureSplit')
+  const hasPrograms = layout?.some((b) => b.blockType === 'programs')
 
   return (
     <div className="w-full min-h-screen bg-[#f8fafc]">
@@ -52,6 +54,9 @@ export default async function HomePage() {
 
       {/* Fallback for WhyMountZion / About Us section until added to CMS layout */}
       {!hasAboutUs && <WhyMountZionSection />}
+
+      {/* Fallback for Academic Programs section until added to CMS layout */}
+      {!hasPrograms && <ProgramsBlockComponent />}
     </div>
   )
 }

@@ -229,15 +229,9 @@ export interface Page {
             description?: string | null;
             buttonText?: string | null;
             buttonUrl?: string | null;
-            mainImage?: (number | null) | Media;
-            secondaryImage?: (number | null) | Media;
-            stats?:
-              | {
-                  value?: string | null;
-                  label?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
+            imageOne?: (number | null) | Media;
+            imageTwo?: (number | null) | Media;
+            bannerText?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'programs';
@@ -536,15 +530,9 @@ export interface PagesSelect<T extends boolean = true> {
               description?: T;
               buttonText?: T;
               buttonUrl?: T;
-              mainImage?: T;
-              secondaryImage?: T;
-              stats?:
-                | T
-                | {
-                    value?: T;
-                    label?: T;
-                    id?: T;
-                  };
+              imageOne?: T;
+              imageTwo?: T;
+              bannerText?: T;
               id?: T;
               blockName?: T;
             };
