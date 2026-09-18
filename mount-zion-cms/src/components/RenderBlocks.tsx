@@ -1,13 +1,14 @@
 import React from 'react'
 import type { Page } from '@/payload-types'
 import { HeroBlockComponent } from './blocks/HeroBlockComponent'
-import { FeatureSplitBlockComponent } from './blocks/FeatureSplitBlockComponent'
+import { AboutUsBlockComponent } from './blocks/AboutUsBlockComponent'
 
 type Blocks = NonNullable<Page['layout']>
 
 const componentsMap: Record<string, React.FC<any>> = {
   hero: HeroBlockComponent,
-  featureSplit: FeatureSplitBlockComponent,
+  aboutUs: AboutUsBlockComponent,
+  featureSplit: AboutUsBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{ blocks?: Blocks | null }> = ({ blocks }) => {

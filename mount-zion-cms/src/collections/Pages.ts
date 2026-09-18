@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { HeroBlock } from '../blocks/HeroBlock'
 import { ProgramsBlock } from '../blocks/ProgramsBlock'
-import { FeatureSplitBlock } from '../blocks/FeatureSplitBlock'
+import { AboutUsBlock } from '../blocks/AboutUsBlock'
 import { FacilitiesBlock } from '../blocks/FacilitiesBlock'
 import { ToppersBlock } from '../blocks/ToppersBlock'
 import { CampusLifeBlock } from '../blocks/CampusLifeBlock'
@@ -56,8 +56,8 @@ export const Pages: CollectionConfig = {
       label: 'Page Content Blocks',
       blocks: [
         HeroBlock,
+        AboutUsBlock,
         ProgramsBlock,
-        FeatureSplitBlock,
         FacilitiesBlock,
         ToppersBlock,
         CampusLifeBlock,

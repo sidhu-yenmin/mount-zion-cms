@@ -43,15 +43,15 @@ export default async function HomePage() {
     console.warn('Could not fetch home page from CMS, using default layout:', error)
   }
 
-  const hasFeatureSplit = layout?.some((b) => b.blockType === 'featureSplit')
+  const hasAboutUs = layout?.some((b) => b.blockType === 'aboutUs' || (b as any).blockType === 'featureSplit')
 
   return (
     <div className="w-full min-h-screen bg-[#f8fafc]">
       {/* Dynamic Layout Blocks rendered directly from CMS */}
       <RenderBlocks blocks={layout} />
 
-      {/* Fallback for WhyMountZion section until added to CMS layout */}
-      {!hasFeatureSplit && <WhyMountZionSection />}
+      {/* Fallback for WhyMountZion / About Us section until added to CMS layout */}
+      {!hasAboutUs && <WhyMountZionSection />}
     </div>
   )
 }

@@ -213,6 +213,22 @@ export interface Page {
             description?: string | null;
             buttonText?: string | null;
             buttonUrl?: string | null;
+            imageOne?: (number | null) | Media;
+            imageTwo?: (number | null) | Media;
+            stat1Value?: string | null;
+            stat1Label?: string | null;
+            stat2Value?: string | null;
+            stat2Label?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'aboutUs';
+          }
+        | {
+            badge?: string | null;
+            heading: string;
+            description?: string | null;
+            buttonText?: string | null;
+            buttonUrl?: string | null;
             mainImage?: (number | null) | Media;
             secondaryImage?: (number | null) | Media;
             stats?:
@@ -225,18 +241,6 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'programs';
-          }
-        | {
-            badge?: string | null;
-            heading: string;
-            description?: string | null;
-            imageOne?: (number | null) | Media;
-            imageTwo?: (number | null) | Media;
-            buttonText?: string | null;
-            buttonUrl?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'featureSplit';
           }
         | {
             badge?: string | null;
@@ -507,6 +511,23 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        aboutUs?:
+          | T
+          | {
+              badge?: T;
+              heading?: T;
+              description?: T;
+              buttonText?: T;
+              buttonUrl?: T;
+              imageOne?: T;
+              imageTwo?: T;
+              stat1Value?: T;
+              stat1Label?: T;
+              stat2Value?: T;
+              stat2Label?: T;
+              id?: T;
+              blockName?: T;
+            };
         programs?:
           | T
           | {
@@ -524,19 +545,6 @@ export interface PagesSelect<T extends boolean = true> {
                     label?: T;
                     id?: T;
                   };
-              id?: T;
-              blockName?: T;
-            };
-        featureSplit?:
-          | T
-          | {
-              badge?: T;
-              heading?: T;
-              description?: T;
-              imageOne?: T;
-              imageTwo?: T;
-              buttonText?: T;
-              buttonUrl?: T;
               id?: T;
               blockName?: T;
             };
