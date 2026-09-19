@@ -5,7 +5,7 @@ import { FooterComponent } from '@/components/layout/FooterComponent'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import type { Header as HeaderType, Footer as FooterType } from '@/payload-types'
-import { HeaderData, NavItem } from '@/types/cms'
+import { HeaderData } from '@/types/cms'
 
 export const metadata = {
   title: 'Mount Zion International School - CBSE',
@@ -23,82 +23,57 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     const payloadConfig = await config
     const payload = await getPayload({ config: payloadConfig })
 
+    let menuData: any = null
+    try {
+      menuData = await payload.findGlobal({
+        slug: 'menu',
+        depth: 2,
+      })
+    } catch {
+      // Menu global not initialized yet
+    }
+
     const header = (await payload.findGlobal({
       slug: 'header',
       depth: 2,
     })) as HeaderType
 
-    const defaultNavItems: NavItem[] = [
-      { label: 'Home', url: '/', isActive: true, showExpandIcon: false },
-      {
-        label: 'Our School',
-        url: '#about',
-        isActive: false,
-        showExpandIcon: true,
-        hasDropdown: true,
-        children: [
-          { label: 'About Mount Zion', url: '#about' },
-          { label: 'Vision & Mission', url: '#vision' },
-          { label: 'Leadership', url: '#leadership' },
-        ],
-      },
-      {
-        label: 'Education',
-        url: '#education',
-        isActive: false,
-        showExpandIcon: true,
-        hasDropdown: true,
-        children: [
-          { label: 'CBSE Curriculum', url: '#curriculum' },
-          { label: 'Primary School', url: '#primary' },
-          { label: 'Middle School', url: '#middle' },
-          { label: 'Senior Secondary', url: '#senior' },
-        ],
-      },
-      {
-        label: 'Student Life',
-        url: '#student-life',
-        isActive: false,
-        showExpandIcon: true,
-        hasDropdown: true,
-        children: [
-          { label: 'Sports & Athletics', url: '#sports' },
-          { label: 'Arts & Culture', url: '#arts' },
-          { label: 'Student Clubs', url: '#clubs' },
-        ],
-      },
-      { label: 'Admissions', url: '#admissions', isActive: false, showExpandIcon: false },
-      { label: 'Contact', url: '#contact', isActive: false, showExpandIcon: false },
-    ]
+    const resolveItemUrl = (item: any): string => {
+      if (item.linkType === 'page' && item.page) {
+        const pageSlug = typeof item.page === 'object' ? item.page.slug : ''
+        return pageSlug === 'home' ? '/' : `/${pageSlug}`
+      }
+      return item.customUrl || '/'
+    }
+
+    let navItems: any[] = []
+
+    if (menuData?.menuItems && menuData.menuItems.length > 0) {
+      navItems = menuData.menuItems.map((item: any) => ({
+        label: item.label,
+        url: resolveItemUrl(item),
+        children: item.submenuItems?.map((sub: any) => ({
+          label: sub.label,
+          url: resolveItemUrl(sub),
+        })),
+      }))
+    } else if (header?.navItems && header.navItems.length > 0) {
+      navItems = header.navItems.map((item) => ({
+        label: item.label,
+        url: item.link,
+        children: item.subItems?.map((sub) => ({
+          label: sub.label,
+          url: sub.link,
+        })),
+      }))
+    }
 
     if (header) {
-      const cmsNavItems =
-        header.navItems && header.navItems.length > 0
-          ? header.navItems.map((item: any) => ({
-              label: item.label,
-              url: item.link,
-              isActive: Boolean(item.isActive),
-              showExpandIcon: Boolean(item.showExpandIcon ?? item.hasDropdown),
-              hasDropdown: Boolean(item.hasDropdown),
-              children: item.subItems?.map((sub: any) => ({
-                label: sub.label,
-                url: sub.link,
-              })),
-            }))
-          : defaultNavItems
-
       headerCmsData = {
         showTopBar: header.topBar?.showTopBar ?? true,
-        phone: header.topBar?.phone || '+91 - 9876543210',
-        email: header.topBar?.email || 'info@mountzion.com',
-        navItems: cmsNavItems,
-      }
-    } else {
-      headerCmsData = {
-        showTopBar: true,
-        phone: '+91 - 9876543210',
-        email: 'info@mountzion.com',
-        navItems: defaultNavItems,
+        phone: header.topBar?.phone || '',
+        email: header.topBar?.email || '',
+        navItems,
       }
     }
 
