@@ -24,6 +24,10 @@ export interface FacilitiesProps {
   tabs?: FacilitiesTabItem[] | null
 }
 
+/* =========================================================================
+   [OPTION A: STATIC FALLBACK TABS & IMAGES - COMMENTED OUT]
+   Uncomment below if you want default demo tabs & stock images without CMS:
+
 const fallbackTabs = [
   'Classrooms',
   'Self defence',
@@ -33,6 +37,7 @@ const fallbackTabs = [
   'Arts',
   'Fitness',
 ]
+========================================================================= */
 
 const fallbackTabImages: Record<string, [string, string]> = {
   Classrooms: ['/images/facilities2.png', '/images/facilities1.png'],
@@ -50,11 +55,11 @@ export const FacilitiesBlockComponent: React.FC<Partial<FacilitiesProps>> = ({
   description = 'At our school, every corner of the campus is designed to inspire learning and personal growth. From state-of-the-art classrooms and creative studios to sports facilities and collaborative spaces, students enjoy an environment that nurtures academic excellence alongside creativity, leadership, teamwork, and well-being.',
   tabs,
 }) => {
-  // Use CMS tabs or fallback list
+  // Use CMS tabs if available (or fallback placeholder tab if none added yet in CMS)
   const tabNames =
     tabs && tabs.length > 0
       ? tabs.map((t) => t.tabName)
-      : fallbackTabs
+      : ['Classrooms', 'Self defence', 'Swimming', 'Dance & Music', 'Sports', 'Arts', 'Fitness'] // fallback tab labels
 
   const [activeTab, setActiveTab] = useState<string>(tabNames[0] || 'Classrooms')
   const activeTabRef = useRef<string>(activeTab)

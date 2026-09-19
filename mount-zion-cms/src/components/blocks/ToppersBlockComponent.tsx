@@ -23,6 +23,10 @@ export interface ToppersBlockProps {
   blockType?: string
 }
 
+/* =========================================================================
+   [OPTION A: STATIC MOCK TOPPERS DATA - COMMENTED OUT]
+   Uncomment below if you want hardcoded demo toppers & stock student portraits:
+
 const defaultAcademicYears: AcademicYearData[] = [
   {
     year: '2026',
@@ -122,23 +126,47 @@ const defaultAcademicYears: AcademicYearData[] = [
     ],
   },
 ]
+========================================================================= */
+
+// Placeholder data structure when no CMS years exist
+const placeholderAcademicYears: AcademicYearData[] = [
+  {
+    year: '2026',
+    rankHolders: [
+      {
+        studentName: 'Topper Student Name',
+        rank: 'HSC Topper',
+        score: '---/500',
+        standard: 'IN GRADE 10',
+        photo: null,
+      },
+      {
+        studentName: 'Topper Student Name',
+        rank: 'School Topper',
+        score: '---/500',
+        standard: 'IN GRADE 10',
+        photo: null,
+      },
+    ],
+  },
+  { year: '2025', rankHolders: [] },
+  { year: '2024', rankHolders: [] },
+  { year: '2023', rankHolders: [] },
+]
 
 export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
   badge = 'STUDENT SUCCESS',
   heading = 'Building Bright Minds for Tomorrow',
   academicYears,
 }) => {
-  const yearsList =
-    academicYears && academicYears.length > 0
-      ? academicYears.map((y) => ({
-          year: y.year,
-          rankHolders:
-            y.rankHolders && y.rankHolders.length > 0
-              ? y.rankHolders
-              : (defaultAcademicYears.find((d) => d.year === y.year)?.rankHolders ??
-                defaultAcademicYears[0].rankHolders),
-        }))
-      : defaultAcademicYears
+  // Use CMS academic years if available, otherwise use neutral placeholder year buttons
+  const hasCmsYears = academicYears && academicYears.length > 0
+  const yearsList = hasCmsYears
+    ? academicYears.map((y) => ({
+        year: y.year,
+        rankHolders: y.rankHolders || [],
+      }))
+    : placeholderAcademicYears
 
   // 1. Scroll-Based Year Selection (Sticky section pinned while scrolling through years)
   const [activeYear, setActiveYear] = useState<string>(yearsList[0]?.year || '2026')
@@ -236,11 +264,27 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
 
   // 2. Student Cards Carousel for the Active Year (Supports 2, 3, 4+ students per year)
   const currentYearData =
-    yearsList.find((y) => y.year === activeYear) ||
-    yearsList[0] ||
-    defaultAcademicYears[0]
+    yearsList.find((y) => y.year === activeYear) || yearsList[0]
 
-  const rankHolders = currentYearData?.rankHolders || []
+  const rankHolders =
+    currentYearData?.rankHolders && currentYearData.rankHolders.length > 0
+      ? currentYearData.rankHolders
+      : [
+          {
+            studentName: 'Topper Student Name',
+            rank: 'Topper Rank',
+            score: '---/500',
+            standard: 'IN GRADE 10',
+            photo: null,
+          },
+          {
+            studentName: 'Topper Student Name',
+            rank: '2nd Rank',
+            score: '---/500',
+            standard: 'IN GRADE 10',
+            photo: null,
+          },
+        ]
 
   const [activeStudentIndex, setActiveStudentIndex] = useState<number>(0)
   const [isPaused, setIsPaused] = useState<boolean>(false)
@@ -336,10 +380,10 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
     )
   }
 
-  const getPhotoUrl = (photo: any, index: number) => {
+  const getPhotoUrl = (photo: any): string | null => {
     if (typeof photo === 'string' && photo.length > 0) return photo
     if (photo && typeof photo === 'object' && photo.url) return photo.url
-    return index % 2 === 0 ? '/images/topper-student1.png' : '/images/topper-student2.png'
+    return null
   }
 
   const isHeadingDefault =
