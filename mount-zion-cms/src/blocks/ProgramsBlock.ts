@@ -59,6 +59,12 @@ export const ProgramsBlock: Block = {
       label: 'Academics Image 2 (Tree Planting 475x528px)',
     },
     {
+      name: 'backgroundImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Background Pattern Image (Optional)',
+    },
+    {
       name: 'bannerText',
       type: 'text',
       label: 'Floating Banner Text',

@@ -15,10 +15,15 @@ export interface AboutUsProps {
   buttonUrl?: string | null
   imageOne?: number | Media | string | null
   imageTwo?: number | Media | string | null
+  floatingBadgeIcon?: number | Media | string | null
+  floatingBadgeLine1?: string | null
+  floatingBadgeLine2?: string | null
   stat1Value?: string | null
   stat1Label?: string | null
+  stat1Icon?: number | Media | string | null
   stat2Value?: string | null
   stat2Label?: string | null
+  stat2Icon?: number | Media | string | null
 }
 
 export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
@@ -29,10 +34,15 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
   buttonUrl = '#academics',
   imageOne,
   imageTwo,
+  floatingBadgeIcon,
+  floatingBadgeLine1 = 'UNLOCKING POTENTIALS',
+  floatingBadgeLine2 = 'HIGHER EDUCATION',
   stat1Value = '9K',
   stat1Label = 'Students',
+  stat1Icon,
   stat2Value = '10',
   stat2Label = 'Experience',
+  stat2Icon,
 }) => {
   // Resolve Left Student Image
   const studentImg =
@@ -49,6 +59,30 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
       : typeof imageTwo === 'string' && imageTwo
         ? imageTwo
         : '/images/why-mount-zion-classroom.png'
+
+  // Resolve Sunburst Badge Icon
+  const sunIconImg =
+    typeof floatingBadgeIcon === 'object' && floatingBadgeIcon?.url
+      ? floatingBadgeIcon.url
+      : typeof floatingBadgeIcon === 'string' && floatingBadgeIcon
+        ? floatingBadgeIcon
+        : '/images/sun.png'
+
+  // Resolve Stat 1 Icon (Graduation)
+  const graduateIconImg =
+    typeof stat1Icon === 'object' && stat1Icon?.url
+      ? stat1Icon.url
+      : typeof stat1Icon === 'string' && stat1Icon
+        ? stat1Icon
+        : '/images/graduate.png'
+
+  // Resolve Stat 2 Icon (Idea)
+  const ideaIconImg =
+    typeof stat2Icon === 'object' && stat2Icon?.url
+      ? stat2Icon.url
+      : typeof stat2Icon === 'string' && stat2Icon
+        ? stat2Icon
+        : '/images/idea.png'
 
   return (
     <section className="relative w-full bg-white py-14 sm:py-20 lg:py-24 overflow-hidden">
@@ -123,10 +157,11 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
                   {/* Sunburst Icon Centered on Left Yellow Border (92.48px x 92.48px) */}
                   <div className="absolute -left-[43px] sm:-left-[46px] top-0 bottom-0 my-auto w-[86px] sm:w-[92px] h-[86px] sm:h-[92px] flex items-center justify-center pointer-events-none">
                     <Image
-                      src="/images/sun.png"
+                      src={sunIconImg}
                       alt="Sunburst icon"
                       width={92}
                       height={92}
+                      unoptimized
                       className="w-full h-full object-contain"
                     />
                   </div>
@@ -134,10 +169,10 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
                   {/* Banner Text */}
                   <div className="flex flex-col justify-center select-none">
                     <span className="text-[#03594E] font-semibold italic text-[16px] sm:text-[18px] lg:text-[20.82px] leading-[1.2] lg:leading-[28px] tracking-tight whitespace-nowrap">
-                      UNLOCKING POTENTIALS
+                      {floatingBadgeLine1 || 'UNLOCKING POTENTIALS'}
                     </span>
                     <span className="text-[#03594E] font-semibold italic text-[16px] sm:text-[18px] lg:text-[20.82px] leading-[1.2] lg:leading-[28px] tracking-tight whitespace-nowrap mt-0.5">
-                      HIGHER EDUCATION
+                      {floatingBadgeLine2 || 'HIGHER EDUCATION'}
                     </span>
                   </div>
                 </div>
@@ -149,10 +184,11 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
                 <div className="flex items-center gap-4 sm:gap-5">
                   <div className="w-[60px] h-[60px] sm:w-[89px] sm:h-[89px] shrink-0 flex items-center justify-center">
                     <Image
-                      src="/images/graduate.png"
+                      src={graduateIconImg}
                       alt="Students enrolled"
                       width={89}
                       height={89}
+                      unoptimized
                       className="w-full h-full object-contain"
                     />
                   </div>
@@ -175,10 +211,11 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
                 <div className="flex items-center gap-4 sm:gap-5">
                   <div className="w-[56px] h-[56px] sm:w-[83px] sm:h-[83px] shrink-0 flex items-center justify-center">
                     <Image
-                      src="/images/idea.png"
+                      src={ideaIconImg}
                       alt="Years of Experience"
                       width={83}
                       height={83}
+                      unoptimized
                       className="w-full h-full object-contain"
                     />
                   </div>

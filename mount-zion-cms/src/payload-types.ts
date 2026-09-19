@@ -215,10 +215,15 @@ export interface Page {
             buttonUrl?: string | null;
             imageOne?: (number | null) | Media;
             imageTwo?: (number | null) | Media;
+            floatingBadgeIcon?: (number | null) | Media;
+            floatingBadgeLine1?: string | null;
+            floatingBadgeLine2?: string | null;
             stat1Value?: string | null;
             stat1Label?: string | null;
+            stat1Icon?: (number | null) | Media;
             stat2Value?: string | null;
             stat2Label?: string | null;
+            stat2Icon?: (number | null) | Media;
             id?: string | null;
             blockName?: string | null;
             blockType: 'aboutUs';
@@ -231,6 +236,7 @@ export interface Page {
             buttonUrl?: string | null;
             imageOne?: (number | null) | Media;
             imageTwo?: (number | null) | Media;
+            backgroundImage?: (number | null) | Media;
             bannerText?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -515,10 +521,15 @@ export interface PagesSelect<T extends boolean = true> {
               buttonUrl?: T;
               imageOne?: T;
               imageTwo?: T;
+              floatingBadgeIcon?: T;
+              floatingBadgeLine1?: T;
+              floatingBadgeLine2?: T;
               stat1Value?: T;
               stat1Label?: T;
+              stat1Icon?: T;
               stat2Value?: T;
               stat2Label?: T;
+              stat2Icon?: T;
               id?: T;
               blockName?: T;
             };
@@ -532,6 +543,7 @@ export interface PagesSelect<T extends boolean = true> {
               buttonUrl?: T;
               imageOne?: T;
               imageTwo?: T;
+              backgroundImage?: T;
               bannerText?: T;
               id?: T;
               blockName?: T;
