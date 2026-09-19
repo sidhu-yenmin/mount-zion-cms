@@ -30,6 +30,10 @@ export interface CampusLifeBlockProps {
   ctaBar?: CampusLifeCtaBar | null
 }
 
+/* =========================================================================
+   [OPTION A: STATIC FALLBACK GALLERY & STUDENT IMAGES - COMMENTED OUT]
+   Uncomment below if you want hardcoded demo gallery photos & student cutout:
+
 const defaultGalleryImages = [
   { src: '/images/facilities2.png', alt: 'School Architecture Staircase', category: 'Campus Architecture', ratio: 260 },
   { src: '/images/facilities1.png', alt: 'Students Collaborating in Classroom', category: 'Collaborative Learning', ratio: 558 },
@@ -38,6 +42,9 @@ const defaultGalleryImages = [
   { src: '/images/gallery3.png', alt: 'Student Writing with Pencil', category: 'Focused Academics', ratio: 350 },
   { src: '/images/gallery4.png', alt: 'Modern Classroom Layout', category: 'Smart Classrooms', ratio: 364 },
 ]
+========================================================================= */
+
+const defaultRatios = [260, 558, 260, 364, 350, 364]
 
 export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> = ({
   badge = 'OUR GALLERY',
@@ -72,21 +79,18 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
     media: number | Media | string | null | undefined,
-    fallback: string,
-  ): string => {
-    if (!media) return fallback
+  ): string | null => {
+    if (!media) return null
     if (typeof media === 'string' && media.trim()) return media
     if (typeof media === 'object' && media?.url) return media.url
-    return fallback
+    return null
   }
 
-  // Build 6 deck images dynamically from CMS or fallbacks
-  const deckImages = defaultGalleryImages.map((defaultImg, idx) => {
+  // [OPTION B: STRICT CMS - Only load images when uploaded in CMS]
+  const deckImages = defaultRatios.map((ratio, idx) => {
     const cmsItem = galleryImages?.[idx]
-    const resolvedUrl = cmsItem
-      ? resolveMediaUrl(cmsItem.image, defaultImg.src)
-      : defaultImg.src
-    const caption = cmsItem?.caption || defaultImg.alt
+    const resolvedUrl = resolveMediaUrl(cmsItem?.image)
+    const caption = cmsItem?.caption || `Gallery Photo 0${idx + 1}`
 
     return {
       src: resolvedUrl,
@@ -107,7 +111,9 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
   const ctaHeading = ctaBar?.heading || "Start Your Child's Journey with Us"
   const ctaButtonText = ctaBar?.buttonText || 'Apply Now'
   const ctaButtonUrl = ctaBar?.buttonUrl || '/admissions'
-  const ctaStudentImg = resolveMediaUrl(ctaBar?.studentImage, '/images/gallery-cta-image.png')
+
+  // Only show student cutout when uploaded in CMS
+  const ctaStudentImg = resolveMediaUrl(ctaBar?.studentImage)
 
   // Split heading into 2 lines matching the reference design
   const renderHeading = () => {

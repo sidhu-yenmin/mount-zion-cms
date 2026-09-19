@@ -21,6 +21,10 @@ export interface TestimonialsProps {
   testimonials?: TestimonialItem[] | null
 }
 
+/* =========================================================================
+   [OPTION A: STATIC MOCK TESTIMONIALS DATA - COMMENTED OUT]
+   Uncomment below if you want hardcoded demo testimonials & stock avatar photos:
+
 const defaultTestimonials: TestimonialItem[] = [
   {
     cardStyle: 'green',
@@ -66,6 +70,38 @@ const defaultTestimonials: TestimonialItem[] = [
     authorName: 'Dr. K. Radhakrishnan',
     authorRole: 'Parent & Educational Advisor',
     authorPhoto: '/images/testimonial3.png',
+  },
+]
+========================================================================= */
+
+// Clean placeholder structure when no CMS reviews exist
+const placeholderTestimonials: TestimonialItem[] = [
+  {
+    cardStyle: 'green',
+    rating: 5,
+    quote:
+      'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
+    authorName: 'Parent / Reviewer Name',
+    authorRole: 'Parent of Grade 10 Student',
+    authorPhoto: null,
+  },
+  {
+    cardStyle: 'yellow',
+    rating: 5,
+    quote:
+      'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
+    authorName: 'Parent / Reviewer Name',
+    authorRole: 'Parent of Grade 8 Student',
+    authorPhoto: null,
+  },
+  {
+    cardStyle: 'green',
+    rating: 5,
+    quote:
+      'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
+    authorName: 'Parent / Reviewer Name',
+    authorRole: 'Parent of Grade 12 Student',
+    authorPhoto: null,
   },
 ]
 
@@ -176,12 +212,11 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
     media: number | Media | string | null | undefined,
-    fallback: string,
-  ): string => {
-    if (!media) return fallback
+  ): string | null => {
+    if (!media) return null
     if (typeof media === 'string' && media.trim()) return media
     if (typeof media === 'object' && media?.url) return media.url
-    return fallback
+    return null
   }
 
   // Split heading into 2 lines matching design
