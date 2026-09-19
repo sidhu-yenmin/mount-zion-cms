@@ -22,6 +22,10 @@ export interface NewsEventsProps {
   items?: NewsEventItem[] | null
 }
 
+/* =========================================================================
+   [OPTION A: STATIC FALLBACK NEWS & EVENTS DATA - COMMENTED OUT]
+   Uncomment below if you want hardcoded demo events & stock news photos:
+
 const defaultItems: NewsEventItem[] = [
   {
     date: '13 Mar 2026',
@@ -42,6 +46,29 @@ const defaultItems: NewsEventItem[] = [
     link: '#',
   },
 ]
+========================================================================= */
+
+// Clean placeholder structure when no CMS news/events exist
+const placeholderItems: NewsEventItem[] = [
+  {
+    date: 'Date Placeholder',
+    title: 'News & Event Title Placeholder',
+    image: null,
+    link: '#',
+  },
+  {
+    date: 'Date Placeholder',
+    title: 'Academic Event Title Placeholder',
+    image: null,
+    link: '#',
+  },
+  {
+    date: 'Date Placeholder',
+    title: 'School Announcement Title Placeholder',
+    image: null,
+    link: '#',
+  },
+]
 
 export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
   badge = 'OUR EVENTS & NEWS',
@@ -56,15 +83,15 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
     media: number | Media | string | null | undefined,
-    fallback: string,
-  ): string => {
-    if (!media) return fallback
+  ): string | null => {
+    if (!media) return null
     if (typeof media === 'string' && media.trim()) return media
     if (typeof media === 'object' && media?.url) return media.url
-    return fallback
+    return null
   }
 
-  const displayItems = items && items.length > 0 ? items : defaultItems
+  const hasCmsItems = items && items.length > 0
+  const displayItems = hasCmsItems ? items : placeholderItems
 
   // Split heading into 2 lines matching screenshot
   const renderHeading = () => {
@@ -130,7 +157,7 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
         <div className="w-full flex flex-col py-2 md:min-h-[460px]">
           {displayItems.map((item, idx) => {
             const isActive = activeRow === idx
-            const imageSrc = resolveMediaUrl(item.image, '/images/news.png')
+            const imageSrc = resolveMediaUrl(item.image)
 
             const arrowButton = (
               <div
