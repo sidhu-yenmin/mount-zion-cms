@@ -22,6 +22,10 @@ export interface NewsEventsProps {
   items?: NewsEventItem[] | null
 }
 
+/* =========================================================================
+   [OPTION A: STATIC FALLBACK NEWS & EVENTS DATA - COMMENTED OUT]
+   Uncomment below if you want hardcoded demo events & stock news photos:
+
 const defaultItems: NewsEventItem[] = [
   {
     date: '13 Mar 2026',
@@ -42,6 +46,29 @@ const defaultItems: NewsEventItem[] = [
     link: '#',
   },
 ]
+========================================================================= */
+
+// Clean placeholder structure when no CMS news/events exist
+const placeholderItems: NewsEventItem[] = [
+  {
+    date: 'Date Placeholder',
+    title: 'News & Event Title Placeholder',
+    image: null,
+    link: '#',
+  },
+  {
+    date: 'Date Placeholder',
+    title: 'Academic Event Title Placeholder',
+    image: null,
+    link: '#',
+  },
+  {
+    date: 'Date Placeholder',
+    title: 'School Announcement Title Placeholder',
+    image: null,
+    link: '#',
+  },
+]
 
 export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
   badge = 'OUR EVENTS & NEWS',
@@ -56,15 +83,15 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
     media: number | Media | string | null | undefined,
-    fallback: string,
-  ): string => {
-    if (!media) return fallback
+  ): string | null => {
+    if (!media) return null
     if (typeof media === 'string' && media.trim()) return media
     if (typeof media === 'object' && media?.url) return media.url
-    return fallback
+    return null
   }
 
-  const displayItems = items && items.length > 0 ? items : defaultItems
+  const hasCmsItems = items && items.length > 0
+  const displayItems = hasCmsItems ? items : placeholderItems
 
   // Split heading into 2 lines matching screenshot
   const renderHeading = () => {
@@ -130,7 +157,7 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
         <div className="w-full flex flex-col">
           {displayItems.map((item, idx) => {
             const isActive = activeRow === idx
-            const imageSrc = resolveMediaUrl(item.image, '/images/news.png')
+            const imageSrc = resolveMediaUrl(item.image)
 
             return (
               <div
@@ -162,15 +189,36 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
                   {/* Middle: Preview Image (Displayed based on click on active row) */}
                   <div className="flex-1 w-full flex justify-center items-center">
                     {isActive && (
-                      <div className="relative w-full max-w-[320px] sm:max-w-[343px] h-[140px] sm:h-[160px] rounded-[20px] overflow-hidden shadow-sm transition-all duration-300 ease-out">
-                        <Image
-                          src={imageSrc}
-                          alt={item.title.replace('\n', ' ')}
-                          fill
-                          unoptimized
-                          className="object-cover object-center"
-                          sizes="343px"
-                        />
+                      <div className="relative w-full max-w-[320px] sm:max-w-[343px] h-[140px] sm:h-[160px] rounded-[20px] overflow-hidden shadow-sm transition-all duration-300 ease-out bg-slate-100 border border-slate-200/80">
+                        {imageSrc ? (
+                          <Image
+                            src={imageSrc}
+                            alt={item.title.replace('\n', ' ')}
+                            fill
+                            unoptimized
+                            className="object-cover object-center"
+                            sizes="343px"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex flex-col items-center justify-center gap-2 p-3 text-slate-400 select-none">
+                            <svg
+                              className="w-8 h-8 text-slate-300"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={1.5}
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                              />
+                            </svg>
+                            <span className="text-xs font-medium text-slate-400 text-center">
+                              Photo Placeholder - Upload in CMS
+                            </span>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
