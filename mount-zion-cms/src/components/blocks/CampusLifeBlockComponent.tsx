@@ -30,6 +30,10 @@ export interface CampusLifeBlockProps {
   ctaBar?: CampusLifeCtaBar | null
 }
 
+/* =========================================================================
+   [OPTION A: STATIC FALLBACK GALLERY & STUDENT IMAGES - COMMENTED OUT]
+   Uncomment below if you want hardcoded demo gallery photos & student cutout:
+
 const defaultGalleryImages = [
   { src: '/images/facilities2.png', alt: 'School Architecture Staircase', ratio: 260 },
   { src: '/images/facilities1.png', alt: 'Students Collaborating in Classroom', ratio: 558 },
@@ -38,6 +42,9 @@ const defaultGalleryImages = [
   { src: '/images/gallery3.png', alt: 'Student Writing with Pencil', ratio: 350 },
   { src: '/images/gallery4.png', alt: 'Modern Classroom Layout', ratio: 364 },
 ]
+========================================================================= */
+
+const defaultRatios = [260, 558, 260, 364, 350, 364]
 
 export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> = ({
   badge = 'OUR GALLERY',
@@ -50,26 +57,23 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
     media: number | Media | string | null | undefined,
-    fallback: string,
-  ): string => {
-    if (!media) return fallback
+  ): string | null => {
+    if (!media) return null
     if (typeof media === 'string' && media.trim()) return media
     if (typeof media === 'object' && media?.url) return media.url
-    return fallback
+    return null
   }
 
-  // Build 6 deck images dynamically from CMS or fallbacks
-  const deckImages = defaultGalleryImages.map((defaultImg, idx) => {
+  // [OPTION B: STRICT CMS - Only load images when uploaded in CMS]
+  const deckImages = defaultRatios.map((ratio, idx) => {
     const cmsItem = galleryImages?.[idx]
-    const resolvedUrl = cmsItem
-      ? resolveMediaUrl(cmsItem.image, defaultImg.src)
-      : defaultImg.src
-    const caption = cmsItem?.caption || defaultImg.alt
+    const resolvedUrl = resolveMediaUrl(cmsItem?.image)
+    const caption = cmsItem?.caption || `Gallery Photo 0${idx + 1}`
 
     return {
       src: resolvedUrl,
       alt: caption,
-      ratio: defaultImg.ratio,
+      ratio,
     }
   })
 
@@ -84,7 +88,9 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
   const ctaHeading = ctaBar?.heading || "Start Your Child's Journey with Us"
   const ctaButtonText = ctaBar?.buttonText || 'Apply Now'
   const ctaButtonUrl = ctaBar?.buttonUrl || '/admissions'
-  const ctaStudentImg = resolveMediaUrl(ctaBar?.studentImage, '/images/gallery-cta-image.png')
+
+  // Only show student cutout when uploaded in CMS
+  const ctaStudentImg = resolveMediaUrl(ctaBar?.studentImage)
 
   // Split heading into 2 lines matching the reference design
   const renderHeading = () => {
@@ -151,16 +157,37 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
               <div
                 key={`r1-${idx}`}
                 style={{ flex: `${item.ratio} 1 0%` }}
-                className="relative h-[220px] sm:h-[230px] rounded-[30px] overflow-hidden group shadow-sm bg-slate-200"
+                className="relative h-[220px] sm:h-[230px] rounded-[30px] overflow-hidden group shadow-sm bg-slate-100 border border-slate-200/80"
               >
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  fill
-                  unoptimized
-                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, 558px"
-                />
+                {item.src ? (
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    unoptimized
+                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, 558px"
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center gap-2 p-4 text-slate-400 select-none">
+                    <svg
+                      className="w-8 h-8 text-slate-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                    <span className="text-xs font-medium text-slate-400 text-center">
+                      {item.alt || 'Upload in CMS'}
+                    </span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -171,16 +198,37 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
               <div
                 key={`r2-${idx}`}
                 style={{ flex: `${item.ratio} 1 0%` }}
-                className="relative h-[220px] sm:h-[230px] rounded-[30px] overflow-hidden group shadow-sm bg-slate-200"
+                className="relative h-[220px] sm:h-[230px] rounded-[30px] overflow-hidden group shadow-sm bg-slate-100 border border-slate-200/80"
               >
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  fill
-                  unoptimized
-                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, 364px"
-                />
+                {item.src ? (
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    unoptimized
+                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, 364px"
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center gap-2 p-4 text-slate-400 select-none">
+                    <svg
+                      className="w-8 h-8 text-slate-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                    <span className="text-xs font-medium text-slate-400 text-center">
+                      {item.alt || 'Upload in CMS'}
+                    </span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -188,7 +236,7 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
 
         {/* 3. Gallery CTA Banner (Bottom: 1118 x 191px) */}
         {showCta && (
-          <div className="relative mt-[185px] w-full max-w-[1118px] mx-auto">
+          <div className={`relative ${ctaStudentImg ? 'mt-[185px]' : 'mt-[60px]'} w-full max-w-[1118px] mx-auto`}>
             {/* Banner Background Container (1118 x 191px) */}
             <div className="relative w-full rounded-[30px] overflow-hidden min-h-[191px] h-auto md:h-[191px] bg-[#03594E] flex flex-col md:flex-row items-center justify-between shadow-lg">
               {/* Background solid image */}
@@ -212,12 +260,12 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
                 />
               </div>
 
-              {/* Text & Button Layout Matching Figma Specs:
-                  Left student graphic occupies 54px to 269px.
-                  Text zone starts at ~290px.
-                  Apply button sits at left: 850px (69px from right edge).
-              */}
-              <div className="relative z-10 w-full h-full flex flex-col md:flex-row items-center justify-between px-6 py-8 md:py-0 md:pl-[290px] md:pr-[69px] gap-6">
+              {/* Text & Button Layout Matching Figma Specs */}
+              <div
+                className={`relative z-10 w-full h-full flex flex-col md:flex-row items-center justify-between px-6 py-8 md:py-0 ${
+                  ctaStudentImg ? 'md:pl-[290px]' : 'md:pl-12'
+                } md:pr-[69px] gap-6`}
+              >
                 {/* CTA Headings (Font: Roboto Medium, size 30px, line-height 140%) */}
                 <div className="text-center md:text-left">
                   <p className="font-['Roboto',sans-serif] font-medium text-[22px] sm:text-[26px] md:text-[30px] leading-[1.3] md:leading-[140%] text-white">
@@ -245,17 +293,19 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
               </div>
             </div>
 
-            {/* Floating Student Girl Cutout - 215 x 294px, anchored to bottom-0, left-[54px], pops up 103px above banner */}
-            <div className="hidden md:block absolute bottom-0 left-[54px] w-[215px] h-[294px] pointer-events-none z-20">
-              <Image
-                src={ctaStudentImg}
-                alt="Mount Zion Student"
-                width={215}
-                height={294}
-                unoptimized
-                className="w-[215px] h-[294px] object-contain drop-shadow-md"
-              />
-            </div>
+            {/* Floating Student Girl Cutout - ONLY renders when uploaded in CMS */}
+            {ctaStudentImg && (
+              <div className="hidden md:block absolute bottom-0 left-[54px] w-[215px] h-[294px] pointer-events-none z-20">
+                <Image
+                  src={ctaStudentImg}
+                  alt="Mount Zion Student"
+                  width={215}
+                  height={294}
+                  unoptimized
+                  className="w-[215px] h-[294px] object-contain drop-shadow-md"
+                />
+              </div>
+            )}
           </div>
         )}
       </div>
