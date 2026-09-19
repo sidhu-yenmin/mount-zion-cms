@@ -16,7 +16,7 @@ export const Footer: GlobalConfig = {
       name: 'description',
       type: 'textarea',
       label: 'School Short Bio / Tagline',
-      defaultValue: 'Mount Zion International School - CBSE. Empowering students for lifelong success.',
+      defaultValue: 'Inspiring Minds. Shaping Futures.\nNurturing Excellence. Building Leaders.',
     },
     {
       name: 'contactInfo',
@@ -27,16 +27,19 @@ export const Footer: GlobalConfig = {
           name: 'address',
           type: 'textarea',
           label: 'School Address',
+          defaultValue: 'Pilivalam, Lembalakkudi,\nPudukottai - 622507',
         },
         {
           name: 'phone',
           type: 'text',
           label: 'Phone Number',
+          defaultValue: '+9173737 51513',
         },
         {
           name: 'email',
           type: 'text',
           label: 'Email Address',
+          defaultValue: 'cbse@mountzionschools.com',
         },
       ],
     },
@@ -85,7 +88,7 @@ export const Footer: GlobalConfig = {
       name: 'copyright',
       type: 'text',
       label: 'Copyright Text',
-      defaultValue: '© 2026 Mount Zion International School. All rights reserved.',
+      defaultValue: '© 2026 Mount Zion International School. All Rights Reserved.',
     },
   ],
 }

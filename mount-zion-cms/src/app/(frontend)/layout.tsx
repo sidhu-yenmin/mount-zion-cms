@@ -1,9 +1,10 @@
 import React from 'react'
 import './styles.css'
 import { TopHeader } from '@/components/layout/TopHeader'
+import { FooterComponent } from '@/components/layout/FooterComponent'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import type { Header as HeaderType } from '@/payload-types'
+import type { Header as HeaderType, Footer as FooterType } from '@/payload-types'
 import { HeaderData } from '@/types/cms'
 
 export const metadata = {
@@ -16,6 +17,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   let headerCmsData: (HeaderData & { showTopBar?: boolean }) | undefined = undefined
+  let footerCmsData: FooterType | null = null
 
   try {
     const payloadConfig = await config
@@ -42,8 +44,13 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           })) || [],
       }
     }
+
+    footerCmsData = (await payload.findGlobal({
+      slug: 'footer',
+      depth: 2,
+    })) as FooterType
   } catch (err) {
-    console.log('Error fetching header:', err)
+    console.log('Error fetching header/footer:', err)
   }
 
   return (
@@ -52,7 +59,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=K2D:wght@800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
       </head>
@@ -60,6 +67,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         {/* Dynamic CMS Header */}
         <TopHeader data={headerCmsData} />
         <main className="flex-1 w-full">{children}</main>
+        {/* Dynamic CMS Footer */}
+        <FooterComponent footer={footerCmsData} />
       </body>
     </html>
   )

@@ -541,4 +541,234 @@ angle: 0 deg;
 opacity: 1;
 background: #B2B2B2;
 
+# Bottom CTA Banner
+
+CTA Banner Image: bottom-cta-banner.png
+width: 1120;
+height: 372;
+left: 1px;
+angle: 0 deg;
+opacity: 1;
+mix-blend-mode: Color burn;
+background: linear-gradient(355.79deg, rgba(0, 0, 0, 0) 33.74%, rgba(0, 0, 0, 0.8) 120.65%);
+
+Start your journey
+font-family: Roboto;
+font-weight: 300;
+font-style: Light;
+font-size: 50px;
+leading-trim: CAP_HEIGHT;
+line-height: 120%;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #FFFFFF;
+
+Span (Towards a brighter future.)
+font-family: Roboto;
+font-weight: 700;
+font-style: Bold;
+font-size: 50px;
+leading-trim: CAP_HEIGHT;
+line-height: 120%;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #FFFFFF;
+
+Give your child the right foundation to learn, grow, and achieve their dreams in a nurturing and inspiring environment.
+font-family: Roboto;
+font-weight: 400;
+font-style: Regular;
+font-size: 18px;
+leading-trim: NONE;
+line-height: 26px;
+letter-spacing: 0%;
+background: #FFFFFF;
+
+Get Started Btn: width: 215;
+height: 58;
+top: 216px;
+left: 820px;
+gap: 10px;
+angle: 0 deg;
+opacity: 1;
+border-radius: 100px;
+border-width: 1px;
+padding-top: 20px;
+padding-right: 40px;
+padding-bottom: 20px;
+padding-left: 40px;
+background: #F8C62F;
+border: 1px solid #F8C62F
+
+Btn text: font-family: Roboto;
+font-weight: 500;
+font-style: Medium;
+font-size: 20px;
+leading-trim: NONE;
+line-height: 56px;
+letter-spacing: 0%;
+text-align: center;
+vertical-align: middle;
+background: #000000;
+
+Arrow Icon: width: 11;
+height: 12;
+angle: 0 deg;
+opacity: 1;
+background: #000000;
+
+CTA Banner Frame: 
+width: 390;
+height: 295.9349365234375;
+top: -48px;
+left: 890px;
+angle: 0 deg;
+opacity: 1;
+
+Footer Container: width: 1440;
+height: 536;
+top: 7663px;
+angle: 0 deg;
+opacity: 1;
+background: #03594E;
+
+School Logo: width: 77;
+height: 63.60869216918945;
+top: 7899px;
+left: 161px;
+angle: 0 deg;
+opacity: 1;
+
+Mount Zion: font-family: K2D;
+font-weight: 800;
+font-style: ExtraBold;
+font-size: 34.2px;
+leading-trim: NONE;
+line-height: 19.95px;
+letter-spacing: 0%;
+text-align: center;
+vertical-align: middle;
+background: #FFFFFF;
+
+International School - CBSE: font-family: Inter;
+font-weight: 500;
+font-style: Medium;
+font-size: 13.31px;
+leading-trim: NONE;
+line-height: 20.71px;
+letter-spacing: 0%;
+text-align: center;
+vertical-align: middle;
+background: #FFFFFF;
+
+Social Icons: facebook, youtube, x, linkedin, instagram
+width: 25px;
+height: 25px;
+angle: 0 deg;
+opacity: 1;
+
+Quick links:
+font-family: Roboto;
+font-weight: 700;
+font-style: Bold;
+font-size: 20px;
+leading-trim: NONE;
+line-height: 18px;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #FFFFFF;
+
+Quick Link Menus: Home, About, Academic, Admissions, Resources, Student Portal, Campus Life, Achievements, Gallery, News & Events, Contact Us
+
+Active Menu Style: font-family: Roboto;
+font-weight: 500;
+font-style: Medium;
+font-size: 14px;
+leading-trim: NONE;
+line-height: 20.59px;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #FFFFFF;
+
+Inactive Menu Style: font-family: Roboto;
+font-weight: 400;
+font-style: Regular;
+font-size: 14px;
+leading-trim: NONE;
+line-height: 20.59px;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #FFFFFF;
+
+Phone Icon: width: 32;
+height: 32;
+top: 7.56px;
+left: 8px;
+angle: 0 deg;
+opacity: 1;
+background: #FFFFFF;
+
+Mail Icon: width: 29;
+height: 23;
+top: 5.6px;
+left: 9px;
+angle: 0 deg;
+opacity: 1;
+background: #FFFFFF;
+
+Location Icon: width: 37;
+height: 57;
+angle: 0 deg;
+opacity: 1;
+
+Main Text style for contact: font-family: Roboto;
+font-weight: 700;
+font-style: Bold;
+font-size: 16px;
+leading-trim: NONE;
+line-height: 100%;
+letter-spacing: 0%;
+background: #FFFFFF;
+
+Subtext style for contact: font-family: Roboto;
+font-weight: 400;
+font-style: Regular;
+font-size: 14px;
+leading-trim: NONE;
+line-height: 139%;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #FFFFFF;
+
+Footer Line:
+width: 1121.0000000000043;
+height: 0px;
+top: 8147px;
+left: 160px;
+angle: 0 deg;
+opacity: 1;
+border-width: 0.25px;
+border: 0.25px solid #FFFFFF
+
+© 2026 Mount Zion International School. All Rights Reserved.
+font-family: Roboto;
+font-weight: 300;
+font-style: Light;
+font-size: 12px;
+leading-trim: NONE;
+line-height: 16px;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #FFFFFF;
+
+Privacy Policy | Terms & Conditions
+font-family: Roboto;
+font-weight: 300;
+font-style: Light;
+font-size: 12px;
+leading-trim: NONE;
+line-height: 52px;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #FFFFFF;
 

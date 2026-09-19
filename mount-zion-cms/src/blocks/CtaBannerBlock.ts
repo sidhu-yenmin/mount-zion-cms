@@ -24,13 +24,13 @@ export const CtaBannerBlock: Block = {
       name: 'description',
       type: 'textarea',
       label: 'Description',
-      defaultValue: 'Admissions are now open for the academic year 2026-2027. Apply today to secure a seat.',
+      defaultValue: 'Give your child the right foundation to learn, grow, and achieve their dreams in a nurturing and inspiring environment.',
     },
     {
       name: 'buttonText',
       type: 'text',
       label: 'Button Label',
-      defaultValue: 'Get Started ↗',
+      defaultValue: 'Get Started',
     },
     {
       name: 'buttonUrl',
