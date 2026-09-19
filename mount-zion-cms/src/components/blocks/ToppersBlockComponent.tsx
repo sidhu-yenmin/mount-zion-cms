@@ -23,6 +23,10 @@ export interface ToppersBlockProps {
   blockType?: string
 }
 
+/* =========================================================================
+   [OPTION A: STATIC MOCK TOPPERS DATA - COMMENTED OUT]
+   Uncomment below if you want hardcoded demo toppers & stock student portraits:
+
 const defaultAcademicYears: AcademicYearData[] = [
   {
     year: '2026',
@@ -101,32 +105,72 @@ const defaultAcademicYears: AcademicYearData[] = [
     ],
   },
 ]
+========================================================================= */
+
+// Placeholder data structure when no CMS years exist
+const placeholderAcademicYears: AcademicYearData[] = [
+  {
+    year: '2026',
+    rankHolders: [
+      {
+        studentName: 'Topper Student Name',
+        rank: 'HSC Topper',
+        score: '---/500',
+        standard: 'IN GRADE 10',
+        photo: null,
+      },
+      {
+        studentName: 'Topper Student Name',
+        rank: 'School Topper',
+        score: '---/500',
+        standard: 'IN GRADE 10',
+        photo: null,
+      },
+    ],
+  },
+  { year: '2025', rankHolders: [] },
+  { year: '2024', rankHolders: [] },
+  { year: '2023', rankHolders: [] },
+]
 
 export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
   badge = 'STUDENT SUCCESS',
   heading = 'Building Bright Minds for Tomorrow',
   academicYears,
 }) => {
-  const yearsList =
-    academicYears && academicYears.length > 0
-      ? academicYears.map((y) => ({
-          year: y.year,
-          rankHolders:
-            y.rankHolders && y.rankHolders.length > 0
-              ? y.rankHolders
-              : (defaultAcademicYears.find((d) => d.year === y.year)?.rankHolders ??
-                defaultAcademicYears[0].rankHolders),
-        }))
-      : defaultAcademicYears
+  // Use CMS academic years if available, otherwise use neutral placeholder year buttons
+  const hasCmsYears = academicYears && academicYears.length > 0
+  const yearsList = hasCmsYears
+    ? academicYears.map((y) => ({
+        year: y.year,
+        rankHolders: y.rankHolders || [],
+      }))
+    : placeholderAcademicYears
 
   const [activeYear, setActiveYear] = useState<string>(yearsList[0]?.year || '2026')
 
   const currentYearData =
-    yearsList.find((y) => y.year === activeYear) ||
-    yearsList[0] ||
-    defaultAcademicYears[0]
+    yearsList.find((y) => y.year === activeYear) || yearsList[0]
 
-  const rankHolders = currentYearData?.rankHolders || []
+  const rankHolders =
+    currentYearData?.rankHolders && currentYearData.rankHolders.length > 0
+      ? currentYearData.rankHolders
+      : [
+          {
+            studentName: 'Topper Student Name',
+            rank: 'Topper Rank',
+            score: '---/500',
+            standard: 'IN GRADE 10',
+            photo: null,
+          },
+          {
+            studentName: 'Topper Student Name',
+            rank: '2nd Rank',
+            score: '---/500',
+            standard: 'IN GRADE 10',
+            photo: null,
+          },
+        ]
 
   const renderScore = (score: string) => {
     if (score && score.includes('/')) {
@@ -152,10 +196,10 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
     )
   }
 
-  const getPhotoUrl = (photo: any, index: number) => {
+  const getPhotoUrl = (photo: any): string | null => {
     if (typeof photo === 'string' && photo.length > 0) return photo
     if (photo && typeof photo === 'object' && photo.url) return photo.url
-    return index % 2 === 0 ? '/images/topper-student1.png' : '/images/topper-student2.png'
+    return null
   }
 
   const isHeadingDefault =
@@ -226,11 +270,7 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
           {/* Student Cards Grid */}
           <div className="flex flex-wrap items-center justify-center gap-6 max-w-[900px]">
             {rankHolders.map((student, idx) => {
-              const photoUrl = getPhotoUrl(student.photo, idx)
-              const isCustomPhoto =
-                student.photo &&
-                typeof student.photo === 'object' &&
-                student.photo.url
+              const photoUrl = getPhotoUrl(student.photo)
 
               return (
                 <div
@@ -249,11 +289,11 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
 
                       {/* Rank Label */}
                       <div className="font-['Roboto',sans-serif] text-[13px] text-white/95 font-medium tracking-wide">
-                        {student.rank || 'HSC Topper'}
+                        {student.rank || 'Topper Rank'}
                       </div>
 
                       {/* Score */}
-                      {renderScore(student.score || '485/500')}
+                      {renderScore(student.score || '---/500')}
 
                       {/* Grade / Standard */}
                       <div className="font-['Roboto',sans-serif] font-normal text-[12px] leading-[13.53px] uppercase text-white tracking-wide">
@@ -262,41 +302,62 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
                     </div>
 
                     {/* Student Name */}
-                    <div className="font-['Roboto',sans-serif] font-semibold text-[20px] leading-[23.67px] text-white truncate">
-                      {student.studentName}
+                    <div className="font-['Roboto',sans-serif] font-semibold text-[18px] sm:text-[20px] leading-[23.67px] text-white truncate">
+                      {student.studentName || 'Student Name'}
                     </div>
                   </div>
 
-                  {/* Right Column: Student Portrait with Laurel Frame */}
+                  {/* Right Column: Student Portrait or Clean Placeholder */}
                   <div className="absolute right-0 top-0 w-[226px] h-[291px] flex items-end justify-end pointer-events-none overflow-hidden rounded-r-[20px]">
-                    {/* If custom CMS photo, render golden laurel wreath SVG background behind portrait */}
-                    {isCustomPhoto && (
-                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <svg
-                          viewBox="0 0 160 160"
-                          className="w-[140px] h-[140px] opacity-90 text-[#F8C62F]"
-                          fill="currentColor"
-                        >
-                          <circle cx="80" cy="80" r="56" fill="#03594E" />
-                          <circle cx="80" cy="80" r="54" fill="#00796B" opacity="0.4" />
-                          <path
-                            d="M80,24 C64,24 50,38 48,56 C46,74 54,92 68,104 C64,98 62,90 62,82 C62,64 70,48 80,40 Z"
-                            fill="#F8C62F"
-                          />
-                          <path
-                            d="M80,24 C96,24 110,38 112,56 C114,74 106,92 92,104 C96,98 98,90 98,82 C98,64 90,48 80,40 Z"
-                            fill="#F8C62F"
-                          />
-                        </svg>
+                    {photoUrl ? (
+                      <>
+                        {/* Golden laurel wreath SVG background */}
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <svg
+                            viewBox="0 0 160 160"
+                            className="w-[140px] h-[140px] opacity-90 text-[#F8C62F]"
+                            fill="currentColor"
+                          >
+                            <circle cx="80" cy="80" r="56" fill="#03594E" />
+                            <circle cx="80" cy="80" r="54" fill="#00796B" opacity="0.4" />
+                            <path
+                              d="M80,24 C64,24 50,38 48,56 C46,74 54,92 68,104 C64,98 62,90 62,82 C62,64 70,48 80,40 Z"
+                              fill="#F8C62F"
+                            />
+                            <path
+                              d="M80,24 C96,24 110,38 112,56 C114,74 106,92 92,104 C96,98 98,90 98,82 C98,64 90,48 80,40 Z"
+                              fill="#F8C62F"
+                            />
+                          </svg>
+                        </div>
+
+                        {/* Custom CMS Student Photo */}
+                        <img
+                          src={photoUrl}
+                          alt={student.studentName || 'Topper Student'}
+                          className="w-full h-full object-cover object-right-bottom select-none"
+                        />
+                      </>
+                    ) : (
+                      /* Placeholder Student Avatar Box */
+                      <div className="w-full h-full flex flex-col items-center justify-center bg-[#024a41]/60 border-l border-[#F8C62F]/30 p-4 text-center select-none">
+                        <div className="w-20 h-20 rounded-full border-2 border-dashed border-[#F8C62F]/50 flex items-center justify-center mb-2 bg-[#03594E]">
+                          <svg
+                            className="w-10 h-10 text-[#F8C62F]/60"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                          </svg>
+                        </div>
+                        <span className="text-[12px] font-medium text-[#F8C62F]/80">
+                          Photo Placeholder
+                        </span>
+                        <span className="text-[10px] text-white/50 mt-0.5">
+                          Upload in CMS
+                        </span>
                       </div>
                     )}
-
-                    {/* Student Image */}
-                    <img
-                      src={photoUrl}
-                      alt={student.studentName}
-                      className="w-full h-full object-cover object-right-bottom select-none"
-                    />
                   </div>
                 </div>
               )

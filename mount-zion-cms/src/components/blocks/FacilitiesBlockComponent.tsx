@@ -24,6 +24,10 @@ export interface FacilitiesProps {
   tabs?: FacilitiesTabItem[] | null
 }
 
+/* =========================================================================
+   [OPTION A: STATIC FALLBACK TABS & IMAGES - COMMENTED OUT]
+   Uncomment below if you want default demo tabs & stock images without CMS:
+
 const fallbackTabs = [
   'Classrooms',
   'Self defence',
@@ -33,6 +37,7 @@ const fallbackTabs = [
   'Arts',
   'Fitness',
 ]
+========================================================================= */
 
 export const FacilitiesBlockComponent: React.FC<Partial<FacilitiesProps>> = ({
   badge = 'CAMPUS EXPERIENCE & BEYOND ACADEMICS',
@@ -40,20 +45,26 @@ export const FacilitiesBlockComponent: React.FC<Partial<FacilitiesProps>> = ({
   description = 'At our school, every corner of the campus is designed to inspire learning and personal growth. From state-of-the-art classrooms and creative studios to sports facilities and collaborative spaces, students enjoy an environment that nurtures academic excellence alongside creativity, leadership, teamwork, and well-being.',
   tabs,
 }) => {
-  // Use CMS tabs or fallback list
+  // Use CMS tabs if available (or fallback placeholder tab if none added yet in CMS)
   const tabNames =
     tabs && tabs.length > 0
       ? tabs.map((t) => t.tabName)
-      : fallbackTabs
+      : ['Classrooms', 'Self defence', 'Swimming', 'Dance & Music', 'Sports', 'Arts', 'Fitness'] // fallback tab labels
 
   const [activeTab, setActiveTab] = useState<string>(tabNames[0] || 'Classrooms')
 
   // Find active tab data from CMS if available
   const activeCmsTab = tabs?.find((t) => t.tabName === activeTab)
 
-  // Resolve 2 display images for active tab
-  let img1Src = '/images/facilities2.png' // modern staircase hallway (540x308)
-  let img2Src = '/images/facilities1.png' // students thumbs up (541x308)
+  /* =========================================================================
+     [OPTION A: HARDCODED STOCK IMAGES - COMMENTED OUT]
+     let img1Src: string | null = '/images/facilities2.png'
+     let img2Src: string | null = '/images/facilities1.png'
+  ========================================================================= */
+
+  // [OPTION B: STRICT CMS - Only load images when uploaded in CMS]
+  let img1Src: string | null = null
+  let img2Src: string | null = null
 
   if (activeCmsTab?.images && activeCmsTab.images.length > 0) {
     const firstImg = activeCmsTab.images[0]?.image
@@ -149,29 +160,73 @@ export const FacilitiesBlockComponent: React.FC<Partial<FacilitiesProps>> = ({
         {/* 3. Facilities 2-Images Row (540 x 308 & 541 x 308, Radius: 30px) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
           {/* Facilities Image 1 (Left - 540 x 308) */}
-          <div className="relative w-full h-[260px] sm:h-[308px] rounded-[30px] overflow-hidden shadow-lg border border-slate-200/60 group">
-            <Image
-              src={img1Src}
-              alt="Campus facility area"
-              fill
-              priority
-              unoptimized
-              className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, 540px"
-            />
+          <div className="relative w-full h-[260px] sm:h-[308px] rounded-[30px] overflow-hidden shadow-sm border border-slate-200/80 bg-slate-100 group">
+            {img1Src ? (
+              <Image
+                src={img1Src}
+                alt="Campus facility area"
+                fill
+                priority
+                unoptimized
+                className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 540px"
+              />
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-6 text-slate-400 select-none">
+                <svg
+                  className="w-12 h-12 text-slate-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+                <div className="text-center">
+                  <p className="text-sm font-semibold text-slate-500">No Image Uploaded</p>
+                  <p className="text-xs text-slate-400 mt-0.5">Upload image for &apos;{activeTab}&apos; in CMS</p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Facilities Image 2 (Right - 541 x 308) */}
-          <div className="relative w-full h-[260px] sm:h-[308px] rounded-[30px] overflow-hidden shadow-lg border border-slate-200/60 group">
-            <Image
-              src={img2Src}
-              alt="Students enjoying school facilities"
-              fill
-              priority
-              unoptimized
-              className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, 541px"
-            />
+          <div className="relative w-full h-[260px] sm:h-[308px] rounded-[30px] overflow-hidden shadow-sm border border-slate-200/80 bg-slate-100 group">
+            {img2Src ? (
+              <Image
+                src={img2Src}
+                alt="Students enjoying school facilities"
+                fill
+                priority
+                unoptimized
+                className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 541px"
+              />
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-6 text-slate-400 select-none">
+                <svg
+                  className="w-12 h-12 text-slate-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+                <div className="text-center">
+                  <p className="text-sm font-semibold text-slate-500">No Image Uploaded</p>
+                  <p className="text-xs text-slate-400 mt-0.5">Upload image for &apos;{activeTab}&apos; in CMS</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
