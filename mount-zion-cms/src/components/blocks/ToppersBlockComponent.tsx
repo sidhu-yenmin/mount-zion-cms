@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import type { Media } from '@/payload-types'
 
 export interface RankHolder {
   studentName: string

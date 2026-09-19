@@ -2,9 +2,10 @@ import { getPayload } from 'payload'
 import React from 'react'
 import config from '@/payload.config'
 import { notFound } from 'next/navigation'
-import { HeaderComponent } from '@/components/HeaderComponent'
 import { RenderBlocks } from '@/components/RenderBlocks'
-import type { Page, Header } from '@/payload-types'
+import type { Page } from '@/payload-types'
+
+export const dynamic = 'force-dynamic'
 
 interface PageProps {
   params: Promise<{
@@ -17,18 +18,7 @@ export default async function DynamicPage({ params }: PageProps) {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
-  // 1. Fetch Header Global
-  let headerData: Header | null = null
-  try {
-    headerData = await payload.findGlobal({
-      slug: 'header',
-      depth: 2,
-    })
-  } catch (e) {
-    console.log('Header not found yet')
-  }
-
-  // 2. Fetch Page by Slug
+  // Fetch Page by Slug
   const pagesResult = await payload.find({
     collection: 'pages',
     where: {
@@ -47,8 +37,7 @@ export default async function DynamicPage({ params }: PageProps) {
   }
 
   return (
-    <main style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
-      {page.headerVariant !== 'hidden' && <HeaderComponent header={headerData} />}
+    <main className="w-full min-h-screen bg-white">
       <RenderBlocks blocks={page.layout} />
     </main>
   )

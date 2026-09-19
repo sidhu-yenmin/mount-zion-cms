@@ -17,6 +17,7 @@ export interface ProgramsProps {
   mainImage?: number | Media | string | null
   imageTwo?: number | Media | string | null
   secondaryImage?: number | Media | string | null
+  backgroundImage?: number | Media | string | null
   bannerText?: string | null
 }
 
@@ -30,6 +31,7 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
   mainImage,
   imageTwo,
   secondaryImage,
+  backgroundImage,
   bannerText = 'Learning • Innovation • Achievement',
 }) => {
   // Resolve Image 1 (Classroom 591x298)
@@ -50,10 +52,18 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
         ? resolvedImg2
         : '/images/academics-img2.png'
 
+  // Resolve Background Image from CMS
+  const bgImgUrl =
+    typeof backgroundImage === 'object' && backgroundImage?.url
+      ? backgroundImage.url
+      : typeof backgroundImage === 'string' && backgroundImage
+        ? backgroundImage
+        : null
+
   return (
     <section
       className="relative w-full bg-[#044438] bg-cover bg-center overflow-hidden py-16 sm:py-20 lg:py-24"
-      style={{ backgroundImage: "url('/images/academics-bg-color.png')" }}
+      style={bgImgUrl ? { backgroundImage: `url('${bgImgUrl}')` } : { backgroundImage: "url('/images/academics-bg-color.png')" }}
     >
       <div className="relative z-10 w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* 1. Header Section */}
@@ -69,12 +79,7 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
 
           {/* Main Heading */}
           <h2 className="text-white font-bold text-[32px] sm:text-[40px] lg:text-[46px] leading-[1.18] lg:leading-[54px] tracking-tight select-none">
-            {heading?.includes("Tomorrow's World") ? (
-              <>
-                <span className="block">{heading.replace("Tomorrow's World", '').trim()}</span>
-                <span className="block">Tomorrow&apos;s World</span>
-              </>
-            ) : heading?.includes('\n') ? (
+            {heading?.includes('\n') ? (
               heading.split('\n').map((line, idx) => (
                 <span key={idx} className="block">
                   {line}
