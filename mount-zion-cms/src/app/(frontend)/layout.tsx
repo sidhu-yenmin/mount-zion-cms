@@ -23,25 +23,57 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     const payloadConfig = await config
     const payload = await getPayload({ config: payloadConfig })
 
+    let menuData: any = null
+    try {
+      menuData = await payload.findGlobal({
+        slug: 'menu',
+        depth: 2,
+      })
+    } catch {
+      // Menu global not initialized yet
+    }
+
     const header = (await payload.findGlobal({
       slug: 'header',
       depth: 2,
     })) as HeaderType
+
+    const resolveItemUrl = (item: any): string => {
+      if (item.linkType === 'page' && item.page) {
+        const pageSlug = typeof item.page === 'object' ? item.page.slug : ''
+        return pageSlug === 'home' ? '/' : `/${pageSlug}`
+      }
+      return item.customUrl || '/'
+    }
+
+    let navItems: any[] = []
+
+    if (menuData?.menuItems && menuData.menuItems.length > 0) {
+      navItems = menuData.menuItems.map((item: any) => ({
+        label: item.label,
+        url: resolveItemUrl(item),
+        children: item.submenuItems?.map((sub: any) => ({
+          label: sub.label,
+          url: resolveItemUrl(sub),
+        })),
+      }))
+    } else if (header?.navItems && header.navItems.length > 0) {
+      navItems = header.navItems.map((item) => ({
+        label: item.label,
+        url: item.link,
+        children: item.subItems?.map((sub) => ({
+          label: sub.label,
+          url: sub.link,
+        })),
+      }))
+    }
 
     if (header) {
       headerCmsData = {
         showTopBar: header.topBar?.showTopBar ?? true,
         phone: header.topBar?.phone || '',
         email: header.topBar?.email || '',
-        navItems:
-          header.navItems?.map((item) => ({
-            label: item.label,
-            url: item.link,
-            children: item.subItems?.map((sub) => ({
-              label: sub.label,
-              url: sub.link,
-            })),
-          })) || [],
+        navItems,
       }
     }
 

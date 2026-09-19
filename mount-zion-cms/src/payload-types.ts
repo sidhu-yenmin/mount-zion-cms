@@ -90,10 +90,12 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
+    menu: Menu;
     header: Header;
     footer: Footer;
   };
   globalsSelect: {
+    menu: MenuSelect<false> | MenuSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
@@ -719,6 +721,36 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu".
+ */
+export interface Menu {
+  id: number;
+  menuItems?:
+    | {
+        label: string;
+        linkType?: ('page' | 'custom') | null;
+        page?: (number | null) | Page;
+        customUrl?: string | null;
+        openInNewTab?: boolean | null;
+        hasSubmenu?: boolean | null;
+        submenuItems?:
+          | {
+              label: string;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
  */
 export interface Header {
@@ -781,6 +813,36 @@ export interface Footer {
   copyright?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu_select".
+ */
+export interface MenuSelect<T extends boolean = true> {
+  menuItems?:
+    | T
+    | {
+        label?: T;
+        linkType?: T;
+        page?: T;
+        customUrl?: T;
+        openInNewTab?: T;
+        hasSubmenu?: T;
+        submenuItems?:
+          | T
+          | {
+              label?: T;
+              linkType?: T;
+              page?: T;
+              customUrl?: T;
+              openInNewTab?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
