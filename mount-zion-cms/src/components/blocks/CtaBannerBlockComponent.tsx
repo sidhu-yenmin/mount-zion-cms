@@ -15,6 +15,13 @@ export interface CtaBannerProps {
   backgroundImage?: number | Media | string | null
 }
 
+/* =========================================================================
+   [OPTION A: STATIC FALLBACK CTA BACKGROUND IMAGE - COMMENTED OUT]
+   Uncomment below if you want hardcoded demo chalkboard background:
+
+   const defaultBgImg = '/images/bottom-cta-banner.png'
+========================================================================= */
+
 export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = ({
   tagline = 'Start your journey',
   heading = 'Towards a brighter future.',
@@ -24,16 +31,19 @@ export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = ({
   backgroundImage,
 }) => {
   const resolveMediaUrl = (
-    media: number | Media | string | null | undefined,
-    fallback: string,
-  ): string => {
-    if (!media) return fallback
+    media: any,
+  ): string | null => {
+    if (!media) return null
     if (typeof media === 'string' && media.trim()) return media
-    if (typeof media === 'object' && media?.url) return media.url
-    return fallback
+    if (typeof media === 'object') {
+      if (media.url) return media.url
+      if (media.filename) return `/media/${media.filename}`
+    }
+    return null
   }
 
-  const bgImgUrl = resolveMediaUrl(backgroundImage, '/images/bottom-cta-banner.png')
+  // [OPTION B: STRICT CMS - Only load background image when uploaded in CMS]
+  const bgImgUrl = resolveMediaUrl(backgroundImage)
 
   return (
     <section className="relative w-full overflow-visible pt-16 sm:pt-20 lg:pt-[84px]">
@@ -44,28 +54,33 @@ export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = ({
 
       {/* 1120 x 372px Banner Card */}
       <div className="relative z-10 w-full max-w-[1120px] mx-auto px-4 xl:px-0">
-        {/* Card Wrapper with rounded-44px and overflow-hidden so decorative frame stays inside */}
-        <div className="relative w-full min-h-[360px] lg:h-[372px] rounded-[44px] overflow-hidden shadow-2xl">
-          {/* Chalkboard Background Image & Gradient */}
-          <div className="absolute inset-0 pointer-events-none">
-            <Image
-              src={bgImgUrl}
-              alt="Classroom Chalkboard Background"
-              fill
-              unoptimized
-              className="object-cover object-center"
-            />
-            {/* Linear Gradient Overlay matching Figma spec */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  'linear-gradient(355.79deg, rgba(0, 0, 0, 0) 33.74%, rgba(0, 0, 0, 0.8) 120.65%)',
-              }}
-            />
-          </div>
+        {/* Card Wrapper with solid dark green background #03594E */}
+        <div className="relative w-full min-h-[360px] lg:h-[372px] rounded-[44px] overflow-hidden shadow-2xl bg-[#03594E]">
+          {/* Custom CMS Background Image & Gradient */}
+          {bgImgUrl ? (
+            <div className="absolute inset-0 pointer-events-none">
+              <Image
+                src={bgImgUrl}
+                alt="Banner Background"
+                fill
+                unoptimized
+                className="object-cover object-center"
+              />
+              {/* Linear Gradient Overlay matching Figma spec */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    'linear-gradient(355.79deg, rgba(0, 0, 0, 0) 33.74%, rgba(0, 0, 0, 0.8) 120.65%)',
+                }}
+              />
+            </div>
+          ) : (
+            /* Solid Dark Green Placeholder Theme when no background image uploaded */
+            <div className="absolute inset-0 bg-[#03594E] pointer-events-none" />
+          )}
 
-          {/* Decorative White Dashed Frame Loop Overlay (inside card with overflow-hidden, matching target) */}
+          {/* Decorative White Dashed Frame Loop Overlay */}
           <div className="absolute -top-[20px] -right-[22px] w-[263px] h-[284px] pointer-events-none z-10 opacity-95">
             <Image
               src="/images/bottom-cta-banner-frame.png"
