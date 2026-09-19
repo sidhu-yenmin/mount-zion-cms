@@ -6,6 +6,7 @@ import { WhyMountZionSection } from '@/components/sections/WhyMountZionSection'
 import { ProgramsBlockComponent } from '@/components/blocks/ProgramsBlockComponent'
 import { FacilitiesBlockComponent } from '@/components/blocks/FacilitiesBlockComponent'
 import { ToppersBlockComponent } from '@/components/blocks/ToppersBlockComponent'
+import { CampusLifeBlockComponent } from '@/components/blocks/CampusLifeBlockComponent'
 import type { Page } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
@@ -50,6 +51,7 @@ export default async function HomePage() {
   const hasPrograms = layout?.some((b) => b.blockType === 'programs')
   const hasFacilities = layout?.some((b) => b.blockType === 'facilities')
   const hasToppers = layout?.some((b) => b.blockType === 'toppers')
+  const hasCampusLife = layout?.some((b) => b.blockType === 'campusLife')
 
   return (
     <div className="w-full min-h-screen bg-[#f8fafc]">
@@ -67,6 +69,9 @@ export default async function HomePage() {
 
       {/* Fallback for Toppers & Achievements section until added to CMS layout */}
       {!hasToppers && <ToppersBlockComponent />}
+
+      {/* Fallback for Campus Life & Gallery section until added to CMS layout */}
+      {!hasCampusLife && <CampusLifeBlockComponent />}
     </div>
   )
 }

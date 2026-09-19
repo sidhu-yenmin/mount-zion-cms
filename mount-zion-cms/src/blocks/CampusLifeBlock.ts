@@ -11,7 +11,7 @@ export const CampusLifeBlock: Block = {
       name: 'badge',
       type: 'text',
       label: 'Badge / Tagline',
-      defaultValue: 'LIFE AT MOUNT ZION',
+      defaultValue: 'OUR GALLERY',
     },
     {
       name: 'heading',
@@ -19,6 +19,12 @@ export const CampusLifeBlock: Block = {
       label: 'Section Heading',
       defaultValue: 'Empowering Future Leaders Around the World',
       required: true,
+    },
+    {
+      name: 'viewMoreText',
+      type: 'text',
+      label: 'View More Button Label',
+      defaultValue: 'View More',
     },
     {
       name: 'viewMoreLink',
@@ -59,8 +65,8 @@ export const CampusLifeBlock: Block = {
         {
           name: 'tagline',
           type: 'text',
-          label: 'CTA Tagline (e.g. Ready to join High School?)',
-          defaultValue: 'Ready to join High School?',
+          label: 'CTA Tagline (e.g. Looking for the Right School?)',
+          defaultValue: 'Looking for the Right School?',
         },
         {
           name: 'heading',
@@ -78,7 +84,7 @@ export const CampusLifeBlock: Block = {
           name: 'buttonText',
           type: 'text',
           label: 'CTA Button Label',
-          defaultValue: 'Apply Now ↗',
+          defaultValue: 'Apply Now',
         },
         {
           name: 'buttonUrl',

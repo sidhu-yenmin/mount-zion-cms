@@ -172,3 +172,108 @@ Letter Spacing-0%; Vertical Alignment-Middle; Case-Uppercase; Color:#FFFFFF;
 Kishore Kumar
 Text Style: Font-Roboto; Weight-600; Style:Semi-bold; Size-20px; Line Height-23.67px;
 Letter Spacing-0%; Vertical Alignment-Middle; Color: #FFFFFF; 
+
+
+# Our Gallery
+
+Our Gallery
+Style: Font-Roboto; Weight-700; Style-Bold; Size-18px; Line Height-56px; Letter Spacing-0%;
+Horizontal Alignment-Center; Vertical Alignment-Middle; Case-Uppercase; Color: #03594E;
+Horizontal Line: Width-38px; Height-0px; Border-2px #03594E;
+
+Empowering Future Leaders Around the World
+Style: Font-Roboto; Weight-700; Style-Bold; Size-46px; Line Height-52px; Letter Spacing-0%;
+Vertical Alignment-Middle; Color: #000000;
+
+View More
+Btn style: width: 199;
+height: 58;
+gap: 10px;
+angle: 0 deg;
+opacity: 1;
+border-radius: 100px;
+border-width: 1px;
+padding-top: 20px;
+padding-right: 40px;
+padding-bottom: 20px;
+padding-left: 40px;
+background: #FFFFFF;
+border: 1px solid #919191
+
+Btn Text: font-family: Roboto;
+font-weight: 500;
+font-style: Medium;
+font-size: 20px;
+leading-trim: NONE;
+line-height: 56px;
+letter-spacing: 0%;
+text-align: center;
+vertical-align: middle;
+background: #353535;
+
+Btn arrow: know-more-btn-icon.png
+width: 11;
+height: 12;
+angle: 0 deg;
+opacity: 1;
+background: #353535;
+
+Images Deck:
+
+Image1: facilities2.png - 260 x 230px; Radius-30px;
+Image2: facilities1.png - 558 x 230px; Radius-30px;
+Image3: gallery1.png - 260 x 230px; Radius - 30px;
+Image4: gallery2.png - 364 x 230px; Radius - 30px;
+Image5: gallery3.png - 350 x 230px; Radius - 30px;
+Image6: gallery4.png - 364 x 230px; Radius - 30px;
+
+Gallery CTA Banner:
+gallery-cta-bg.png: 1118 x 191px;
+gallery-cta-bg-pattern.png: 1118 x 191px; Opacity: 12%;
+gallery-cta-image.png: 215 x 294px;
+
+Looking for the Right School?
+Start Your Child's Journey with Us
+font-family: Roboto;
+font-weight: 500;
+font-style: Medium;
+font-size: 30px;
+leading-trim: NONE;
+line-height: 140%;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #FFFFFF;
+
+Apply Now
+Btn style: width: 199;
+height: 58;
+top: 66.33px;
+left: 850px;
+gap: 10px;
+angle: 0 deg;
+opacity: 1;
+border-radius: 100px;
+padding-top: 20px;
+padding-right: 40px;
+padding-bottom: 20px;
+padding-left: 40px;
+background: #F8C62F;
+border: 1px solid #F8C62F
+
+Btn text: font-family: Roboto;
+font-weight: 500;
+font-style: Medium;
+font-size: 20px;
+leading-trim: NONE;
+line-height: 56px;
+letter-spacing: 0%;
+text-align: center;
+vertical-align: middle;
+background: #000000;
+
+Btn arrow: know-more-btn-icon.png
+width: 11;
+height: 12;
+angle: 0 deg;
+opacity: 1;
+background: #000000;

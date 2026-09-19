@@ -283,6 +283,7 @@ export interface Page {
         | {
             badge?: string | null;
             heading: string;
+            viewMoreText?: string | null;
             viewMoreLink?: string | null;
             galleryImages?:
               | {
@@ -587,6 +588,7 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               badge?: T;
               heading?: T;
+              viewMoreText?: T;
               viewMoreLink?: T;
               galleryImages?:
                 | T
