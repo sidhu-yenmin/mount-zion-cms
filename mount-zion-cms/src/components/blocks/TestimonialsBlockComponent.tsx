@@ -21,6 +21,10 @@ export interface TestimonialsProps {
   testimonials?: TestimonialItem[] | null
 }
 
+/* =========================================================================
+   [OPTION A: STATIC MOCK TESTIMONIALS DATA - COMMENTED OUT]
+   Uncomment below if you want hardcoded demo testimonials & stock avatar photos:
+
 const defaultTestimonials: TestimonialItem[] = [
   {
     cardStyle: 'green',
@@ -50,6 +54,38 @@ const defaultTestimonials: TestimonialItem[] = [
     authorPhoto: '/images/testimonial1.png',
   },
 ]
+========================================================================= */
+
+// Clean placeholder structure when no CMS reviews exist
+const placeholderTestimonials: TestimonialItem[] = [
+  {
+    cardStyle: 'green',
+    rating: 5,
+    quote:
+      'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
+    authorName: 'Parent / Reviewer Name',
+    authorRole: 'Parent of Grade 10 Student',
+    authorPhoto: null,
+  },
+  {
+    cardStyle: 'yellow',
+    rating: 5,
+    quote:
+      'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
+    authorName: 'Parent / Reviewer Name',
+    authorRole: 'Parent of Grade 8 Student',
+    authorPhoto: null,
+  },
+  {
+    cardStyle: 'green',
+    rating: 5,
+    quote:
+      'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
+    authorName: 'Parent / Reviewer Name',
+    authorRole: 'Parent of Grade 12 Student',
+    authorPhoto: null,
+  },
+]
 
 export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = ({
   badge = 'TESTIMONIALS',
@@ -62,17 +98,16 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
     media: number | Media | string | null | undefined,
-    fallback: string,
-  ): string => {
-    if (!media) return fallback
+  ): string | null => {
+    if (!media) return null
     if (typeof media === 'string' && media.trim()) return media
     if (typeof media === 'object' && media?.url) return media.url
-    return fallback
+    return null
   }
 
-  // Use CMS testimonials or fallback to the 3 spec items
-  const displayItems =
-    testimonials && testimonials.length > 0 ? testimonials : defaultTestimonials
+  // Use CMS testimonials or fallback to clean placeholders
+  const hasCmsTestimonials = testimonials && testimonials.length > 0
+  const displayItems = hasCmsTestimonials ? testimonials : placeholderTestimonials
 
   // Split heading into 2 lines matching screenshot
   const renderHeading = () => {
@@ -122,8 +157,7 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
         <div className="flex flex-col lg:flex-row items-center justify-center gap-y-14 gap-x-[22px] w-full pt-[32px]">
           {displayItems.slice(0, 3).map((item, idx) => {
             const isYellow = item.cardStyle === 'yellow'
-            const defaultAvatar = defaultTestimonials[idx % defaultTestimonials.length]?.authorPhoto as string
-            const avatarSrc = resolveMediaUrl(item.authorPhoto, defaultAvatar)
+            const avatarSrc = resolveMediaUrl(item.authorPhoto)
             const ratingCount = Math.min(Math.max(item.rating || 5, 1), 5)
 
             return (
@@ -134,15 +168,27 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
                 }`}
               >
                 {/* Floating Avatar (63.5 x 63.5px, border 2px solid white, top: -31.75px, left: 38.95px) */}
-                <div className="absolute -top-[31.75px] left-[38.95px] w-[63.5px] h-[63.5px] rounded-full overflow-hidden border-2 border-white shadow-md z-10 bg-white">
-                  <Image
-                    src={avatarSrc}
-                    alt={item.authorName}
-                    width={64}
-                    height={64}
-                    unoptimized
-                    className="w-full h-full object-cover object-center"
-                  />
+                <div className="absolute -top-[31.75px] left-[38.95px] w-[63.5px] h-[63.5px] rounded-full overflow-hidden border-2 border-white shadow-md z-10 bg-slate-100 flex items-center justify-center">
+                  {avatarSrc ? (
+                    <Image
+                      src={avatarSrc}
+                      alt={item.authorName || 'Review Author'}
+                      width={64}
+                      height={64}
+                      unoptimized
+                      className="w-full h-full object-cover object-center"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-slate-200 text-slate-400">
+                      <svg
+                        className="w-8 h-8 text-slate-400"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                      </svg>
+                    </div>
+                  )}
                 </div>
 
                 {/* Card Body */}
@@ -179,14 +225,14 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
                       isYellow ? 'text-black' : 'text-white'
                     }`}
                   >
-                    {item.authorName}
+                    {item.authorName || 'Author Name'}
                   </h4>
                   <p
                     className={`font-['Roboto',sans-serif] italic font-normal text-[14.25px] leading-[20.59px] tracking-normal mt-[2px] ${
                       isYellow ? 'text-black' : 'text-white'
                     }`}
                   >
-                    {item.authorRole}
+                    {item.authorRole || 'Designation'}
                   </p>
                 </div>
               </div>
