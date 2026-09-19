@@ -1,162 +1,307 @@
 'use client'
 
 import React, { useState } from 'react'
-import Image from 'next/image'
-import { Trophy, Award, Star } from 'lucide-react'
 import type { Media } from '@/payload-types'
 
-export interface ToppersProps {
-  blockType?: string
-  badge?: string | null
-  heading?: string | null
-  academicYears?: Array<{
-    year: string
-    rankHolders?: Array<{
-      studentName: string
-      rank: string
-      score: string
-      standard?: string | null
-      photo?: number | Media | string | null
-    }> | null
-  }> | null
+export interface RankHolder {
+  studentName: string
+  rank: string
+  score: string
+  standard?: string | null
+  photo?: any
 }
 
-export const ToppersBlockComponent: React.FC<Partial<ToppersProps>> = ({
+export interface AcademicYearData {
+  year: string
+  rankHolders?: RankHolder[] | null
+}
+
+export interface ToppersBlockProps {
+  badge?: string | null
+  heading?: string | null
+  academicYears?: AcademicYearData[] | null
+  blockType?: string
+}
+
+const defaultAcademicYears: AcademicYearData[] = [
+  {
+    year: '2026',
+    rankHolders: [
+      {
+        studentName: 'Kishorekumar',
+        rank: 'HSC Topper',
+        score: '485/500',
+        standard: 'IN GRADE 10',
+        photo: '/images/topper-student1.png',
+      },
+      {
+        studentName: 'Yogalakshmi',
+        rank: 'HSC Topper',
+        score: '483/500',
+        standard: 'IN GRADE 10',
+        photo: '/images/topper-student2.png',
+      },
+    ],
+  },
+  {
+    year: '2025',
+    rankHolders: [
+      {
+        studentName: 'Aadhavan',
+        rank: 'CBSE Topper',
+        score: '492/500',
+        standard: 'IN GRADE 10',
+        photo: '/images/topper-student1.png',
+      },
+      {
+        studentName: 'Priya Dharshini',
+        rank: 'HSC Topper',
+        score: '489/500',
+        standard: 'IN GRADE 10',
+        photo: '/images/topper-student2.png',
+      },
+    ],
+  },
+  {
+    year: '2024',
+    rankHolders: [
+      {
+        studentName: 'Sanjay Raman',
+        rank: 'School Topper',
+        score: '488/500',
+        standard: 'IN GRADE 10',
+        photo: '/images/topper-student1.png',
+      },
+      {
+        studentName: 'Ananya Mohan',
+        rank: '2nd Rank',
+        score: '484/500',
+        standard: 'IN GRADE 10',
+        photo: '/images/topper-student2.png',
+      },
+    ],
+  },
+  {
+    year: '2023',
+    rankHolders: [
+      {
+        studentName: 'Kavin Kumar',
+        rank: '1st Rank',
+        score: '490/500',
+        standard: 'IN GRADE 10',
+        photo: '/images/topper-student1.png',
+      },
+      {
+        studentName: 'Meenakshi',
+        rank: '2nd Rank',
+        score: '486/500',
+        standard: 'IN GRADE 10',
+        photo: '/images/topper-student2.png',
+      },
+    ],
+  },
+]
+
+export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
   badge = 'STUDENT SUCCESS',
   heading = 'Building Bright Minds for Tomorrow',
-  academicYears = [],
+  academicYears,
 }) => {
-  const [activeYearIdx, setActiveYearIdx] = useState(0)
+  const yearsList =
+    academicYears && academicYears.length > 0
+      ? academicYears.map((y) => ({
+          year: y.year,
+          rankHolders:
+            y.rankHolders && y.rankHolders.length > 0
+              ? y.rankHolders
+              : (defaultAcademicYears.find((d) => d.year === y.year)?.rankHolders ??
+                defaultAcademicYears[0].rankHolders),
+        }))
+      : defaultAcademicYears
 
-  // Default fallback rank holders if none configured in CMS
-  const defaultYears = [
-    {
-      year: '2024-2025',
-      rankHolders: [
-        {
-          studentName: 'Aadhavan K.',
-          rank: '1st Rank',
-          score: '492/500',
-          standard: '10th Standard CBSE',
-          photo: '/images/hero-student.png',
-        },
-        {
-          studentName: 'Sneha R.',
-          rank: '2nd Rank',
-          score: '488/500',
-          standard: '10th Standard CBSE',
-          photo: '/images/why-mount-zion-student.png',
-        },
-        {
-          studentName: 'Karthik M.',
-          rank: '3rd Rank',
-          score: '485/500',
-          standard: '10th Standard CBSE',
-          photo: '/images/hero-student1.jpg',
-        },
-      ],
-    },
-  ]
+  const [activeYear, setActiveYear] = useState<string>(yearsList[0]?.year || '2026')
 
-  const displayYears = academicYears && academicYears.length > 0 ? academicYears : defaultYears
-  const currentYear = displayYears[activeYearIdx] || displayYears[0]
+  const currentYearData =
+    yearsList.find((y) => y.year === activeYear) ||
+    yearsList[0] ||
+    defaultAcademicYears[0]
+
+  const rankHolders = currentYearData?.rankHolders || []
+
+  const renderScore = (score: string) => {
+    if (score && score.includes('/')) {
+      const parts = score.split('/')
+      const numerator = parts[0]?.trim() || ''
+      const denominator = parts[1]?.trim() || ''
+      return (
+        <div className="flex items-baseline font-['Roboto',sans-serif] text-[#F8C62F] leading-none my-2.5">
+          <span className="text-[52px] sm:text-[64px] font-medium leading-[40.58px] tracking-normal">
+            {numerator}
+          </span>
+          <span className="text-[20px] font-medium leading-[40.58px] ml-0.5">/</span>
+          <span className="text-[20px] font-normal leading-[40.58px] ml-0.5">
+            {denominator}
+          </span>
+        </div>
+      )
+    }
+    return (
+      <div className="font-['Roboto',sans-serif] text-[#F8C62F] text-[52px] sm:text-[64px] font-medium leading-[40.58px] my-2.5">
+        {score}
+      </div>
+    )
+  }
+
+  const getPhotoUrl = (photo: any, index: number) => {
+    if (typeof photo === 'string' && photo.length > 0) return photo
+    if (photo && typeof photo === 'object' && photo.url) return photo.url
+    return index % 2 === 0 ? '/images/topper-student1.png' : '/images/topper-student2.png'
+  }
+
+  const isHeadingDefault =
+    heading === 'Building Bright Minds for Tomorrow' || !heading
 
   return (
-    <section className="relative w-full bg-white py-16 sm:py-20 lg:py-24 overflow-hidden">
-      <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <span className="inline-block w-[36px] h-[2px] bg-[#03594E]" />
-            <span className="text-[#03594E] font-bold text-[15px] sm:text-[17px] uppercase tracking-normal select-none">
-              {badge || 'STUDENT SUCCESS'}
-            </span>
-            <span className="inline-block w-[36px] h-[2px] bg-[#03594E]" />
-          </div>
-
-          <h2 className="text-[#0F172A] font-bold text-[30px] sm:text-[38px] lg:text-[44px] leading-tight mb-4 select-none">
-            {heading}
-          </h2>
+    <section
+      className="relative w-full py-16 md:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#044438]"
+      style={{
+        backgroundImage: "url('/images/academics-bg-color.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div className="max-w-[1240px] mx-auto relative z-10 flex flex-col items-center">
+        {/* Badge with horizontal lines */}
+        <div className="flex items-center justify-center gap-3.5 mb-2">
+          <div className="w-[38px] h-[2px] bg-white opacity-90" />
+          <span className="font-['Roboto',sans-serif] font-bold text-[16px] md:text-[18px] leading-[56px] text-white uppercase tracking-wider text-center">
+            {badge || 'STUDENT SUCCESS'}
+          </span>
+          <div className="w-[38px] h-[2px] bg-white opacity-90" />
         </div>
 
-        {/* Year Filter Tabs */}
-        {displayYears.length > 1 && (
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12">
-            {displayYears.map((yr, idx) => {
-              const isActive = idx === activeYearIdx
+        {/* Heading */}
+        <h2 className="font-['Roboto',sans-serif] font-bold text-[32px] sm:text-[40px] md:text-[46px] leading-[38px] sm:leading-[46px] md:leading-[52px] text-white text-center mb-10 md:mb-14 max-w-[700px]">
+          {isHeadingDefault ? (
+            <>
+              Building Bright Minds
+              <br className="hidden sm:inline" /> for Tomorrow
+            </>
+          ) : (
+            heading
+          )}
+        </h2>
+
+        {/* Content Row: Years Navigation on Left, Student Cards on Right */}
+        <div className="w-full flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 lg:gap-8 xl:gap-10">
+          {/* Years Navigation Buttons */}
+          <div className="flex flex-row flex-wrap lg:flex-col items-center lg:items-start justify-center gap-3 w-full lg:w-auto">
+            {yearsList.map((item) => {
+              const isActive = activeYear === item.year
               return (
                 <button
-                  key={idx}
-                  onClick={() => setActiveYearIdx(idx)}
-                  className={`px-6 py-2.5 rounded-full text-[15px] sm:text-[16px] font-semibold transition-all duration-200 cursor-pointer ${
+                  key={item.year}
+                  type="button"
+                  onClick={() => setActiveYear(item.year)}
+                  className={`flex items-center justify-between px-[25px] py-[15px] h-[63px] rounded-[20px] cursor-pointer transition-all duration-300 shadow-md ${
                     isActive
-                      ? 'bg-[#F8C62F] text-[#0F172A] shadow-md'
-                      : 'bg-slate-100 text-neutral-700 hover:bg-slate-200 border border-slate-200'
+                      ? 'w-[197px] bg-[#F8C62F] text-[#0F172A] shadow-amber-500/20'
+                      : 'w-[172px] bg-[#FFFFFF] text-[#03594E] hover:bg-slate-50 hover:w-[182px]'
                   }`}
+                  aria-pressed={isActive}
                 >
-                  {yr.year}
+                  <span className="font-['Roboto',sans-serif] font-medium text-[18px] leading-[33px]">
+                    {item.year}
+                  </span>
+                  <img
+                    src={isActive ? '/images/active-arrow.png' : '/images/inactive-arrow.png'}
+                    alt="arrow"
+                    className="w-6 h-6 object-contain flex-shrink-0"
+                  />
                 </button>
               )
             })}
           </div>
-        )}
 
-        {/* Rank Holders Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {currentYear?.rankHolders?.map((student, idx) => {
-            const rawPhoto = student.photo
-            const photoSrc =
-              typeof rawPhoto === 'object' && rawPhoto?.url
-                ? rawPhoto.url
-                : typeof rawPhoto === 'string' && rawPhoto
-                  ? rawPhoto
-                  : '/images/why-mount-zion-student.png'
+          {/* Student Cards Grid */}
+          <div className="flex flex-wrap items-center justify-center gap-6 max-w-[900px]">
+            {rankHolders.map((student, idx) => {
+              const photoUrl = getPhotoUrl(student.photo, idx)
+              const isCustomPhoto =
+                student.photo &&
+                typeof student.photo === 'object' &&
+                student.photo.url
 
-            return (
-              <div
-                key={idx}
-                className="group relative bg-slate-50 rounded-[28px] p-6 border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center"
-              >
-                {/* Photo with Gold Ring */}
-                <div className="relative w-[130px] h-[130px] sm:w-[150px] sm:h-[150px] rounded-full overflow-hidden border-4 border-[#F8C62F] shadow-lg mb-5 group-hover:scale-105 transition-transform duration-300">
-                  <Image
-                    src={photoSrc}
-                    alt={student.studentName}
-                    fill
-                    unoptimized
-                    className="object-cover object-center"
-                    sizes="150px"
-                  />
+              return (
+                <div
+                  key={idx}
+                  className="w-full sm:w-[420px] h-[291px] rounded-[20px] border border-[#F8C62F] bg-[#03594E] p-6 relative overflow-hidden flex justify-between shadow-xl transition-all duration-300 hover:shadow-2xl hover:border-[#fcd34d]"
+                >
+                  {/* Left Column Info */}
+                  <div className="flex flex-col justify-between z-20 relative h-full w-[170px] flex-shrink-0">
+                    <div>
+                      {/* Medal Icon */}
+                      <img
+                        src="/images/star-medal.png"
+                        alt="Medal"
+                        className="w-[72px] h-[88.11px] object-contain drop-shadow-md mb-2"
+                      />
+
+                      {/* Rank Label */}
+                      <div className="font-['Roboto',sans-serif] text-[13px] text-white/95 font-medium tracking-wide">
+                        {student.rank || 'HSC Topper'}
+                      </div>
+
+                      {/* Score */}
+                      {renderScore(student.score || '485/500')}
+
+                      {/* Grade / Standard */}
+                      <div className="font-['Roboto',sans-serif] font-normal text-[12px] leading-[13.53px] uppercase text-white tracking-wide">
+                        {student.standard || 'IN GRADE 10'}
+                      </div>
+                    </div>
+
+                    {/* Student Name */}
+                    <div className="font-['Roboto',sans-serif] font-semibold text-[20px] leading-[23.67px] text-white truncate">
+                      {student.studentName}
+                    </div>
+                  </div>
+
+                  {/* Right Column: Student Portrait with Laurel Frame */}
+                  <div className="absolute right-0 top-0 w-[226px] h-[291px] flex items-end justify-end pointer-events-none overflow-hidden rounded-r-[20px]">
+                    {/* If custom CMS photo, render golden laurel wreath SVG background behind portrait */}
+                    {isCustomPhoto && (
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <svg
+                          viewBox="0 0 160 160"
+                          className="w-[140px] h-[140px] opacity-90 text-[#F8C62F]"
+                          fill="currentColor"
+                        >
+                          <circle cx="80" cy="80" r="56" fill="#03594E" />
+                          <circle cx="80" cy="80" r="54" fill="#00796B" opacity="0.4" />
+                          <path
+                            d="M80,24 C64,24 50,38 48,56 C46,74 54,92 68,104 C64,98 62,90 62,82 C62,64 70,48 80,40 Z"
+                            fill="#F8C62F"
+                          />
+                          <path
+                            d="M80,24 C96,24 110,38 112,56 C114,74 106,92 92,104 C96,98 98,90 98,82 C98,64 90,48 80,40 Z"
+                            fill="#F8C62F"
+                          />
+                        </svg>
+                      </div>
+                    )}
+
+                    {/* Student Image */}
+                    <img
+                      src={photoUrl}
+                      alt={student.studentName}
+                      className="w-full h-full object-cover object-right-bottom select-none"
+                    />
+                  </div>
                 </div>
-
-                {/* Badge Tag */}
-                <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#03594E] text-white text-[13px] sm:text-[14px] font-bold shadow-xs mb-3">
-                  <Trophy className="w-4 h-4 text-[#F8C62F]" />
-                  <span>{student.rank}</span>
-                </div>
-
-                {/* Student Name */}
-                <h3 className="text-[#0F172A] font-bold text-[20px] sm:text-[22px] mb-1">
-                  {student.studentName}
-                </h3>
-
-                {/* Standard / Grade */}
-                {student.standard && (
-                  <p className="text-neutral-500 text-[14px] sm:text-[15px] mb-3">
-                    {student.standard}
-                  </p>
-                )}
-
-                {/* Score Pill */}
-                <div className="mt-auto px-5 py-2 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center gap-2">
-                  <Star className="w-4 h-4 text-[#F8C62F] fill-[#F8C62F]" />
-                  <span className="text-[#03594E] font-bold text-[16px] sm:text-[17px]">
-                    {student.score}
-                  </span>
-                </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>
