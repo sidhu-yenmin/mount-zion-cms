@@ -104,6 +104,38 @@ const placeholderTestimonials: TestimonialItem[] = [
     authorPhoto: null,
   },
 ]
+========================================================================= */
+
+// Clean placeholder structure when no CMS reviews exist
+const placeholderTestimonials: TestimonialItem[] = [
+  {
+    cardStyle: 'green',
+    rating: 5,
+    quote:
+      'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
+    authorName: 'Parent / Reviewer Name',
+    authorRole: 'Parent of Grade 10 Student',
+    authorPhoto: null,
+  },
+  {
+    cardStyle: 'yellow',
+    rating: 5,
+    quote:
+      'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
+    authorName: 'Parent / Reviewer Name',
+    authorRole: 'Parent of Grade 8 Student',
+    authorPhoto: null,
+  },
+  {
+    cardStyle: 'green',
+    rating: 5,
+    quote:
+      'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
+    authorName: 'Parent / Reviewer Name',
+    authorRole: 'Parent of Grade 12 Student',
+    authorPhoto: null,
+  },
+]
 
 export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = ({
   badge = 'TESTIMONIALS',
