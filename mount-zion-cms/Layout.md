@@ -277,3 +277,125 @@ height: 12;
 angle: 0 deg;
 opacity: 1;
 background: #000000;
+
+
+# Testimonial
+
+Left Horizontal line: width: 38;
+height: 0px;
+angle: 0 deg;
+opacity: 1;
+border-width: 2px;
+
+
+testimonials: font-family: Roboto;
+font-weight: 700;
+font-style: Bold;
+font-size: 18px;
+leading-trim: NONE;
+line-height: 56px;
+letter-spacing: 0%;
+text-align: center;
+vertical-align: middle;
+text-transform: uppercase;
+background: #03594E;
+
+Right Horizontal Line: width: 38;
+height: 0px;
+angle: 0 deg;
+opacity: 1;
+border: 2px solid #03594E
+
+Building Bright Minds for Tomorrow: font-family: Roboto;
+font-weight: 700;
+font-style: Bold;
+font-size: 46px;
+leading-trim: NONE;
+line-height: 52px;
+letter-spacing: 0%;
+text-align: center;
+vertical-align: middle;
+background: #000000;
+
+Testimonial Card: width: 365.27px;
+height: 251.04px;
+top: 232.68px;
+angle: 0 deg;
+opacity: 1;
+border-radius: 22.17px;
+background: #03594E; For yellow cards: background: #F8C62F;
+
+Testimonial Card Images: testimonial1.png, testimonial2.png, testimonial3.png
+width: 63.5px;
+height: 63.5px;
+top: 201px;
+left: 38.95px;
+angle: 0 deg;
+opacity: 1;
+border-width: 2px;
+border: 2px solid #FFFFFF
+
+Testimonial Stars:
+Green Star:
+width: 13.511752128601074;
+height: 12.865341186523438;
+top: 5.31px;
+left: 5.12px;
+angle: 0 deg;
+opacity: 1;
+background: #03594E; For yellow star: background: #F8C62F; 
+
+Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.
+font-family: Roboto;
+font-weight: 400;
+font-style: Regular;
+font-size: 14.25px;
+leading-trim: NONE;
+line-height: 20.59px;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #FFFFFF;
+
+Testimonial Author: M.S. Dhoni
+font-family: Roboto;
+font-weight: 700;
+font-style: Bold;
+font-size: 15.84px;
+leading-trim: NONE;
+line-height: 41.18px;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #FFFFFF;
+
+Testimonial Author role: Indian Cricketer
+font-family: Roboto;
+font-weight: 400;
+font-style: Italic;
+font-size: 14.25px;
+leading-trim: NONE;
+line-height: 20.59px;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #FFFFFF; For yellow card background: #000000;
+
+Inactive carousel indicator:
+width: 18;
+height: 6;
+top: 504.72px;
+left: 515.5px;
+angle: 0 deg;
+opacity: 1;
+border-radius: 15px;
+background: #03594E2E;
+opacity: 18%
+
+Active carousel indicator:
+width: 47;
+height: 6;
+top: 504.72px;
+left: 557.5px;
+angle: 0 deg;
+opacity: 1;
+border-radius: 15px;
+background: #03594E;
+

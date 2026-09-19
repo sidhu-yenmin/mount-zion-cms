@@ -7,6 +7,7 @@ import { ProgramsBlockComponent } from '@/components/blocks/ProgramsBlockCompone
 import { FacilitiesBlockComponent } from '@/components/blocks/FacilitiesBlockComponent'
 import { ToppersBlockComponent } from '@/components/blocks/ToppersBlockComponent'
 import { CampusLifeBlockComponent } from '@/components/blocks/CampusLifeBlockComponent'
+import { TestimonialsBlockComponent } from '@/components/blocks/TestimonialsBlockComponent'
 import type { Page } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
@@ -72,6 +73,7 @@ export default async function HomePage() {
   const hasFacilities = layout?.some((b) => b.blockType === 'facilities')
   const hasToppers = layout?.some((b) => b.blockType === 'toppers')
   const hasCampusLife = layout?.some((b) => b.blockType === 'campusLife')
+  const hasTestimonials = layout?.some((b) => b.blockType === 'testimonials')
 
   return (
     <div className="w-full min-h-screen bg-[#f8fafc]">
@@ -92,6 +94,9 @@ export default async function HomePage() {
 
       {/* Fallback for Campus Life & Gallery section until added to CMS layout */}
       {!hasCampusLife && <CampusLifeBlockComponent />}
+
+      {/* Fallback for Testimonials & Reviews section until added to CMS layout */}
+      {!hasTestimonials && <TestimonialsBlockComponent />}
     </div>
   )
 }
