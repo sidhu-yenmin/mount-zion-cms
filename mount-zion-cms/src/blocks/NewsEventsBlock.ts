@@ -11,7 +11,7 @@ export const NewsEventsBlock: Block = {
       name: 'badge',
       type: 'text',
       label: 'Badge / Tagline',
-      defaultValue: 'HAPPENINGS & NEWS',
+      defaultValue: 'OUR EVENTS & NEWS',
     },
     {
       name: 'heading',
@@ -19,6 +19,12 @@ export const NewsEventsBlock: Block = {
       label: 'Section Heading',
       defaultValue: 'Explore Our World-Class Academic Programs',
       required: true,
+    },
+    {
+      name: 'exploreMoreText',
+      type: 'text',
+      label: 'Explore More Button Label',
+      defaultValue: 'Explore More',
     },
     {
       name: 'viewAllUrl',

@@ -399,3 +399,146 @@ opacity: 1;
 border-radius: 15px;
 background: #03594E;
 
+# News & Events Listing
+
+Our events & news: font-family: Roboto;
+font-weight: 700;
+font-style: Bold;
+font-size: 18px;
+leading-trim: NONE;
+line-height: 56px;
+letter-spacing: 0%;
+text-align: center;
+vertical-align: middle;
+text-transform: uppercase;
+background: #03594E;
+
+Horizontal line: width: 38;
+height: 0px;
+top: 8px;
+left: 191px;
+angle: 0 deg;
+opacity: 1;
+border-width: 2px;
+border: 2px solid #03594E
+
+Explore Our World-Class Academic Programs: font-family: Roboto;
+font-weight: 700;
+font-style: Bold;
+font-size: 46px;
+leading-trim: NONE;
+line-height: 52px;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #000000;
+
+Explore More Btn: width: 233;
+height: 58;
+gap: 10px;
+angle: 0 deg;
+opacity: 1;
+border-radius: 100px;
+border-width: 1px;
+padding-top: 20px;
+padding-right: 40px;
+padding-bottom: 20px;
+padding-left: 40px;
+background: #FFFFFF;
+border: 1px solid #919191
+
+Btn Text: font-family: Roboto;
+font-weight: 500;
+font-style: Medium;
+font-size: 20px;
+leading-trim: NONE;
+line-height: 56px;
+letter-spacing: 0%;
+text-align: center;
+vertical-align: middle;
+background: #353535;
+
+Arrow Icon: know-more-btn-icon.png
+width: 11;
+height: 12;
+angle: 0 deg;
+opacity: 1;
+background: #353535;
+
+Horizontal Divider line:
+width: 1120px;
+height: 0px;
+top: 199px;
+angle: 0 deg;
+opacity: 1;
+border-width: 1px;
+border: 1px solid #B2B2B2
+
+13 Mar 2026: font-family: Roboto;
+font-weight: 500;
+font-style: Medium;
+font-size: 18px;
+leading-trim: NONE;
+line-height: 140%;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #000000;
+
+Explore Our World-Class 
+Academic Programs
+
+Discover the New Academic Programs
+
+New Academic Fees Structures
+
+Common text Style for above three texts: font-family: Roboto;
+font-weight: 700;
+font-style: Bold;
+font-size: 24px;
+leading-trim: NONE;
+line-height: 140%;
+letter-spacing: 0%;
+vertical-align: middle;
+background: #000000;
+
+Image: news.png
+width: 343.1319274902344;
+height: 227.90103149414062;
+top: -69.33px;
+angle: 0 deg;
+opacity: 1;
+
+Active Arrow Btn: width: 38;
+height: 38;
+top: 265px;
+left: 1042px;
+angle: 0 deg;
+opacity: 1;
+background: #03594E;
+
+Inactive Arrow Btn: width: 38;
+height: 38;
+top: 435px;
+left: 1042px;
+angle: 0 deg;
+opacity: 1;
+border: 1px solid #03594E
+
+Active Arrow Icon: know-more-icon.png
+width: 12.666666984558105;
+height: 13.933333396911621;
+top: 277.67px;
+left: 1054.67px;
+angle: 0 deg;
+opacity: 1;
+background: #FFFFFF;
+
+Inactive Arrow Icon: 
+width: 12.666666984558105;
+height: 13.933333396911621;
+top: 447.67px;
+left: 1054.67px;
+angle: 0 deg;
+opacity: 1;
+background: #B2B2B2;
+
+

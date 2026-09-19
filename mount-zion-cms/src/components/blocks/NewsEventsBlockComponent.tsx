@@ -1,130 +1,209 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight, Calendar } from 'lucide-react'
 import type { Media } from '@/payload-types'
+
+export interface NewsEventItem {
+  date: string
+  title: string
+  image?: number | Media | string | null
+  link?: string | null
+  id?: string | null
+}
 
 export interface NewsEventsProps {
   blockType?: string
   badge?: string | null
   heading?: string | null
+  exploreMoreText?: string | null
   viewAllUrl?: string | null
-  items?: Array<{
-    date: string
-    title: string
-    image?: number | Media | string | null
-    link?: string | null
-  }> | null
+  items?: NewsEventItem[] | null
 }
 
+const defaultItems: NewsEventItem[] = [
+  {
+    date: '13 Mar 2026',
+    title: 'Explore Our World-Class\nAcademic Programs',
+    image: '/images/news.png',
+    link: '#',
+  },
+  {
+    date: '17 Apr 2026',
+    title: 'Discover the New Academic Programs',
+    image: '/images/news.png',
+    link: '#',
+  },
+  {
+    date: '09 Jun 2026',
+    title: 'New Academic Fees Structures',
+    image: '/images/news.png',
+    link: '#',
+  },
+]
+
 export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
-  badge = 'HAPPENINGS & NEWS',
+  badge = 'OUR EVENTS & NEWS',
   heading = 'Explore Our World-Class Academic Programs',
+  exploreMoreText = 'Explore More',
   viewAllUrl = '/news',
-  items = [],
+  items,
 }) => {
-  const defaultItems = [
-    {
-      date: '10TH JAN',
-      title: 'Annual Science & Tech Expo 2026 inaugurated by Chief Guests',
-      image: '/images/why-mount-zion-classroom.png',
-      link: '#',
-    },
-    {
-      date: '25TH JAN',
-      title: 'Inter-School Athletics Meet: Mount Zion students clinch 12 Gold Medals',
-      image: '/images/hero-student.png',
-      link: '#',
-    },
-    {
-      date: '12TH FEB',
-      title: 'Robotics Workshop & AI Innovation Challenge for Grades 6 to 10',
-      image: '/images/hero-student1.jpg',
-      link: '#',
-    },
-  ]
+  // Track active row placed on click (default to index 0 matching reference design)
+  const [activeRow, setActiveRow] = useState<number>(0)
+
+  // Helper to extract image URL from CMS upload or string
+  const resolveMediaUrl = (
+    media: number | Media | string | null | undefined,
+    fallback: string,
+  ): string => {
+    if (!media) return fallback
+    if (typeof media === 'string' && media.trim()) return media
+    if (typeof media === 'object' && media?.url) return media.url
+    return fallback
+  }
 
   const displayItems = items && items.length > 0 ? items : defaultItems
 
-  return (
-    <section className="relative w-full bg-slate-50 py-16 sm:py-20 lg:py-24 overflow-hidden">
-      <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-[#03594E] font-bold text-[15px] sm:text-[17px] uppercase tracking-normal select-none">
-                {badge || 'HAPPENINGS & NEWS'}
-              </span>
-              <span className="inline-block w-[36px] h-[2px] bg-[#03594E]" />
-            </div>
+  // Split heading into 2 lines matching screenshot
+  const renderHeading = () => {
+    if (!heading) return null
 
-            <h2 className="text-[#0F172A] font-bold text-[30px] sm:text-[38px] lg:text-[44px] leading-tight select-none">
-              {heading}
-            </h2>
-          </div>
+    if (heading.includes('\n')) {
+      return heading.split('\n').map((line, idx) => (
+        <span key={idx} className="block">
+          {line}
+        </span>
+      ))
+    }
+
+    if (heading.includes('Academic Programs')) {
+      return (
+        <>
+          <span className="block">Explore Our World-Class</span>
+          <span className="block">Academic Programs</span>
+        </>
+      )
+    }
+
+    return heading
+  }
+
+  return (
+    <section className="relative w-full bg-[#f4f6f8] pt-[50px] pb-[70px] overflow-hidden">
+      <div className="w-full max-w-[1120px] mx-auto px-4 xl:px-0">
+        {/* 1. Header Section */}
+        <div className="flex items-center gap-[10px] mb-[10px]">
+          <span className="font-['Roboto',sans-serif] font-bold text-[18px] leading-[22px] uppercase text-[#03594E]">
+            {badge}
+          </span>
+          <div className="w-[38px] h-[2px] bg-[#03594E]" />
+        </div>
+
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-[28px]">
+          <h2 className="font-['Roboto',sans-serif] font-bold text-[34px] sm:text-[40px] lg:text-[46px] leading-[1.14] sm:leading-[52px] text-black tracking-normal max-w-[640px]">
+            {renderHeading()}
+          </h2>
 
           {viewAllUrl && (
-            <div>
-              <Link
-                href={viewAllUrl}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-neutral-300 bg-white hover:bg-neutral-100 text-neutral-800 font-semibold text-[15px] sm:text-[16px] transition-all duration-200 shadow-xs"
-              >
-                <span>View All News</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
-            </div>
+            <Link
+              href={viewAllUrl}
+              className="inline-flex items-center justify-center gap-[10px] w-[233px] h-[58px] rounded-[100px] border border-[#919191] bg-white text-[#353535] font-['Roboto',sans-serif] font-medium text-[20px] transition-all duration-300 hover:border-black hover:bg-slate-50 hover:shadow-md shrink-0 self-start md:self-end group mb-1 md:mb-0"
+            >
+              <span>{exploreMoreText}</span>
+              <Image
+                src="/images/know-more-btn-icon.png"
+                alt="Arrow"
+                width={11}
+                height={12}
+                className="w-[11px] h-[12px] object-contain transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </Link>
           )}
         </div>
 
-        {/* News Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayItems.map((news, idx) => {
-            const rawImg = news.image
-            const imgSrc =
-              typeof rawImg === 'object' && rawImg?.url
-                ? rawImg.url
-                : typeof rawImg === 'string' && rawImg
-                  ? rawImg
-                  : '/images/why-mount-zion-classroom.png'
+        {/* 2. Top Divider Line (1120px, 1px solid #B2B2B2) */}
+        <div className="w-full border-t border-[#B2B2B2]" />
+
+        {/* 3. News & Events Rows List */}
+        <div className="w-full flex flex-col">
+          {displayItems.map((item, idx) => {
+            const isActive = activeRow === idx
+            const imageSrc = resolveMediaUrl(item.image, '/images/news.png')
 
             return (
               <div
                 key={idx}
-                className="group relative bg-white rounded-[28px] overflow-hidden border border-slate-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col"
+                onClick={() => setActiveRow(idx)}
+                className={`group w-full border-b border-[#B2B2B2] transition-all duration-300 cursor-pointer ${
+                  isActive ? 'py-[24px] sm:py-[28px]' : 'py-[18px] sm:py-[22px]'
+                }`}
               >
-                {/* Thumbnail Image */}
-                <div className="relative w-full h-[220px] overflow-hidden bg-slate-100">
-                  <Image
-                    src={imgSrc}
-                    alt={news.title}
-                    fill
-                    unoptimized
-                    className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 400px"
-                  />
-                  {/* Date Badge */}
-                  <div className="absolute top-4 left-4 px-4 py-1.5 rounded-full bg-[#03594E] text-white text-[13px] font-bold shadow-md flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span>{news.date}</span>
+                <div className="w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6">
+                  {/* Left: Date */}
+                  <div className="w-full md:w-[170px] shrink-0">
+                    <p className="font-['Roboto',sans-serif] font-medium text-[18px] leading-[140%] text-black">
+                      {item.date}
+                    </p>
                   </div>
-                </div>
 
-                {/* Content */}
-                <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
-                  <h3 className="text-[#0F172A] font-bold text-[18px] sm:text-[20px] leading-snug mb-4 group-hover:text-[#03594E] transition-colors">
-                    {news.title}
-                  </h3>
+                  {/* Middle Left: Title */}
+                  <div className="w-full md:w-[340px] shrink-0">
+                    <h3
+                      className={`font-['Roboto',sans-serif] font-bold text-[22px] sm:text-[24px] leading-[135%] whitespace-pre-line transition-colors duration-200 ${
+                        isActive ? 'text-[#03594E]' : 'text-black group-hover:text-[#03594E]'
+                      }`}
+                    >
+                      {item.title}
+                    </h3>
+                  </div>
 
-                  <Link
-                    href={news.link || '#'}
-                    className="inline-flex items-center gap-2 text-[#03594E] font-bold text-[15px] sm:text-[16px] hover:underline mt-auto"
-                  >
-                    <span>Read More</span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </Link>
+                  {/* Middle: Preview Image (Displayed based on click on active row) */}
+                  <div className="flex-1 w-full flex justify-center items-center">
+                    {isActive && (
+                      <div className="relative w-full max-w-[320px] sm:max-w-[343px] h-[140px] sm:h-[160px] rounded-[20px] overflow-hidden shadow-sm transition-all duration-300 ease-out">
+                        <Image
+                          src={imageSrc}
+                          alt={item.title.replace('\n', ' ')}
+                          fill
+                          unoptimized
+                          className="object-cover object-center"
+                          sizes="343px"
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Right: Arrow Button (38 x 38px) */}
+                  <div className="shrink-0 flex justify-end items-center self-end md:self-center">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setActiveRow(idx)
+                      }}
+                      aria-label={`Select ${item.title}`}
+                      className={`w-[38px] h-[38px] rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer ${
+                        isActive
+                          ? 'bg-[#03594E] text-white shadow-sm'
+                          : 'border border-[#03594E] bg-transparent text-[#03594E] hover:bg-[#03594E] hover:text-white'
+                      }`}
+                    >
+                      <svg
+                        className="w-[14px] h-[14px]"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
             )

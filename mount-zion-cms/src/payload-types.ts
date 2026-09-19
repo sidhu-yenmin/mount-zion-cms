@@ -331,6 +331,7 @@ export interface Page {
         | {
             badge?: string | null;
             heading: string;
+            exploreMoreText?: string | null;
             viewAllUrl?: string | null;
             items?:
               | {
@@ -646,6 +647,7 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               badge?: T;
               heading?: T;
+              exploreMoreText?: T;
               viewAllUrl?: T;
               items?:
                 | T
