@@ -34,31 +34,26 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
   backgroundImage,
   bannerText = 'Learning • Innovation • Achievement',
 }) => {
-  // Resolve Image 1 (Classroom 591x298)
-  const resolvedImg1 = imageOne || mainImage
-  const img1Src =
-    typeof resolvedImg1 === 'object' && resolvedImg1?.url
-      ? resolvedImg1.url
-      : typeof resolvedImg1 === 'string' && resolvedImg1
-        ? resolvedImg1
-        : '/images/academics-img1.png'
+  // Helper to extract image URL from CMS upload or string
+  const resolveMediaUrl = (
+    media: number | Media | string | null | undefined,
+  ): string | null => {
+    if (!media) return null
+    if (typeof media === 'string' && media.trim()) return media
+    if (typeof media === 'object' && media?.url) return media.url
+    return null
+  }
 
-  // Resolve Image 2 (Tree planting 475x528)
+  // Resolve Image 1 (Classroom 591x298 - strict CMS)
+  const resolvedImg1 = imageOne || mainImage
+  const img1Src = resolveMediaUrl(resolvedImg1)
+
+  // Resolve Image 2 (Tree planting 475x528 - strict CMS)
   const resolvedImg2 = imageTwo || secondaryImage
-  const img2Src =
-    typeof resolvedImg2 === 'object' && resolvedImg2?.url
-      ? resolvedImg2.url
-      : typeof resolvedImg2 === 'string' && resolvedImg2
-        ? resolvedImg2
-        : '/images/academics-img2.png'
+  const img2Src = resolveMediaUrl(resolvedImg2)
 
   // Resolve Background Image from CMS
-  const bgImgUrl =
-    typeof backgroundImage === 'object' && backgroundImage?.url
-      ? backgroundImage.url
-      : typeof backgroundImage === 'string' && backgroundImage
-        ? backgroundImage
-        : null
+  const bgImgUrl = resolveMediaUrl(backgroundImage)
 
   return (
     <section
@@ -96,16 +91,28 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
           {/* Left Column (Image 1 + Description + CTA Button) */}
           <div className="lg:col-span-7 flex flex-col justify-between">
             {/* Academics Image 1 (591 x 298px on desktop, rounded 30px) */}
-            <div className="relative w-full max-w-[591px] h-[240px] sm:h-[280px] lg:h-[298px] rounded-[30px] overflow-hidden shadow-2xl border border-white/10 group">
-              <Image
-                src={img1Src}
-                alt="Students in classroom learning chemical reactions"
-                fill
-                priority
-                unoptimized
-                className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 1024px) 100vw, 591px"
-              />
+            <div className="relative w-full max-w-[591px] h-[240px] sm:h-[280px] lg:h-[298px] rounded-[30px] overflow-hidden shadow-2xl border border-white/10 bg-black/20 group">
+              {img1Src ? (
+                <Image
+                  src={img1Src}
+                  alt="Academics Program"
+                  fill
+                  priority
+                  unoptimized
+                  className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 591px"
+                />
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-6 text-white/50 select-none">
+                  <svg className="w-12 h-12 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <div className="text-center">
+                    <p className="text-xs font-semibold text-white/70">No Image Uploaded</p>
+                    <p className="text-[11px] text-white/40 mt-0.5">Upload Image 1 in CMS</p>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Description Paragraph */}
@@ -129,16 +136,28 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
           <div className="lg:col-span-5 flex justify-center lg:justify-end">
             <div className="relative w-full max-w-[475px] group">
               {/* Academics Image 2 (475 x 528px on desktop, rounded 30px) */}
-              <div className="relative w-full h-[400px] sm:h-[480px] lg:h-[528px] rounded-[30px] overflow-hidden shadow-2xl border border-white/10">
-                <Image
-                  src={img2Src}
-                  alt="Students planting a tree together outdoors"
-                  fill
-                  priority
-                  unoptimized
-                  className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 1024px) 100vw, 475px"
-                />
+              <div className="relative w-full h-[400px] sm:h-[480px] lg:h-[528px] rounded-[30px] overflow-hidden shadow-2xl border border-white/10 bg-black/20">
+                {img2Src ? (
+                  <Image
+                    src={img2Src}
+                    alt="Academics Activity"
+                    fill
+                    priority
+                    unoptimized
+                    className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 1024px) 100vw, 475px"
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-6 text-white/50 select-none">
+                    <svg className="w-12 h-12 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <div className="text-center">
+                      <p className="text-xs font-semibold text-white/70">No Image Uploaded</p>
+                      <p className="text-[11px] text-white/40 mt-0.5">Upload Image 2 in CMS</p>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Overlapping Blurry Banner (Learning • Innovation • Achievement) */}

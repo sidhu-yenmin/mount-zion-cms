@@ -29,13 +29,13 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
 }) => {
   const [videoModalOpen, setVideoModalOpen] = useState(false)
 
-  // 1. Resolve Background Image (CMS Media object or string path)
+  // 1. Resolve Background Image (CMS Media object or string path - strict CMS)
   const bgImage =
     typeof backgroundImage === 'object' && backgroundImage?.url
       ? backgroundImage.url
       : typeof backgroundImage === 'string' && backgroundImage
         ? backgroundImage
-        : '/images/hero-student.png'
+        : null
 
   // 2. Parse Heading into 3 lines for the Figma styled typography
   const rawHeading = (heading || '').trim()
@@ -57,15 +57,17 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
       <div className="relative min-h-[680px] sm:min-h-[740px] lg:min-h-[800px] w-full flex flex-col justify-between overflow-hidden bg-[#0c2e26]">
         {/* 1. Background Image */}
         <div className="absolute inset-0 z-0">
-          <Image
-            src={bgImage}
-            alt="Mount Zion International School student in classroom"
-            fill
-            priority
-            unoptimized
-            className="object-cover object-center sm:object-[66%_center] lg:object-[60%_center]"
-            sizes="100vw"
-          />
+          {bgImage && (
+            <Image
+              src={bgImage}
+              alt="Mount Zion International School student in classroom"
+              fill
+              priority
+              unoptimized
+              className="object-cover object-center sm:object-[66%_center] lg:object-[60%_center]"
+              sizes="100vw"
+            />
+          )}
 
           {/* Gradients & Vignette Overlays */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#041914]/95 via-[#06241d]/75 via-45% to-transparent sm:w-[82%] lg:w-[68%]" />

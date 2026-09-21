@@ -36,6 +36,23 @@ export const NewsEventsBlock: Block = {
       name: 'items',
       type: 'array',
       label: 'News / Event Items',
+      defaultValue: [
+        {
+          date: '13 Mar 2026',
+          title: 'Explore Our World-Class\nAcademic Programs',
+          link: '#',
+        },
+        {
+          date: '17 Apr 2026',
+          title: 'Discover the New Academic Programs',
+          link: '#',
+        },
+        {
+          date: '09 Jun 2026',
+          title: 'New Academic Fees Structures',
+          link: '#',
+        },
+      ],
       minRows: 1,
       fields: [
         {

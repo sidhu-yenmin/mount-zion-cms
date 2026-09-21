@@ -44,61 +44,58 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
   stat2Label = 'Experience',
   stat2Icon,
 }) => {
-  // Resolve Left Student Image
-  const studentImg =
-    typeof imageOne === 'object' && imageOne?.url
-      ? imageOne.url
-      : typeof imageOne === 'string' && imageOne
-        ? imageOne
-        : '/images/why-mount-zion-student.png'
+  // Helper to extract image URL from CMS upload or string
+  const resolveMediaUrl = (
+    media: number | Media | string | null | undefined,
+  ): string | null => {
+    if (!media) return null
+    if (typeof media === 'string' && media.trim()) return media
+    if (typeof media === 'object' && media?.url) return media.url
+    return null
+  }
 
-  // Resolve Classroom Activity Image
-  const classroomImg =
-    typeof imageTwo === 'object' && imageTwo?.url
-      ? imageTwo.url
-      : typeof imageTwo === 'string' && imageTwo
-        ? imageTwo
-        : '/images/why-mount-zion-classroom.png'
+  // Resolve Left Student Image (Strict CMS - null if not uploaded)
+  const studentImg = resolveMediaUrl(imageOne)
 
-  // Resolve Sunburst Badge Icon
-  const sunIconImg =
-    typeof floatingBadgeIcon === 'object' && floatingBadgeIcon?.url
-      ? floatingBadgeIcon.url
-      : typeof floatingBadgeIcon === 'string' && floatingBadgeIcon
-        ? floatingBadgeIcon
-        : '/images/sun.png'
+  // Resolve Classroom Activity Image (Strict CMS - null if not uploaded)
+  const classroomImg = resolveMediaUrl(imageTwo)
 
-  // Resolve Stat 1 Icon (Graduation)
-  const graduateIconImg =
-    typeof stat1Icon === 'object' && stat1Icon?.url
-      ? stat1Icon.url
-      : typeof stat1Icon === 'string' && stat1Icon
-        ? stat1Icon
-        : '/images/graduate.png'
+  // Resolve Sunburst Badge Icon (Strict CMS - null if not uploaded)
+  const sunIconImg = resolveMediaUrl(floatingBadgeIcon)
 
-  // Resolve Stat 2 Icon (Idea)
-  const ideaIconImg =
-    typeof stat2Icon === 'object' && stat2Icon?.url
-      ? stat2Icon.url
-      : typeof stat2Icon === 'string' && stat2Icon
-        ? stat2Icon
-        : '/images/idea.png'
+  // Resolve Stat 1 Icon (Graduation - Strict CMS - null if not uploaded)
+  const graduateIconImg = resolveMediaUrl(stat1Icon)
+
+  // Resolve Stat 2 Icon (Idea / Experience - Strict CMS - null if not uploaded)
+  const ideaIconImg = resolveMediaUrl(stat2Icon)
 
   return (
     <section className="relative w-full bg-white py-14 sm:py-20 lg:py-24 overflow-hidden">
       <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 xl:gap-14">
           {/* 1. Left Student Image (361 x 456 on Desktop) */}
-          <div className="shrink-0 w-full max-w-[361px] lg:w-[361px] h-[400px] sm:h-[456px] rounded-[32px] overflow-hidden shadow-xl border border-slate-100 relative group">
-            <Image
-              src={studentImg}
-              alt="Mount Zion International School student studying"
-              fill
-              priority
-              unoptimized
-              className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-              sizes="(max-width: 1024px) 100vw, 361px"
-            />
+          <div className="shrink-0 w-full max-w-[361px] lg:w-[361px] h-[400px] sm:h-[456px] rounded-[32px] overflow-hidden shadow-xl border border-slate-100 relative group bg-slate-100">
+            {studentImg ? (
+              <Image
+                src={studentImg}
+                alt="Mount Zion International School student studying"
+                fill
+                priority
+                unoptimized
+                className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 1024px) 100vw, 361px"
+              />
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-6 text-slate-400 select-none">
+                <svg className="w-12 h-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <div className="text-center">
+                  <p className="text-xs font-semibold text-slate-500">No Image Uploaded</p>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Upload Image 1 in CMS</p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* 2. Right Content Column */}
@@ -140,31 +137,45 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
               {/* Classroom Image Card with Overlapping Sunburst Banner */}
               <div className="relative w-full max-w-[423px] shrink-0 group">
                 {/* Classroom Photo Container with rounded corners & overflow hidden */}
-                <div className="relative w-full h-[260px] sm:h-[320px] rounded-[24px] overflow-hidden shadow-lg border border-slate-100">
-                  <Image
-                    src={classroomImg}
-                    alt="Classroom students with teacher"
-                    fill
-                    priority
-                    unoptimized
-                    className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 423px"
-                  />
+                <div className="relative w-full h-[260px] sm:h-[320px] rounded-[24px] overflow-hidden shadow-lg border border-slate-100 bg-slate-100">
+                  {classroomImg ? (
+                    <Image
+                      src={classroomImg}
+                      alt="Classroom students with teacher"
+                      fill
+                      priority
+                      unoptimized
+                      className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 423px"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-6 text-slate-400 select-none">
+                      <svg className="w-12 h-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <div className="text-center">
+                        <p className="text-xs font-semibold text-slate-500">No Image Uploaded</p>
+                        <p className="text-[11px] text-slate-400 mt-0.5">Upload Image 2 in CMS</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Overlapping Glassmorphic Banner matching target image exactly */}
                 <div className="absolute -left-12 sm:-left-28 md:-left-32 lg:-left-[135px] bottom-16 sm:bottom-20 lg:bottom-[82px] w-[290px] sm:w-[314px] h-[86px] sm:h-[92px] rounded-r-[18.16px] rounded-l-none bg-gradient-to-r from-[#dceee8]/92 via-[#dceee8]/82 via-55% to-[#152a24]/75 backdrop-blur-[30px] border-l-[3.5px] border-l-[#F8C62F] shadow-xl flex items-center pl-14 sm:pl-16 pr-4 z-20 pointer-events-none transition-transform duration-300 group-hover:scale-[1.02]">
                   {/* Sunburst Icon Centered on Left Yellow Border (92.48px x 92.48px) */}
-                  <div className="absolute -left-[43px] sm:-left-[46px] top-0 bottom-0 my-auto w-[86px] sm:w-[92px] h-[86px] sm:h-[92px] flex items-center justify-center pointer-events-none">
-                    <Image
-                      src={sunIconImg}
-                      alt="Sunburst icon"
-                      width={92}
-                      height={92}
-                      unoptimized
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
+                  {sunIconImg && (
+                    <div className="absolute -left-[43px] sm:-left-[46px] top-0 bottom-0 my-auto w-[86px] sm:w-[92px] h-[86px] sm:h-[92px] flex items-center justify-center pointer-events-none">
+                      <Image
+                        src={sunIconImg}
+                        alt="Sunburst icon"
+                        width={92}
+                        height={92}
+                        unoptimized
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  )}
 
                   {/* Banner Text */}
                   <div className="flex flex-col justify-center select-none">
@@ -182,16 +193,18 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
               <div className="flex flex-row md:flex-col justify-around md:justify-center items-start gap-8 sm:gap-10 shrink-0 w-full md:w-auto pb-2">
                 {/* Stat 1: Students */}
                 <div className="flex items-center gap-4 sm:gap-5">
-                  <div className="w-[60px] h-[60px] sm:w-[89px] sm:h-[89px] shrink-0 flex items-center justify-center">
-                    <Image
-                      src={graduateIconImg}
-                      alt="Students enrolled"
-                      width={89}
-                      height={89}
-                      unoptimized
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
+                  {graduateIconImg && (
+                    <div className="w-[60px] h-[60px] sm:w-[89px] sm:h-[89px] shrink-0 flex items-center justify-center">
+                      <Image
+                        src={graduateIconImg}
+                        alt="Students enrolled"
+                        width={89}
+                        height={89}
+                        unoptimized
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  )}
                   <div>
                     <div className="flex items-baseline leading-none select-none">
                       <span className="text-[#0F172A] font-bold italic text-[36px] sm:text-[46px] font-['Inter',sans-serif]">
@@ -209,16 +222,18 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
 
                 {/* Stat 2: Experience */}
                 <div className="flex items-center gap-4 sm:gap-5">
-                  <div className="w-[56px] h-[56px] sm:w-[83px] sm:h-[83px] shrink-0 flex items-center justify-center">
-                    <Image
-                      src={ideaIconImg}
-                      alt="Years of Experience"
-                      width={83}
-                      height={83}
-                      unoptimized
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
+                  {ideaIconImg && (
+                    <div className="w-[56px] h-[56px] sm:w-[83px] sm:h-[83px] shrink-0 flex items-center justify-center">
+                      <Image
+                        src={ideaIconImg}
+                        alt="Years of Experience"
+                        width={83}
+                        height={83}
+                        unoptimized
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  )}
                   <div>
                     <div className="flex items-baseline leading-none select-none">
                       <span className="text-[#0F172A] font-bold italic text-[36px] sm:text-[46px] font-['Inter',sans-serif]">

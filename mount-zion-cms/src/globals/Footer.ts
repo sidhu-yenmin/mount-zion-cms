@@ -81,6 +81,7 @@ export const Footer: GlobalConfig = {
               name: 'phone',
               type: 'text',
               label: 'Phone Number',
+              defaultValue: '+9173737 51513',
               admin: { width: '60%' },
             },
             {
@@ -99,6 +100,7 @@ export const Footer: GlobalConfig = {
               name: 'email',
               type: 'text',
               label: 'Email Address',
+              defaultValue: 'cbse@mountzionschools.com',
               admin: { width: '60%' },
             },
             {
@@ -117,6 +119,7 @@ export const Footer: GlobalConfig = {
               name: 'address',
               type: 'textarea',
               label: 'School Address',
+              defaultValue: 'Pilivalam, Lembalakkudi,\nPudukottai - 622507',
               admin: { width: '60%' },
             },
             {
@@ -134,6 +137,19 @@ export const Footer: GlobalConfig = {
       name: 'quickLinks',
       type: 'array',
       label: 'Quick Links',
+      defaultValue: [
+        { linkType: 'custom', customUrl: '/', label: 'Home' },
+        { linkType: 'custom', customUrl: '#about', label: 'About' },
+        { linkType: 'custom', customUrl: '#academic', label: 'Academic' },
+        { linkType: 'custom', customUrl: '#admission', label: 'Admission' },
+        { linkType: 'custom', customUrl: '#resources', label: 'Resources' },
+        { linkType: 'custom', customUrl: '#portal', label: 'Student Portal' },
+        { linkType: 'custom', customUrl: '#campus-life', label: 'Campus Life' },
+        { linkType: 'custom', customUrl: '#achievements', label: 'Achievements' },
+        { linkType: 'custom', customUrl: '/gallery', label: 'Gallery' },
+        { linkType: 'custom', customUrl: '/news', label: 'News & Events' },
+        { linkType: 'custom', customUrl: '#contact', label: 'Contact Us' },
+      ],
       fields: [
         {
           name: 'linkType',
@@ -174,6 +190,13 @@ export const Footer: GlobalConfig = {
       name: 'socialLinks',
       type: 'array',
       label: 'Social Media Links',
+      defaultValue: [
+        { platform: 'facebook', url: 'https://facebook.com' },
+        { platform: 'instagram', url: 'https://instagram.com' },
+        { platform: 'youtube', url: 'https://youtube.com' },
+        { platform: 'twitter', url: 'https://x.com' },
+        { platform: 'linkedin', url: 'https://linkedin.com' },
+      ],
       fields: [
         {
           name: 'platform',
