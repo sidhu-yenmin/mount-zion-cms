@@ -57,15 +57,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           url: resolveItemUrl(sub),
         })),
       }))
-    } else if (header?.navItems && header.navItems.length > 0) {
-      navItems = header.navItems.map((item) => ({
-        label: item.label,
-        url: item.link,
-        children: item.subItems?.map((sub) => ({
-          label: sub.label,
-          url: sub.link,
-        })),
-      }))
     }
 
     if (header) {

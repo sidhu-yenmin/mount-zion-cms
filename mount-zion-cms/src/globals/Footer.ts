@@ -100,14 +100,37 @@ export const Footer: GlobalConfig = {
       label: 'Quick Links',
       fields: [
         {
-          name: 'label',
-          type: 'text',
-          required: true,
+          name: 'linkType',
+          type: 'radio',
+          label: 'Link Type',
+          defaultValue: 'page',
+          options: [
+            { label: 'Link to CMS Page', value: 'page' },
+            { label: 'Custom URL / Anchor (e.g. #about, https://...)', value: 'custom' },
+          ],
         },
         {
-          name: 'url',
+          name: 'page',
+          type: 'relationship',
+          relationTo: 'pages',
+          label: 'Select CMS Page',
+          admin: {
+            condition: (_, siblingData) => siblingData?.linkType === 'page',
+          },
+        },
+        {
+          name: 'customUrl',
           type: 'text',
-          required: true,
+          label: 'Custom URL / Path',
+          defaultValue: '/',
+          admin: {
+            condition: (_, siblingData) => siblingData?.linkType === 'custom',
+          },
+        },
+        {
+          name: 'label',
+          type: 'text',
+          label: 'Custom Link Label (Optional - auto-uses Page Title if left blank)',
         },
       ],
     },
@@ -119,18 +142,27 @@ export const Footer: GlobalConfig = {
         {
           name: 'platform',
           type: 'select',
+          label: 'Platform',
           options: [
             { label: 'Facebook', value: 'facebook' },
             { label: 'Instagram', value: 'instagram' },
             { label: 'YouTube', value: 'youtube' },
             { label: 'Twitter / X', value: 'twitter' },
             { label: 'LinkedIn', value: 'linkedin' },
+            { label: 'Custom / Other', value: 'other' },
           ],
-          required: true,
+          defaultValue: 'facebook',
+        },
+        {
+          name: 'icon',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Social Icon (Upload custom icon, or leave blank to auto-use standard icon)',
         },
         {
           name: 'url',
           type: 'text',
+          label: 'Profile URL',
           required: true,
         },
       ],

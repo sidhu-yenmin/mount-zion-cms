@@ -738,26 +738,6 @@ export interface Header {
     email?: string | null;
   };
   logo?: (number | null) | Media;
-  navItems?:
-    | {
-        label: string;
-        link: string;
-        isActive?: boolean | null;
-        /**
-         * Option to display the (v) expand arrow icon next to this menu item
-         */
-        showExpandIcon?: boolean | null;
-        hasDropdown?: boolean | null;
-        subItems?:
-          | {
-              label: string;
-              link: string;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
   ctaButton?: {
     label?: string | null;
     url?: string | null;
@@ -789,14 +769,17 @@ export interface Footer {
   };
   quickLinks?:
     | {
-        label: string;
-        url: string;
+        linkType?: ('page' | 'custom') | null;
+        page?: (number | null) | Page;
+        customUrl?: string | null;
+        label?: string | null;
         id?: string | null;
       }[]
     | null;
   socialLinks?:
     | {
-        platform: 'facebook' | 'instagram' | 'youtube' | 'twitter' | 'linkedin';
+        platform?: ('facebook' | 'instagram' | 'youtube' | 'twitter' | 'linkedin' | 'other') | null;
+        icon?: (number | null) | Media;
         url: string;
         id?: string | null;
       }[]
@@ -848,23 +831,6 @@ export interface HeaderSelect<T extends boolean = true> {
         email?: T;
       };
   logo?: T;
-  navItems?:
-    | T
-    | {
-        label?: T;
-        link?: T;
-        isActive?: T;
-        showExpandIcon?: T;
-        hasDropdown?: T;
-        subItems?:
-          | T
-          | {
-              label?: T;
-              link?: T;
-              id?: T;
-            };
-        id?: T;
-      };
   ctaButton?:
     | T
     | {
@@ -903,14 +869,17 @@ export interface FooterSelect<T extends boolean = true> {
   quickLinks?:
     | T
     | {
+        linkType?: T;
+        page?: T;
+        customUrl?: T;
         label?: T;
-        url?: T;
         id?: T;
       };
   socialLinks?:
     | T
     | {
         platform?: T;
+        icon?: T;
         url?: T;
         id?: T;
       };
