@@ -30,13 +30,34 @@ export default async function HomePage() {
     if (homePage?.layout && homePage.layout.length > 0) {
       layout = homePage.layout
     }
+
+    const pageBgColor = (homePage as any)?.backgroundColor || '#f8fafc'
+    const bgMedia = (homePage as any)?.backgroundImage
+    const pageBgImg =
+      typeof bgMedia === 'object' && bgMedia?.url
+        ? bgMedia.url
+        : typeof bgMedia === 'string' && bgMedia
+          ? bgMedia
+          : null
+
+    return (
+      <main
+        className="w-full min-h-screen transition-colors duration-300 bg-cover bg-center"
+        style={{
+          backgroundColor: pageBgColor,
+          backgroundImage: pageBgImg ? `url(${pageBgImg})` : undefined,
+        }}
+      >
+        {/* Dynamic Layout Blocks rendered directly from CMS Home Page */}
+        <RenderBlocks blocks={layout} />
+      </main>
+    )
   } catch (error) {
     console.warn('Could not fetch home page from CMS:', error)
   }
 
   return (
     <main className="w-full min-h-screen bg-[#f8fafc]">
-      {/* Dynamic Layout Blocks rendered directly from CMS Home Page */}
       <RenderBlocks blocks={layout} />
     </main>
   )

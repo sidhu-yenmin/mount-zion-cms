@@ -74,6 +74,8 @@ export interface AboutUsProps {
   stat2Value?: string | null
   stat2Label?: string | null
   stat2Icon?: number | Media | string | null
+  backgroundColor?: string | null
+  backgroundImage?: number | Media | string | null
 }
 
 export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
@@ -93,6 +95,8 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
   stat2Value = '10',
   stat2Label = 'Experience',
   stat2Icon,
+  backgroundColor = '#FFFFFF',
+  backgroundImage,
 }) => {
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
@@ -103,6 +107,9 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
     if (typeof media === 'object' && media?.url) return media.url
     return null
   }
+
+  // Resolve Background Image
+  const bgImgUrl = resolveMediaUrl(backgroundImage)
 
   // Resolve Left Student Image (Strict CMS - null if not uploaded)
   const studentImg = resolveMediaUrl(imageOne)

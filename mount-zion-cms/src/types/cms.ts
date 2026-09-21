@@ -25,6 +25,8 @@ export interface HeaderData {
   phone: string
   email: string
   navItems: NavItem[]
+  backgroundColor?: string
+  textColor?: string
 }
 
 export interface StatItem {

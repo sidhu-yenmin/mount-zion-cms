@@ -55,7 +55,19 @@ export const Footer: GlobalConfig = {
           relationTo: 'media',
           label: 'Background Banner Image (Chalkboard graphic)',
         },
+        {
+          name: 'backgroundColor',
+          type: 'text',
+          label: 'CTA Banner Background Color',
+          defaultValue: '#03594E',
+        },
       ],
+    },
+    {
+      name: 'backgroundColor',
+      type: 'text',
+      label: 'Main Footer Background Color',
+      defaultValue: '#03594E',
     },
     {
       name: 'logo',

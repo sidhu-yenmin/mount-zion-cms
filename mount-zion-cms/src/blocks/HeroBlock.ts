@@ -30,6 +30,12 @@ export const HeroBlock: Block = {
       required: true,
     },
     {
+      name: 'backgroundColor',
+      type: 'text',
+      label: 'Section Background Color',
+      defaultValue: '#022C22',
+    },
+    {
       name: 'backgroundImage',
       type: 'upload',
       relationTo: 'media',

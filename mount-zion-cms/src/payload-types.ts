@@ -183,6 +183,11 @@ export interface Page {
    */
   slug: string;
   headerVariant?: ('transparent' | 'solid-green' | 'solid-white' | 'hidden') | null;
+  /**
+   * e.g. #FFFFFF, #F8FAFC, #03594E
+   */
+  backgroundColor?: string | null;
+  backgroundImage?: (number | null) | Media;
   layout?:
     | (
         | {
@@ -192,6 +197,7 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
+            backgroundColor?: string | null;
             backgroundImage: number | Media;
             /**
              * Optional additional background images to display as a rotating carousel in the hero banner
@@ -229,6 +235,8 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             description?: string | null;
             buttonText?: string | null;
             buttonUrl?: string | null;
@@ -254,6 +262,7 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
+            backgroundColor?: string | null;
             description?: string | null;
             buttonText?: string | null;
             buttonUrl?: string | null;
@@ -272,6 +281,8 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             description?: string | null;
             tabs?:
               | {
@@ -297,6 +308,8 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             academicYears?:
               | {
                   year: string;
@@ -324,6 +337,8 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             viewMoreText?: string | null;
             viewMoreLink?: string | null;
             galleryImages?:
@@ -352,6 +367,8 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             testimonials?:
               | {
                   cardStyle?: ('green' | 'yellow') | null;
@@ -374,6 +391,8 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             exploreMoreText?: string | null;
             viewAllUrl?: string | null;
             items?:
@@ -520,6 +539,8 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   headerVariant?: T;
+  backgroundColor?: T;
+  backgroundImage?: T;
   layout?:
     | T
     | {
@@ -529,6 +550,7 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
+              backgroundColor?: T;
               backgroundImage?: T;
               carouselImages?:
                 | T
@@ -558,6 +580,8 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
+              backgroundColor?: T;
+              backgroundImage?: T;
               description?: T;
               buttonText?: T;
               buttonUrl?: T;
@@ -581,6 +605,7 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
+              backgroundColor?: T;
               description?: T;
               buttonText?: T;
               buttonUrl?: T;
@@ -597,6 +622,8 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
+              backgroundColor?: T;
+              backgroundImage?: T;
               description?: T;
               tabs?:
                 | T
@@ -620,6 +647,8 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
+              backgroundColor?: T;
+              backgroundImage?: T;
               academicYears?:
                 | T
                 | {
@@ -645,6 +674,8 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
+              backgroundColor?: T;
+              backgroundImage?: T;
               viewMoreText?: T;
               viewMoreLink?: T;
               galleryImages?:
@@ -673,6 +704,8 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
+              backgroundColor?: T;
+              backgroundImage?: T;
               testimonials?:
                 | T
                 | {
@@ -693,6 +726,8 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
+              backgroundColor?: T;
+              backgroundImage?: T;
               exploreMoreText?: T;
               viewAllUrl?: T;
               items?:
@@ -791,7 +826,10 @@ export interface Header {
     showTopBar?: boolean | null;
     phone?: string | null;
     email?: string | null;
+    backgroundColor?: string | null;
+    textColor?: string | null;
   };
+  navBackgroundColor?: string | null;
   logo?: (number | null) | Media;
   ctaButton?: {
     label?: string | null;
@@ -814,7 +852,9 @@ export interface Footer {
     buttonText?: string | null;
     buttonUrl?: string | null;
     backgroundImage?: (number | null) | Media;
+    backgroundColor?: string | null;
   };
+  backgroundColor?: string | null;
   logo?: (number | null) | Media;
   description?: string | null;
   contactInfo?: {
@@ -887,7 +927,10 @@ export interface HeaderSelect<T extends boolean = true> {
         showTopBar?: T;
         phone?: T;
         email?: T;
+        backgroundColor?: T;
+        textColor?: T;
       };
+  navBackgroundColor?: T;
   logo?: T;
   ctaButton?:
     | T
@@ -914,7 +957,9 @@ export interface FooterSelect<T extends boolean = true> {
         buttonText?: T;
         buttonUrl?: T;
         backgroundImage?: T;
+        backgroundColor?: T;
       };
+  backgroundColor?: T;
   logo?: T;
   description?: T;
   contactInfo?:

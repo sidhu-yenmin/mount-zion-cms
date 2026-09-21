@@ -30,6 +30,12 @@ export const CtaBannerBlock: Block = {
       required: true,
     },
     {
+      name: 'backgroundColor',
+      type: 'text',
+      label: 'Banner Background Color',
+      defaultValue: '#03594E',
+    },
+    {
       name: 'description',
       type: 'textarea',
       label: 'Description',

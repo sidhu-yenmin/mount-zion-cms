@@ -19,6 +19,8 @@ export interface TestimonialsProps {
   badge?: string | null
   heading?: string | null
   testimonials?: TestimonialItem[] | null
+  backgroundColor?: string | null
+  backgroundImage?: number | Media | string | null
 }
 
 /* =========================================================================
@@ -141,6 +143,8 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
   badge = 'TESTIMONIALS',
   heading = 'Building Bright Minds for Tomorrow',
   testimonials = [],
+  backgroundColor = '#f4f6f8',
+  backgroundImage,
 }) => {
   // Use CMS testimonials or fallback to default list
   const displayItems =
@@ -263,7 +267,7 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
       ))
     }
 
-    if (heading.includes('for Tomorrow')) {
+    if (heading.includes('Building Bright Minds') || heading.includes('for Tomorrow')) {
       return (
         <>
           <span className="block">Building Bright Minds</span>

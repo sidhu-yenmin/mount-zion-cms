@@ -20,6 +20,8 @@ export interface NewsEventsProps {
   exploreMoreText?: string | null
   viewAllUrl?: string | null
   items?: NewsEventItem[] | null
+  backgroundColor?: string | null
+  backgroundImage?: number | Media | string | null
 }
 
 /* =========================================================================
@@ -75,7 +77,9 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
   heading = 'Explore Our World-Class Academic Programs',
   exploreMoreText = 'Explore More',
   viewAllUrl = '/news',
-  items,
+  items = [],
+  backgroundColor = '#FFFFFF',
+  backgroundImage,
 }) => {
   // Track active row placed on click (default to index 0 matching reference design)
   const [activeRow, setActiveRow] = useState<number>(0)
@@ -89,6 +93,8 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
     if (typeof media === 'object' && media?.url) return media.url
     return null
   }
+
+  const bgImgUrl = resolveMediaUrl(backgroundImage)
 
   const hasCmsItems = items && items.length > 0
   const displayItems = hasCmsItems ? items : placeholderItems
@@ -117,8 +123,16 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
     return heading
   }
 
+  const sectionBgColor = backgroundColor || '#FFFFFF'
+
   return (
-    <section className="relative w-full bg-[#f4f6f8] pt-[50px] pb-[70px] overflow-hidden">
+    <section
+      className="relative w-full py-16 sm:py-20 lg:py-24 overflow-hidden transition-colors duration-300 bg-cover bg-center"
+      style={{
+        backgroundColor: sectionBgColor,
+        backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,
+      }}
+    >
       <div className="w-full max-w-[1120px] mx-auto px-4 xl:px-0">
         {/* 1. Header Section */}
         <div className="flex items-center gap-[10px] mb-[10px]">

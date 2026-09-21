@@ -28,6 +28,8 @@ export interface CampusLifeBlockProps {
   viewMoreLink?: string | null
   galleryImages?: GalleryImageItem[] | null
   ctaBar?: CampusLifeCtaBar | null
+  backgroundColor?: string | null
+  backgroundImage?: number | Media | string | null
 }
 
 /* =========================================================================
@@ -53,6 +55,8 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
   viewMoreLink = '/gallery',
   galleryImages,
   ctaBar,
+  backgroundColor = '#f4f6f8',
+  backgroundImage,
 }) => {
   // 1. Scroll-Triggered Viewport Arrival
   const [isInView, setIsInView] = useState(false)
@@ -85,6 +89,8 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
     if (typeof media === 'object' && media?.url) return media.url
     return null
   }
+
+  const bgImgUrl = resolveMediaUrl(backgroundImage)
 
   // [OPTION B: STRICT CMS - Only load images when uploaded in CMS]
   const deckImages = defaultRatios.map((ratio, idx) => {
@@ -138,6 +144,8 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
 
     return heading
   }
+
+  const sectionBgColor = backgroundColor || '#f4f6f8'
 
   return (
     <section

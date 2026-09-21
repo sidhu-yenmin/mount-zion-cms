@@ -19,6 +19,7 @@ export interface ProgramsProps {
   secondaryImage?: number | Media | string | null
   backgroundImage?: number | Media | string | null
   bannerText?: string | null
+  backgroundColor?: string | null
 }
 
 export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
@@ -33,6 +34,7 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
   secondaryImage,
   backgroundImage,
   bannerText = 'Learning • Innovation • Achievement',
+  backgroundColor = '#044438',
 }) => {
   // Scroll-triggered viewport presentation (triggers only after arriving to the screen)
   const [isInView, setIsInView] = useState(false)
@@ -75,6 +77,8 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
 
   // Resolve Background Image from CMS
   const bgImgUrl = resolveMediaUrl(backgroundImage)
+
+  const sectionBgColor = backgroundColor || '#044438'
 
   return (
     <section

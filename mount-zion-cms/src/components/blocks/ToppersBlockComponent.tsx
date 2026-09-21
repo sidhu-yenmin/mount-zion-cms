@@ -21,6 +21,8 @@ export interface ToppersBlockProps {
   heading?: string | null
   academicYears?: AcademicYearData[] | null
   blockType?: string
+  backgroundColor?: string | null
+  backgroundImage?: number | Media | string | null
 }
 
 /* =========================================================================
@@ -158,6 +160,8 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
   badge = 'STUDENT SUCCESS',
   heading = 'Building Bright Minds for Tomorrow',
   academicYears,
+  backgroundColor = '#044438',
+  backgroundImage,
 }) => {
   // Use CMS academic years if available, otherwise use neutral placeholder year buttons
   const hasCmsYears = academicYears && academicYears.length > 0
@@ -358,9 +362,7 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
 
   const renderScore = (score: string) => {
     if (score && score.includes('/')) {
-      const parts = score.split('/')
-      const numerator = parts[0]?.trim() || ''
-      const denominator = parts[1]?.trim() || ''
+      const [numerator, denominator] = score.split('/')
       return (
         <div className="h-[44px] sm:h-[48px] flex items-baseline font-['Roboto',sans-serif] text-[#F8C62F] leading-none my-1 sm:my-1.5">
           <span className="text-[48px] sm:text-[56px] lg:text-[64px] font-medium leading-[38px] sm:leading-[40.58px] tracking-normal">
@@ -385,6 +387,8 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
     if (photo && typeof photo === 'object' && photo.url) return photo.url
     return null
   }
+
+  const bgImgUrl = getPhotoUrl(backgroundImage)
 
   const isHeadingDefault =
     heading === 'Building Bright Minds for Tomorrow' || !heading

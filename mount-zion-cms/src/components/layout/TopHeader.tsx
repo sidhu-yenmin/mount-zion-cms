@@ -56,8 +56,14 @@ export function TopHeader({ data }: TopHeaderProps) {
     return null
   }
 
+  const topBgColor = data?.backgroundColor || '#EAB308'
+  const topTextColor = data?.textColor || '#0F172A'
+
   return (
-    <header className="w-full bg-[#EAB308] text-[#0F172A] relative z-50 font-['Inter',sans-serif] shadow-xs">
+    <header
+      className="w-full relative z-50 font-['Inter',sans-serif] shadow-xs"
+      style={{ backgroundColor: topBgColor, color: topTextColor }}
+    >
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-[53px]">
         {/* Left Side: Contact Information */}
         <div className="flex items-center gap-6 sm:gap-8 shrink-0">

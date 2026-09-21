@@ -35,8 +35,10 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
   secondaryButtonUrl = '#admission',
   videoUrl,
   stats,
-}) => {
+  backgroundColor,
+}: HeroBlockProps & { backgroundColor?: string | null }) => {
   const [videoModalOpen, setVideoModalOpen] = useState(false)
+  const heroBgColor = backgroundColor || '#0c2e26'
 
   // 1. Resolve Background Images for the Carousel
   const resolveImgSrc = (img: number | Media | string | null | undefined): string | null => {

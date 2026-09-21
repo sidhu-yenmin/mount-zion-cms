@@ -22,6 +22,8 @@ export interface FacilitiesProps {
   heading?: string | null
   description?: string | null
   tabs?: FacilitiesTabItem[] | null
+  backgroundColor?: string | null
+  backgroundImage?: number | Media | string | null
 }
 
 /* =========================================================================
@@ -54,7 +56,20 @@ export const FacilitiesBlockComponent: React.FC<Partial<FacilitiesProps>> = ({
   heading = 'Where Learning, Discovery & Growth Come Together',
   description = 'At our school, every corner of the campus is designed to inspire learning and personal growth. From state-of-the-art classrooms and creative studios to sports facilities and collaborative spaces, students enjoy an environment that nurtures academic excellence alongside creativity, leadership, teamwork, and well-being.',
   tabs,
+  backgroundColor = '#f4f6f8',
+  backgroundImage,
 }) => {
+  // Helper to extract image URL from CMS upload or string
+  const resolveMediaUrl = (
+    media: number | Media | string | null | undefined,
+  ): string | null => {
+    if (!media) return null
+    if (typeof media === 'string' && media.trim()) return media
+    if (typeof media === 'object' && media?.url) return media.url
+    return null
+  }
+
+  const bgImgUrl = resolveMediaUrl(backgroundImage)
   // Use CMS tabs if available (or fallback placeholder tab if none added yet in CMS)
   const tabNames =
     tabs && tabs.length > 0

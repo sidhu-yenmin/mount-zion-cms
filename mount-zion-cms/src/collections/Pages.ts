@@ -50,6 +50,25 @@ export const Pages: CollectionConfig = {
       },
     },
     {
+      name: 'backgroundColor',
+      type: 'text',
+      label: 'Page Background Color (Hex / CSS)',
+      defaultValue: '#FFFFFF',
+      admin: {
+        position: 'sidebar',
+        description: 'e.g. #FFFFFF, #F8FAFC, #03594E',
+      },
+    },
+    {
+      name: 'backgroundImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Page Background Image (Optional)',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'layout',
       type: 'blocks',
       label: 'Page Content Blocks',

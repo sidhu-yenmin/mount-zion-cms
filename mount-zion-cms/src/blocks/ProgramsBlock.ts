@@ -30,6 +30,12 @@ export const ProgramsBlock: Block = {
       required: true,
     },
     {
+      name: 'backgroundColor',
+      type: 'text',
+      label: 'Section Background Color',
+      defaultValue: '#FFFFFF',
+    },
+    {
       name: 'description',
       type: 'textarea',
       label: 'Description Text',
