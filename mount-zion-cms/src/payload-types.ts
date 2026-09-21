@@ -186,6 +186,10 @@ export interface Page {
   layout?:
     | (
         | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
             backgroundImage: number | Media;
@@ -219,6 +223,10 @@ export interface Page {
             blockType: 'hero';
           }
         | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
             description?: string | null;
@@ -240,6 +248,10 @@ export interface Page {
             blockType: 'aboutUs';
           }
         | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
             description?: string | null;
@@ -254,6 +266,10 @@ export interface Page {
             blockType: 'programs';
           }
         | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
             description?: string | null;
@@ -275,6 +291,10 @@ export interface Page {
             blockType: 'facilities';
           }
         | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
             academicYears?:
@@ -298,6 +318,10 @@ export interface Page {
             blockType: 'toppers';
           }
         | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
             viewMoreText?: string | null;
@@ -322,6 +346,10 @@ export interface Page {
             blockType: 'campusLife';
           }
         | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
             testimonials?:
@@ -340,6 +368,10 @@ export interface Page {
             blockType: 'testimonials';
           }
         | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
             exploreMoreText?: string | null;
@@ -494,6 +526,7 @@ export interface PagesSelect<T extends boolean = true> {
         hero?:
           | T
           | {
+              hideSection?: T;
               badge?: T;
               heading?: T;
               backgroundImage?: T;
@@ -522,6 +555,7 @@ export interface PagesSelect<T extends boolean = true> {
         aboutUs?:
           | T
           | {
+              hideSection?: T;
               badge?: T;
               heading?: T;
               description?: T;
@@ -544,6 +578,7 @@ export interface PagesSelect<T extends boolean = true> {
         programs?:
           | T
           | {
+              hideSection?: T;
               badge?: T;
               heading?: T;
               description?: T;
@@ -559,6 +594,7 @@ export interface PagesSelect<T extends boolean = true> {
         facilities?:
           | T
           | {
+              hideSection?: T;
               badge?: T;
               heading?: T;
               description?: T;
@@ -581,6 +617,7 @@ export interface PagesSelect<T extends boolean = true> {
         toppers?:
           | T
           | {
+              hideSection?: T;
               badge?: T;
               heading?: T;
               academicYears?:
@@ -605,6 +642,7 @@ export interface PagesSelect<T extends boolean = true> {
         campusLife?:
           | T
           | {
+              hideSection?: T;
               badge?: T;
               heading?: T;
               viewMoreText?: T;
@@ -632,6 +670,7 @@ export interface PagesSelect<T extends boolean = true> {
         testimonials?:
           | T
           | {
+              hideSection?: T;
               badge?: T;
               heading?: T;
               testimonials?:
@@ -651,6 +690,7 @@ export interface PagesSelect<T extends boolean = true> {
         newsEvents?:
           | T
           | {
+              hideSection?: T;
               badge?: T;
               heading?: T;
               exploreMoreText?: T;
