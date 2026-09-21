@@ -86,7 +86,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   }
 
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -95,7 +95,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           rel="stylesheet"
         />
       </head>
-      <body className="bg-slate-50 text-neutral-900 antialiased min-h-screen flex flex-col">
+      <body
+        className="bg-slate-50 text-neutral-900 antialiased min-h-screen flex flex-col"
+        suppressHydrationWarning
+      >
         {/* Dynamic CMS Header */}
         <TopHeader data={headerCmsData} />
         <main className="flex-1 w-full">{children}</main>
