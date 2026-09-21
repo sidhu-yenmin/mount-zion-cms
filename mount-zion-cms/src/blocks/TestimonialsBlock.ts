@@ -24,6 +24,32 @@ export const TestimonialsBlock: Block = {
       name: 'testimonials',
       type: 'array',
       label: 'Parent & Student Reviews',
+      defaultValue: [
+        {
+          cardStyle: 'green',
+          rating: 5,
+          quote:
+            'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
+          authorName: 'M.S. Dhoni',
+          authorRole: 'Indian Cricketer',
+        },
+        {
+          cardStyle: 'yellow',
+          rating: 5,
+          quote:
+            'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
+          authorName: 'M.S. Dhoni',
+          authorRole: 'Indian Cricketer',
+        },
+        {
+          cardStyle: 'green',
+          rating: 5,
+          quote:
+            'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
+          authorName: 'M.S. Dhoni',
+          authorRole: 'Indian Cricketer',
+        },
+      ],
       minRows: 1,
       fields: [
         {

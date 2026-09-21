@@ -94,45 +94,30 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
   stat2Label = 'Experience',
   stat2Icon,
 }) => {
-  // Resolve Left Student Image
-  const studentImg =
-    typeof imageOne === 'object' && imageOne?.url
-      ? imageOne.url
-      : typeof imageOne === 'string' && imageOne
-        ? imageOne
-        : '/images/why-mount-zion-student.png'
+  // Helper to extract image URL from CMS upload or string
+  const resolveMediaUrl = (
+    media: number | Media | string | null | undefined,
+  ): string | null => {
+    if (!media) return null
+    if (typeof media === 'string' && media.trim()) return media
+    if (typeof media === 'object' && media?.url) return media.url
+    return null
+  }
 
-  // Resolve Classroom Activity Image
-  const classroomImg =
-    typeof imageTwo === 'object' && imageTwo?.url
-      ? imageTwo.url
-      : typeof imageTwo === 'string' && imageTwo
-        ? imageTwo
-        : '/images/why-mount-zion-classroom.png'
+  // Resolve Left Student Image (Strict CMS - null if not uploaded)
+  const studentImg = resolveMediaUrl(imageOne)
 
-  // Resolve Sunburst Badge Icon
-  const sunIconImg =
-    typeof floatingBadgeIcon === 'object' && floatingBadgeIcon?.url
-      ? floatingBadgeIcon.url
-      : typeof floatingBadgeIcon === 'string' && floatingBadgeIcon
-        ? floatingBadgeIcon
-        : '/images/sun.png'
+  // Resolve Classroom Activity Image (Strict CMS - null if not uploaded)
+  const classroomImg = resolveMediaUrl(imageTwo)
 
-  // Resolve Stat 1 Icon (Graduation)
-  const graduateIconImg =
-    typeof stat1Icon === 'object' && stat1Icon?.url
-      ? stat1Icon.url
-      : typeof stat1Icon === 'string' && stat1Icon
-        ? stat1Icon
-        : '/images/graduate.png'
+  // Resolve Sunburst Badge Icon (Strict CMS - null if not uploaded)
+  const sunIconImg = resolveMediaUrl(floatingBadgeIcon)
 
-  // Resolve Stat 2 Icon (Idea)
-  const ideaIconImg =
-    typeof stat2Icon === 'object' && stat2Icon?.url
-      ? stat2Icon.url
-      : typeof stat2Icon === 'string' && stat2Icon
-        ? stat2Icon
-        : '/images/idea.png'
+  // Resolve Stat 1 Icon (Graduation - Strict CMS - null if not uploaded)
+  const graduateIconImg = resolveMediaUrl(stat1Icon)
+
+  // Resolve Stat 2 Icon (Idea / Experience - Strict CMS - null if not uploaded)
+  const ideaIconImg = resolveMediaUrl(stat2Icon)
 
   // Scroll-triggered viewport slide-in / slide-out presentation
   const [isInView, setIsInView] = useState(false)
@@ -233,16 +218,28 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
                 }`}
               >
                 {/* Classroom Photo Container with rounded corners & overflow hidden */}
-                <div className="relative w-full h-[260px] sm:h-[320px] rounded-[24px] overflow-hidden shadow-lg border border-slate-100">
-                  <Image
-                    src={classroomImg}
-                    alt="Classroom students with teacher"
-                    fill
-                    priority
-                    unoptimized
-                    className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 423px"
-                  />
+                <div className="relative w-full h-[260px] sm:h-[320px] rounded-[24px] overflow-hidden shadow-lg border border-slate-100 bg-slate-100">
+                  {classroomImg ? (
+                    <Image
+                      src={classroomImg}
+                      alt="Classroom students with teacher"
+                      fill
+                      priority
+                      unoptimized
+                      className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 423px"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-6 text-slate-400 select-none">
+                      <svg className="w-12 h-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <div className="text-center">
+                        <p className="text-xs font-semibold text-slate-500">No Image Uploaded</p>
+                        <p className="text-[11px] text-slate-400 mt-0.5">Upload Image 2 in CMS</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Overlapping Glassmorphic Banner with gentle floating levitation */}

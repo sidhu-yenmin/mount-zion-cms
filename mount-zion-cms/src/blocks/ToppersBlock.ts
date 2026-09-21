@@ -24,6 +24,64 @@ export const ToppersBlock: Block = {
       name: 'academicYears',
       type: 'array',
       label: 'Academic Years & Rank Holders',
+      defaultValue: [
+        {
+          year: '2026',
+          rankHolders: [
+            {
+              studentName: 'Kishorekumar',
+              rank: 'HSC Topper',
+              score: '485/500',
+              standard: 'IN GRADE 10',
+            },
+            {
+              studentName: 'Yogalakshmi',
+              rank: 'HSC Topper',
+              score: '483/500',
+              standard: 'IN GRADE 10',
+            },
+          ],
+        },
+        {
+          year: '2025',
+          rankHolders: [
+            {
+              studentName: 'Aadhavan',
+              rank: 'CBSE Topper',
+              score: '492/500',
+              standard: 'IN GRADE 10',
+            },
+            {
+              studentName: 'Sneha',
+              rank: 'School 2nd',
+              score: '488/500',
+              standard: 'IN GRADE 10',
+            },
+          ],
+        },
+        {
+          year: '2024',
+          rankHolders: [
+            {
+              studentName: 'Rahul',
+              rank: '1st Rank',
+              score: '490/500',
+              standard: 'IN GRADE 10',
+            },
+          ],
+        },
+        {
+          year: '2023',
+          rankHolders: [
+            {
+              studentName: 'Divya',
+              rank: '1st Rank',
+              score: '494/500',
+              standard: 'IN GRADE 10',
+            },
+          ],
+        },
+      ],
       minRows: 1,
       fields: [
         {

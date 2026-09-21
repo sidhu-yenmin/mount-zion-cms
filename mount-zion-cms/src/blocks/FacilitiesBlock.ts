@@ -31,6 +31,15 @@ export const FacilitiesBlock: Block = {
       name: 'tabs',
       type: 'array',
       label: 'Facility Categories & Photos',
+      defaultValue: [
+        { tabName: 'Classrooms' },
+        { tabName: 'Self defence' },
+        { tabName: 'Swimming' },
+        { tabName: 'Dance & Music' },
+        { tabName: 'Sports' },
+        { tabName: 'Arts' },
+        { tabName: 'Fitness' },
+      ],
       minRows: 1,
       fields: [
         {

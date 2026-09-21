@@ -11,6 +11,14 @@ export const Menu: GlobalConfig = {
       name: 'menuItems',
       type: 'array',
       label: 'Main Navigation Menu',
+      defaultValue: [
+        { label: 'Home', linkType: 'custom', customUrl: '/' },
+        { label: 'About', linkType: 'custom', customUrl: '#about' },
+        { label: 'Academic', linkType: 'custom', customUrl: '#academic' },
+        { label: 'Admission', linkType: 'custom', customUrl: '#admission' },
+        { label: 'Resources', linkType: 'custom', customUrl: '#resources' },
+        { label: 'Student Portal', linkType: 'custom', customUrl: '#portal' },
+      ],
       labels: {
         singular: 'Menu Item',
         plural: 'Menu Items',

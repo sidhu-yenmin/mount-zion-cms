@@ -93,6 +93,12 @@ export const HeroBlock: Block = {
       name: 'stats',
       type: 'array',
       label: 'Bottom Stats Counter Cards',
+      defaultValue: [
+        { icon: 'book', value: '30+', label: 'Academic\nExperience' },
+        { icon: 'students', value: '3,000+', label: 'Happy\nStudents' },
+        { icon: 'teacher', value: '250+', label: 'Experienced\nTeachers' },
+        { icon: 'trophy', value: '100%', label: 'Pass Rate In\nBoard Exams' },
+      ],
       minRows: 1,
       maxRows: 6,
       fields: [
