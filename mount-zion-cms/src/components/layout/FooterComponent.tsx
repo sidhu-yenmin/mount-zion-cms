@@ -182,12 +182,12 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
                       aria-label={social.name}
                       className="transition-transform duration-200 hover:scale-115 opacity-95 hover:opacity-100"
                     >
-                      <div className="relative w-[25px] h-[25px]">
+                      <div className="relative w-[28px] h-[28px]">
                         <Image
                           src={social.icon}
                           alt={social.name}
-                          width={25}
-                          height={25}
+                          width={28}
+                          height={28}
                           unoptimized
                           className="object-contain"
                         />
@@ -241,24 +241,27 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
               <div className="w-full lg:w-[280px] flex flex-col gap-6 shrink-0">
                 {/* Phone */}
                 {phone && (
-                  <div className="flex items-start gap-3.5">
-                    <div className="w-[32px] h-[32px] shrink-0 flex items-center justify-center pt-0.5">
-                      <Image
-                        src="/images/phone.svg"
-                        alt="Phone"
-                        width={32}
-                        height={32}
-                        unoptimized
-                        className="object-contain"
-                      />
-                    </div>
+                  <div className="flex items-start gap-4">
+                    {/* [OPTION A: STATIC FALLBACK PHONE ICON COMMENTED OUT - uncomment || '/images/phone.svg' below if needed] */}
+                    {resolveMediaUrl((footer?.contactInfo as any)?.phoneIcon) && (
+                      <div className="w-[38px] h-[38px] shrink-0 flex items-center justify-center pt-0.5">
+                        <Image
+                          src={resolveMediaUrl((footer?.contactInfo as any)?.phoneIcon)!}
+                          alt="Phone"
+                          width={38}
+                          height={38}
+                          unoptimized
+                          className="w-[36px] h-[36px] object-contain"
+                        />
+                      </div>
+                    )}
                     <div>
-                      <p className="font-['Roboto',sans-serif] font-bold text-[16px] leading-tight text-white mb-1">
+                      <p className="font-['Roboto',sans-serif] font-bold text-[17px] leading-tight text-white mb-1.5">
                         Contact Us
                       </p>
                       <a
                         href={`tel:${phone.replace(/\s+/g, '')}`}
-                        className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[139%] text-white/85 hover:text-white transition-colors"
+                        className="font-['Roboto',sans-serif] font-normal text-[15px] leading-[139%] text-white/85 hover:text-white transition-colors"
                       >
                         {phone}
                       </a>
@@ -268,24 +271,27 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
 
                 {/* Email */}
                 {email && (
-                  <div className="flex items-start gap-3.5">
-                    <div className="w-[32px] h-[26px] shrink-0 flex items-center justify-center pt-1">
-                      <Image
-                        src="/images/mail.svg"
-                        alt="Email"
-                        width={29}
-                        height={23}
-                        unoptimized
-                        className="object-contain"
-                      />
-                    </div>
+                  <div className="flex items-start gap-4">
+                    {/* [OPTION A: STATIC FALLBACK EMAIL ICON COMMENTED OUT - uncomment || '/images/mail.svg' below if needed] */}
+                    {resolveMediaUrl((footer?.contactInfo as any)?.emailIcon) && (
+                      <div className="w-[38px] h-[38px] shrink-0 flex items-center justify-center pt-0.5">
+                        <Image
+                          src={resolveMediaUrl((footer?.contactInfo as any)?.emailIcon)!}
+                          alt="Email"
+                          width={38}
+                          height={38}
+                          unoptimized
+                          className="w-[36px] h-[36px] object-contain"
+                        />
+                      </div>
+                    )}
                     <div>
-                      <p className="font-['Roboto',sans-serif] font-bold text-[16px] leading-tight text-white mb-1">
+                      <p className="font-['Roboto',sans-serif] font-bold text-[17px] leading-tight text-white mb-1.5">
                         Mail Us
                       </p>
                       <a
                         href={`mailto:${email}`}
-                        className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[139%] text-white/85 hover:text-white transition-colors"
+                        className="font-['Roboto',sans-serif] font-normal text-[15px] leading-[139%] text-white/85 hover:text-white transition-colors"
                       >
                         {email}
                       </a>
@@ -295,22 +301,25 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
 
                 {/* Address */}
                 {address && (
-                  <div className="flex items-start gap-3.5">
-                    <div className="w-[32px] h-[32px] shrink-0 flex items-center justify-center pt-0.5">
-                      <Image
-                        src="/images/location.svg"
-                        alt="Location"
-                        width={24}
-                        height={30}
-                        unoptimized
-                        className="w-[24px] h-[30px] object-contain"
-                      />
-                    </div>
+                  <div className="flex items-start gap-4">
+                    {/* [OPTION A: STATIC FALLBACK ADDRESS ICON COMMENTED OUT - uncomment || '/images/location.svg' below if needed] */}
+                    {resolveMediaUrl((footer?.contactInfo as any)?.addressIcon) && (
+                      <div className="w-[38px] h-[38px] shrink-0 flex items-center justify-center pt-0.5">
+                        <Image
+                          src={resolveMediaUrl((footer?.contactInfo as any)?.addressIcon)!}
+                          alt="Location"
+                          width={38}
+                          height={38}
+                          unoptimized
+                          className="w-[36px] h-[36px] object-contain"
+                        />
+                      </div>
+                    )}
                     <div>
-                      <p className="font-['Roboto',sans-serif] font-bold text-[16px] leading-tight text-white mb-1">
+                      <p className="font-['Roboto',sans-serif] font-bold text-[17px] leading-tight text-white mb-1.5">
                         Address
                       </p>
-                      <p className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[139%] text-white/85 whitespace-pre-line">
+                      <p className="font-['Roboto',sans-serif] font-normal text-[15px] leading-[139%] text-white/85 whitespace-pre-line">
                         {address}
                       </p>
                     </div>

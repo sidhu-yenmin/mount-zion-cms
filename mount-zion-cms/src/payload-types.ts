@@ -763,9 +763,12 @@ export interface Footer {
   logo?: (number | null) | Media;
   description?: string | null;
   contactInfo?: {
-    address?: string | null;
     phone?: string | null;
+    phoneIcon?: (number | null) | Media;
     email?: string | null;
+    emailIcon?: (number | null) | Media;
+    address?: string | null;
+    addressIcon?: (number | null) | Media;
   };
   quickLinks?:
     | {
@@ -778,7 +781,7 @@ export interface Footer {
     | null;
   socialLinks?:
     | {
-        platform?: ('facebook' | 'instagram' | 'youtube' | 'twitter' | 'linkedin' | 'other') | null;
+        platform: 'facebook' | 'instagram' | 'youtube' | 'twitter' | 'linkedin' | 'other';
         icon?: (number | null) | Media;
         url: string;
         id?: string | null;
@@ -862,9 +865,12 @@ export interface FooterSelect<T extends boolean = true> {
   contactInfo?:
     | T
     | {
-        address?: T;
         phone?: T;
+        phoneIcon?: T;
         email?: T;
+        emailIcon?: T;
+        address?: T;
+        addressIcon?: T;
       };
   quickLinks?:
     | T
