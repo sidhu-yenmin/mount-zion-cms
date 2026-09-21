@@ -13,7 +13,7 @@ export function SchoolLogo({ logoUrl, className = '' }: { logoUrl?: string; clas
         height={83}
         priority
         unoptimized
-        className="h-14 sm:h-16 w-auto object-contain drop-shadow-sm"
+        className="h-8 sm:h-11 md:h-14 lg:h-16 w-auto max-w-[170px] sm:max-w-none object-contain drop-shadow-sm"
       />
     </div>
   )

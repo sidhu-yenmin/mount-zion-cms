@@ -127,10 +127,10 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
               <div>
                 <Link
                   href={buttonUrl || '#academics'}
-                  className="inline-flex items-center justify-center gap-3 min-h-[52px] sm:min-h-[58px] px-8 sm:px-10 rounded-full border border-[#919191] bg-[#FFFFFF] hover:bg-neutral-50 text-[#353535] font-medium text-[18px] sm:text-[20px] transition-all duration-200 shadow-xs hover:shadow-md active:scale-95 cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2.5 sm:gap-3 min-h-[48px] sm:min-h-[58px] px-7 sm:px-10 rounded-full border border-[#919191] bg-[#FFFFFF] hover:bg-neutral-50 text-[#353535] font-medium text-[16px] sm:text-[20px] transition-all duration-200 shadow-xs hover:shadow-md active:scale-95 cursor-pointer whitespace-nowrap shrink-0"
                 >
                   <span>{buttonText}</span>
-                  <ArrowUpRight className="w-5 h-5 stroke-[2.2] text-[#353535]" />
+                  <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2] text-[#353535]" />
                 </Link>
               </div>
             </div>
@@ -153,9 +153,9 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
                 </div>
 
                 {/* Overlapping Glassmorphic Banner matching target image exactly */}
-                <div className="absolute -left-12 sm:-left-28 md:-left-32 lg:-left-[135px] bottom-16 sm:bottom-20 lg:bottom-[82px] w-[290px] sm:w-[314px] h-[86px] sm:h-[92px] rounded-r-[18.16px] rounded-l-none bg-gradient-to-r from-[#dceee8]/92 via-[#dceee8]/82 via-55% to-[#152a24]/75 backdrop-blur-[30px] border-l-[3.5px] border-l-[#F8C62F] shadow-xl flex items-center pl-14 sm:pl-16 pr-4 z-20 pointer-events-none transition-transform duration-300 group-hover:scale-[1.02]">
+                <div className="absolute left-6 sm:-left-28 md:-left-32 lg:-left-[135px] bottom-6 sm:bottom-20 lg:bottom-[82px] w-[270px] sm:w-[314px] h-[80px] sm:h-[92px] rounded-r-[18.16px] rounded-l-none bg-gradient-to-r from-[#dceee8]/92 via-[#dceee8]/82 via-55% to-[#152a24]/75 backdrop-blur-[30px] border-l-[3.5px] border-l-[#F8C62F] shadow-xl flex items-center pl-12 sm:pl-16 pr-4 z-20 pointer-events-none transition-transform duration-300 group-hover:scale-[1.02]">
                   {/* Sunburst Icon Centered on Left Yellow Border (92.48px x 92.48px) */}
-                  <div className="absolute -left-[43px] sm:-left-[46px] top-0 bottom-0 my-auto w-[86px] sm:w-[92px] h-[86px] sm:h-[92px] flex items-center justify-center pointer-events-none">
+                  <div className="absolute -left-[38px] sm:-left-[46px] top-0 bottom-0 my-auto w-[76px] sm:w-[92px] h-[76px] sm:h-[92px] flex items-center justify-center pointer-events-none">
                     <Image
                       src={sunIconImg}
                       alt="Sunburst icon"
@@ -168,10 +168,10 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
 
                   {/* Banner Text */}
                   <div className="flex flex-col justify-center select-none">
-                    <span className="text-[#03594E] font-semibold italic text-[16px] sm:text-[18px] lg:text-[20.82px] leading-[1.2] lg:leading-[28px] tracking-tight whitespace-nowrap">
+                    <span className="text-[#03594E] font-semibold italic text-[15px] sm:text-[18px] lg:text-[20.82px] leading-[1.2] lg:leading-[28px] tracking-tight whitespace-nowrap">
                       {floatingBadgeLine1 || 'UNLOCKING POTENTIALS'}
                     </span>
-                    <span className="text-[#03594E] font-semibold italic text-[16px] sm:text-[18px] lg:text-[20.82px] leading-[1.2] lg:leading-[28px] tracking-tight whitespace-nowrap mt-0.5">
+                    <span className="text-[#03594E] font-semibold italic text-[15px] sm:text-[18px] lg:text-[20.82px] leading-[1.2] lg:leading-[28px] tracking-tight whitespace-nowrap mt-0.5">
                       {floatingBadgeLine2 || 'HIGHER EDUCATION'}
                     </span>
                   </div>
@@ -179,10 +179,10 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
               </div>
 
               {/* Vertical Stats Counter Column */}
-              <div className="flex flex-row md:flex-col justify-around md:justify-center items-start gap-8 sm:gap-10 shrink-0 w-full md:w-auto pb-2">
+              <div className="flex flex-row md:flex-col justify-between sm:justify-around md:justify-center items-center md:items-start gap-4 sm:gap-8 md:gap-10 shrink-0 w-full md:w-auto pb-2 px-2 sm:px-4 md:px-0">
                 {/* Stat 1: Students */}
-                <div className="flex items-center gap-4 sm:gap-5">
-                  <div className="w-[60px] h-[60px] sm:w-[89px] sm:h-[89px] shrink-0 flex items-center justify-center">
+                <div className="flex items-center gap-2.5 sm:gap-4 md:gap-5 min-w-0">
+                  <div className="w-[46px] h-[46px] sm:w-[56px] sm:h-[56px] md:w-[89px] md:h-[89px] shrink-0 flex items-center justify-center">
                     <Image
                       src={graduateIconImg}
                       alt="Students enrolled"
@@ -192,24 +192,24 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <div className="flex items-baseline leading-none select-none">
-                      <span className="text-[#0F172A] font-bold italic text-[36px] sm:text-[46px] font-['Inter',sans-serif]">
+                      <span className="text-[#0F172A] font-bold italic text-[28px] sm:text-[36px] md:text-[46px] font-['Inter',sans-serif]">
                         {stat1Value || '9K'}
                       </span>
-                      <span className="text-[#F8C62F] font-medium text-[40px] sm:text-[50px] font-['Inter',sans-serif] ml-1 leading-none">
+                      <span className="text-[#F8C62F] font-medium text-[32px] sm:text-[40px] md:text-[50px] font-['Inter',sans-serif] ml-1 leading-none">
                         +
                       </span>
                     </div>
-                    <div className="text-[#0F172A] font-bold text-[18px] sm:text-[24px] mt-1 select-none">
+                    <div className="text-[#0F172A] font-bold text-[14px] sm:text-[18px] md:text-[24px] mt-0.5 sm:mt-1 select-none whitespace-nowrap">
                       {stat1Label || 'Students'}
                     </div>
                   </div>
                 </div>
 
                 {/* Stat 2: Experience */}
-                <div className="flex items-center gap-4 sm:gap-5">
-                  <div className="w-[56px] h-[56px] sm:w-[83px] sm:h-[83px] shrink-0 flex items-center justify-center">
+                <div className="flex items-center gap-2.5 sm:gap-4 md:gap-5 min-w-0">
+                  <div className="w-[42px] h-[42px] sm:w-[52px] sm:h-[52px] md:w-[83px] md:h-[83px] shrink-0 flex items-center justify-center">
                     <Image
                       src={ideaIconImg}
                       alt="Years of Experience"
@@ -219,16 +219,16 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <div className="flex items-baseline leading-none select-none">
-                      <span className="text-[#0F172A] font-bold italic text-[36px] sm:text-[46px] font-['Inter',sans-serif]">
+                      <span className="text-[#0F172A] font-bold italic text-[28px] sm:text-[36px] md:text-[46px] font-['Inter',sans-serif]">
                         {stat2Value || '10'}
                       </span>
-                      <span className="text-[#F8C62F] font-medium text-[40px] sm:text-[50px] font-['Inter',sans-serif] ml-1 leading-none">
+                      <span className="text-[#F8C62F] font-medium text-[32px] sm:text-[40px] md:text-[50px] font-['Inter',sans-serif] ml-1 leading-none">
                         +
                       </span>
                     </div>
-                    <div className="text-[#0F172A] font-bold text-[18px] sm:text-[24px] mt-1 select-none">
+                    <div className="text-[#0F172A] font-bold text-[14px] sm:text-[18px] md:text-[24px] mt-0.5 sm:mt-1 select-none whitespace-nowrap">
                       {stat2Label || 'Experience'}
                     </div>
                   </div>

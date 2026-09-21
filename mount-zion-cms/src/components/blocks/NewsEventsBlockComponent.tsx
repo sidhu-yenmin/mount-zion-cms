@@ -109,7 +109,7 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
           {viewAllUrl && (
             <Link
               href={viewAllUrl}
-              className="inline-flex items-center justify-center gap-[10px] w-[233px] h-[58px] rounded-[100px] border border-[#919191] bg-white text-[#353535] font-['Roboto',sans-serif] font-medium text-[20px] transition-all duration-300 hover:border-black hover:bg-slate-50 hover:shadow-md shrink-0 self-start md:self-end group mb-1 md:mb-0"
+              className="inline-flex items-center justify-center gap-[10px] w-auto sm:w-[233px] h-[48px] sm:h-[58px] px-6 sm:px-0 rounded-[100px] border border-[#919191] bg-white text-[#353535] font-['Roboto',sans-serif] font-medium text-[16px] sm:text-[20px] transition-all duration-300 hover:border-black hover:bg-slate-50 hover:shadow-md shrink-0 self-start md:self-end group mb-1 md:mb-0 whitespace-nowrap"
             >
               <span>{exploreMoreText}</span>
               <Image

@@ -142,9 +142,9 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
               </div>
 
               {/* Overlapping Blurry Banner (Learning • Innovation • Achievement) */}
-              <div className="absolute -left-6 sm:-left-20 md:-left-24 lg:-left-[140px] bottom-6 sm:bottom-10 w-[290px] sm:w-[375px] h-[62px] sm:h-[70px] rounded-r-[18.16px] rounded-l-none bg-gradient-to-r from-white/[0.14] via-white/[0.10] to-white/[0.04] backdrop-blur-[7px] border-l-[3.5px] border-l-[#F8C62F] shadow-2xl flex items-center pl-12 sm:pl-16 pr-4 z-20 pointer-events-none transition-transform duration-300 group-hover:scale-[1.02]">
+              <div className="absolute left-6 sm:-left-20 md:-left-24 lg:-left-[140px] bottom-6 sm:bottom-10 w-[260px] sm:w-[375px] max-w-[calc(100vw-3rem)] h-[58px] sm:h-[70px] rounded-r-[18.16px] rounded-l-none bg-gradient-to-r from-white/[0.14] via-white/[0.10] to-white/[0.04] backdrop-blur-[7px] border-l-[3.5px] border-l-[#F8C62F] shadow-2xl flex items-center pl-10 sm:pl-16 pr-3 sm:pr-4 z-20 pointer-events-none transition-transform duration-300 group-hover:scale-[1.02]">
                 {/* Sunburst Icon Centered on Left Yellow Border */}
-                <div className="absolute -left-[35px] sm:-left-[46px] top-0 bottom-0 my-auto w-[70px] sm:w-[92px] h-[70px] sm:h-[92px] flex items-center justify-center pointer-events-none">
+                <div className="absolute -left-[30px] sm:-left-[46px] top-0 bottom-0 my-auto w-[60px] sm:w-[92px] h-[60px] sm:h-[92px] flex items-center justify-center pointer-events-none">
                   <Image
                     src="/images/sun.png"
                     alt="Sunburst icon"
@@ -155,7 +155,7 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
                 </div>
 
                 {/* Banner Text */}
-                <span className="text-white font-semibold italic text-[14px] sm:text-[17px] lg:text-[20.82px] leading-tight lg:leading-[30.07px] tracking-tight whitespace-nowrap select-none">
+                <span className="text-white font-semibold italic text-[12px] sm:text-[17px] lg:text-[20.82px] leading-tight lg:leading-[30.07px] tracking-tight whitespace-nowrap select-none">
                   {bannerText}
                 </span>
               </div>

@@ -75,17 +75,17 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
         </div>
 
         {/* Overlay Navbar */}
-        <div className="relative z-20 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 pt-6 sm:pt-8 flex items-center justify-between">
-          <Link href="/" className="hover:opacity-95 transition-opacity">
+        <div className="relative z-20 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 pt-4 sm:pt-8 flex items-center justify-between gap-3 sm:gap-6">
+          <Link href="/" className="hover:opacity-95 transition-opacity shrink-0">
             <SchoolLogo />
           </Link>
 
           <Link
             href="#apply"
-            className="inline-flex items-center gap-1.5 bg-white hover:bg-neutral-100 text-neutral-900 font-bold text-xs sm:text-sm px-6 py-2.5 sm:py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 cursor-pointer"
+            className="inline-flex items-center justify-center gap-1.5 bg-white hover:bg-neutral-100 text-neutral-900 font-bold text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-2.5 rounded-full transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 cursor-pointer whitespace-nowrap shrink-0"
           >
             <span>Apply Now</span>
-            <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+            <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5] shrink-0" />
           </Link>
         </div>
 
@@ -105,24 +105,24 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
               )}
 
               {/* Main Headline */}
-              <h1 className="text-white tracking-tight leading-[1.12] mb-8 select-none">
-                <span className="block font-light text-4xl sm:text-5xl lg:text-[54px] xl:text-[58px] text-white/95">
+              <h1 className="text-white tracking-tight leading-[1.12] mb-6 sm:mb-8 select-none">
+                <span className="block font-light text-[30px] sm:text-5xl lg:text-[54px] xl:text-[58px] text-white/95">
                   {lines[0]}
                 </span>
-                <span className="block font-extrabold text-4xl sm:text-5xl lg:text-[54px] xl:text-[58px] text-white mt-1">
+                <span className="block font-extrabold text-[30px] sm:text-5xl lg:text-[54px] xl:text-[58px] text-white mt-1">
                   {lines[1]}
                 </span>
-                <span className="block font-extrabold text-4xl sm:text-5xl lg:text-[54px] xl:text-[58px] text-white mt-1">
+                <span className="block font-extrabold text-[30px] sm:text-5xl lg:text-[54px] xl:text-[58px] text-white mt-1">
                   {lines[2]}
                 </span>
               </h1>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                 {primaryButtonText && (
                   <Link
                     href={primaryButtonUrl || '#explore'}
-                    className="inline-flex items-center gap-2 bg-[#f5a623] hover:bg-[#e29517] text-[#111] font-bold text-sm sm:text-base px-7 sm:px-8 py-3 sm:py-3.5 rounded-full transition-all duration-200 shadow-lg hover:shadow-amber-500/30 active:scale-95"
+                    className="inline-flex items-center justify-center gap-2 bg-[#f5a623] hover:bg-[#e29517] text-[#111] font-bold text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-all duration-200 shadow-lg hover:shadow-amber-500/30 active:scale-95 whitespace-nowrap shrink-0"
                   >
                     <span>{primaryButtonText}</span>
                     <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
@@ -132,7 +132,7 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
                 {secondaryButtonText && (
                   <Link
                     href={secondaryButtonUrl || '#admission'}
-                    className="inline-flex items-center gap-2 border border-white/80 hover:border-white text-white hover:bg-white/10 font-semibold text-sm sm:text-base px-7 sm:px-8 py-3 sm:py-3.5 rounded-full transition-all duration-200 backdrop-blur-xs active:scale-95"
+                    className="inline-flex items-center justify-center gap-2 border border-white/80 hover:border-white text-white hover:bg-white/10 font-semibold text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-all duration-200 backdrop-blur-xs active:scale-95 whitespace-nowrap shrink-0"
                   >
                     <span>{secondaryButtonText}</span>
                     <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />

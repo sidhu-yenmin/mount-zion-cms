@@ -129,7 +129,7 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
           {viewMoreLink && (
             <Link
               href={viewMoreLink}
-              className="inline-flex items-center justify-center gap-[10px] w-[199px] h-[58px] rounded-[100px] border border-[#919191] bg-white text-[#353535] font-['Roboto',sans-serif] font-medium text-[20px] transition-all duration-300 hover:border-black hover:bg-slate-50 hover:shadow-md shrink-0 self-start md:self-end group mb-1 md:mb-0"
+              className="inline-flex items-center justify-center gap-[10px] w-auto sm:w-[199px] h-[48px] sm:h-[58px] px-6 sm:px-0 rounded-[100px] border border-[#919191] bg-white text-[#353535] font-['Roboto',sans-serif] font-medium text-[16px] sm:text-[20px] transition-all duration-300 hover:border-black hover:bg-slate-50 hover:shadow-md shrink-0 self-start md:self-end group mb-1 md:mb-0 whitespace-nowrap"
             >
               <span>{viewMoreText}</span>
               <Image
@@ -188,7 +188,7 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
 
         {/* 3. Gallery CTA Banner (Bottom: 1118 x 191px) */}
         {showCta && (
-          <div className="relative mt-[185px] w-full max-w-[1118px] mx-auto">
+          <div className="relative mt-10 md:mt-[185px] w-full max-w-[1118px] mx-auto">
             {/* Banner Background Container (1118 x 191px) */}
             <div className="relative w-full rounded-[30px] overflow-hidden min-h-[191px] h-auto md:h-[191px] bg-[#03594E] flex flex-col md:flex-row items-center justify-between shadow-lg">
               {/* Background solid image */}
@@ -231,7 +231,7 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
                 {/* Apply Now Button: 199 x 58px, #F8C62F, rounded-full */}
                 <Link
                   href={ctaButtonUrl}
-                  className="inline-flex items-center justify-center gap-[10px] w-[199px] h-[58px] rounded-[100px] bg-[#F8C62F] border border-[#F8C62F] text-black font-['Roboto',sans-serif] font-medium text-[20px] transition-all duration-300 hover:brightness-105 hover:shadow-lg shrink-0 group"
+                  className="inline-flex items-center justify-center gap-[10px] w-auto sm:w-[199px] h-[50px] sm:h-[58px] px-8 sm:px-0 rounded-[100px] bg-[#F8C62F] border border-[#F8C62F] text-black font-['Roboto',sans-serif] font-medium text-[18px] sm:text-[20px] transition-all duration-300 hover:brightness-105 hover:shadow-lg shrink-0 group whitespace-nowrap"
                 >
                   <span>{ctaButtonText}</span>
                   <Image

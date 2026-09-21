@@ -78,14 +78,14 @@ export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = ({
           </div>
 
           {/* Banner Content */}
-          <div className="relative z-20 h-full flex flex-col justify-center px-8 sm:px-14 lg:px-[72px] py-10 lg:py-0">
+          <div className="relative z-20 h-full flex flex-col justify-center px-6 sm:px-14 lg:px-[72px] py-8 sm:py-10 lg:py-0">
             {/* Left Text Block */}
             <div className="max-w-[680px] text-left">
-              <h2 className="text-white text-[32px] sm:text-[42px] lg:text-[48px] xl:text-[50px] leading-[1.18] tracking-normal">
+              <h2 className="text-white text-[28px] sm:text-[42px] lg:text-[48px] xl:text-[50px] leading-[1.18] tracking-normal">
                 <span className="font-['Roboto',sans-serif] font-light block">
                   {tagline}
                 </span>
-                <span className="font-['Roboto',sans-serif] font-bold block whitespace-nowrap">
+                <span className="font-['Roboto',sans-serif] font-bold block sm:whitespace-nowrap">
                   {heading}
                 </span>
               </h2>
@@ -101,7 +101,7 @@ export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = ({
             <div className="mt-8 lg:mt-0 lg:absolute lg:right-[85px] lg:top-[216px]">
               <Link
                 href={buttonUrl || '/admissions'}
-                className="inline-flex items-center justify-center gap-[10px] w-[215px] h-[58px] rounded-[100px] bg-[#F8C62F] border border-[#F8C62F] text-black font-['Roboto',sans-serif] font-medium text-[20px] transition-all duration-300 hover:brightness-105 hover:shadow-xl active:scale-95 group"
+                className="inline-flex items-center justify-center gap-[10px] w-auto sm:w-[215px] h-[50px] sm:h-[58px] px-8 sm:px-0 rounded-[100px] bg-[#F8C62F] border border-[#F8C62F] text-black font-['Roboto',sans-serif] font-medium text-[18px] sm:text-[20px] transition-all duration-300 hover:brightness-105 hover:shadow-xl active:scale-95 group whitespace-nowrap shrink-0"
               >
                 <span>{buttonText}</span>
                 <span className="text-[20px] font-medium leading-none transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
