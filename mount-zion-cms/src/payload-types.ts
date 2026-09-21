@@ -346,17 +346,6 @@ export interface Page {
             blockName?: string | null;
             blockType: 'newsEvents';
           }
-        | {
-            tagline?: string | null;
-            heading: string;
-            description?: string | null;
-            buttonText?: string | null;
-            buttonUrl?: string | null;
-            backgroundImage?: (number | null) | Media;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'ctaBanner';
-          }
       )[]
     | null;
   updatedAt: string;
@@ -661,18 +650,6 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        ctaBanner?:
-          | T
-          | {
-              tagline?: T;
-              heading?: T;
-              description?: T;
-              buttonText?: T;
-              buttonUrl?: T;
-              backgroundImage?: T;
-              id?: T;
-              blockName?: T;
-            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -762,6 +739,15 @@ export interface Header {
  */
 export interface Footer {
   id: number;
+  ctaBanner: {
+    showCtaBanner?: boolean | null;
+    tagline?: string | null;
+    heading: string;
+    description?: string | null;
+    buttonText?: string | null;
+    buttonUrl?: string | null;
+    backgroundImage?: (number | null) | Media;
+  };
   logo?: (number | null) | Media;
   description?: string | null;
   contactInfo?: {
@@ -832,6 +818,17 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  ctaBanner?:
+    | T
+    | {
+        showCtaBanner?: T;
+        tagline?: T;
+        heading?: T;
+        description?: T;
+        buttonText?: T;
+        buttonUrl?: T;
+        backgroundImage?: T;
+      };
   logo?: T;
   description?: T;
   contactInfo?:

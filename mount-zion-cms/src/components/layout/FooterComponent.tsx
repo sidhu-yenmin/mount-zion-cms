@@ -3,6 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { CtaBannerBlockComponent } from '@/components/blocks/CtaBannerBlockComponent'
 import type { Footer as FooterType, Media } from '@/payload-types'
 
 export interface FooterComponentProps {
@@ -74,9 +75,23 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
     { name: 'instagram', icon: '/images/instagram.png', url: 'https://instagram.com' },
   ]
 
+  const ctaBannerData = (footer as any)?.ctaBanner
+  const showCta = ctaBannerData?.showCtaBanner !== false
+
   return (
-    <footer className="w-full bg-[#03594E] text-white pt-[50px] pb-0">
-      <div className="w-full max-w-[1120px] mx-auto px-4 xl:px-0">
+    <div className="w-full">
+      {showCta && (
+        <CtaBannerBlockComponent
+          tagline={ctaBannerData?.tagline}
+          heading={ctaBannerData?.heading}
+          description={ctaBannerData?.description}
+          buttonText={ctaBannerData?.buttonText}
+          buttonUrl={ctaBannerData?.buttonUrl}
+          backgroundImage={ctaBannerData?.backgroundImage}
+        />
+      )}
+      <footer className="w-full bg-[#03594E] text-white pt-[50px] pb-0">
+        <div className="w-full max-w-[1120px] mx-auto px-4 xl:px-0">
         {/* Main Footer Layout (Flex justify-between to perfectly space out 3 blocks across 1120px) */}
         <div className="flex flex-col lg:flex-row justify-between items-start gap-10 lg:gap-8 pb-12 lg:pb-14">
           {/* Left Column: School Logo, Brand Name, Tagline & Social Icons */}
@@ -270,5 +285,6 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
         </div>
       </div>
     </footer>
-  )
+  </div>
+)
 }

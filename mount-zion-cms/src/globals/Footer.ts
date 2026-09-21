@@ -7,6 +7,57 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
+      name: 'ctaBanner',
+      type: 'group',
+      label: 'Bottom CTA Banner',
+      fields: [
+        {
+          name: 'showCtaBanner',
+          type: 'checkbox',
+          label: 'Show Bottom CTA Banner',
+          defaultValue: true,
+        },
+        {
+          name: 'tagline',
+          type: 'text',
+          label: 'Tagline',
+          defaultValue: 'Start your journey',
+        },
+        {
+          name: 'heading',
+          type: 'text',
+          label: 'Heading',
+          defaultValue: 'Towards a brighter future.',
+          required: true,
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          label: 'Description',
+          defaultValue:
+            'Give your child the right foundation to learn, grow, and achieve their dreams in a nurturing and inspiring environment.',
+        },
+        {
+          name: 'buttonText',
+          type: 'text',
+          label: 'Button Label',
+          defaultValue: 'Get Started',
+        },
+        {
+          name: 'buttonUrl',
+          type: 'text',
+          label: 'Button URL',
+          defaultValue: '/admissions',
+        },
+        {
+          name: 'backgroundImage',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Background Banner Image (Chalkboard graphic)',
+        },
+      ],
+    },
+    {
       name: 'logo',
       type: 'upload',
       relationTo: 'media',

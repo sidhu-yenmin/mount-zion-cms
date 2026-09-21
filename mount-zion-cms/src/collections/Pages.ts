@@ -7,7 +7,6 @@ import { ToppersBlock } from '../blocks/ToppersBlock'
 import { CampusLifeBlock } from '../blocks/CampusLifeBlock'
 import { TestimonialsBlock } from '../blocks/TestimonialsBlock'
 import { NewsEventsBlock } from '../blocks/NewsEventsBlock'
-import { CtaBannerBlock } from '../blocks/CtaBannerBlock'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -63,7 +62,6 @@ export const Pages: CollectionConfig = {
         CampusLifeBlock,
         TestimonialsBlock,
         NewsEventsBlock,
-        CtaBannerBlock,
       ],
     },
   ],
