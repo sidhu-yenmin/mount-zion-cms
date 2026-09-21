@@ -28,6 +28,8 @@ export interface CampusLifeBlockProps {
   viewMoreLink?: string | null
   galleryImages?: GalleryImageItem[] | null
   ctaBar?: CampusLifeCtaBar | null
+  backgroundColor?: string | null
+  backgroundImage?: number | Media | string | null
 }
 
 /* =========================================================================
@@ -53,6 +55,8 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
   viewMoreLink = '/gallery',
   galleryImages,
   ctaBar,
+  backgroundColor = '#f4f6f8',
+  backgroundImage,
 }) => {
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
@@ -63,6 +67,8 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
     if (typeof media === 'object' && media?.url) return media.url
     return null
   }
+
+  const bgImgUrl = resolveMediaUrl(backgroundImage)
 
   // [OPTION B: STRICT CMS - Only load images when uploaded in CMS]
   const deckImages = defaultRatios.map((ratio, idx) => {
@@ -116,8 +122,16 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
     return heading
   }
 
+  const sectionBgColor = backgroundColor || '#f4f6f8'
+
   return (
-    <section className="relative w-full bg-[#f4f6f8] pt-[60px] pb-[80px] overflow-hidden">
+    <section
+      className="relative w-full pt-[60px] pb-[80px] overflow-hidden transition-colors duration-300 bg-cover bg-center"
+      style={{
+        backgroundColor: sectionBgColor,
+        backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,
+      }}
+    >
       <div className="w-full max-w-[1118px] mx-auto px-4 xl:px-0">
         {/* 1. Header Section */}
         <div className="flex items-center gap-[10px] mb-[12px]">

@@ -30,6 +30,18 @@ export const TestimonialsBlock: Block = {
       required: true,
     },
     {
+      name: 'backgroundColor',
+      type: 'text',
+      label: 'Section Background Color (Hex / CSS)',
+      defaultValue: '#F4F6F8',
+    },
+    {
+      name: 'backgroundImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Section Background Image (Optional full section background / pattern)',
+    },
+    {
       name: 'testimonials',
       type: 'array',
       label: 'Parent & Student Reviews',

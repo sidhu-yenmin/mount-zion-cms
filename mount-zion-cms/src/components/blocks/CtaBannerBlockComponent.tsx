@@ -13,6 +13,7 @@ export interface CtaBannerProps {
   buttonText?: string | null
   buttonUrl?: string | null
   backgroundImage?: number | Media | string | null
+  backgroundColor?: string | null
 }
 
 /* =========================================================================
@@ -29,6 +30,7 @@ export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = ({
   buttonText = 'Get Started',
   buttonUrl = '/admissions',
   backgroundImage,
+  backgroundColor = '#03594E',
 }) => {
   const resolveMediaUrl = (
     media: any,
@@ -44,18 +46,25 @@ export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = ({
 
   // [OPTION B: STRICT CMS - Only load background image when uploaded in CMS]
   const bgImgUrl = resolveMediaUrl(backgroundImage)
+  const bannerBgColor = backgroundColor || '#03594E'
 
   return (
     <section className="relative w-full overflow-visible pt-16 sm:pt-20 lg:pt-[84px]">
-      {/* Background Split: Top half matches light page background, bottom half matches footer #03594E */}
+      {/* Background Split: Top half matches light page background, bottom half matches banner background color */}
       {/* 84px (top padding) + 186px (half banner) = 270px */}
       <div className="absolute inset-x-0 top-0 h-[250px] sm:h-[266px] lg:h-[270px] bg-[#f4f6f8] pointer-events-none" />
-      <div className="absolute inset-x-0 top-[250px] sm:top-[266px] lg:top-[270px] bottom-0 bg-[#03594E] pointer-events-none" />
+      <div
+        className="absolute inset-x-0 top-[250px] sm:top-[266px] lg:top-[270px] bottom-0 pointer-events-none transition-colors duration-300"
+        style={{ backgroundColor: bannerBgColor }}
+      />
 
       {/* 1120 x 372px Banner Card */}
       <div className="relative z-10 w-full max-w-[1120px] mx-auto px-4 xl:px-0">
-        {/* Card Wrapper with solid dark green background #03594E */}
-        <div className="relative w-full min-h-[360px] lg:h-[372px] rounded-[44px] overflow-hidden shadow-2xl bg-[#03594E]">
+        {/* Card Wrapper with dynamic background color */}
+        <div
+          className="relative w-full min-h-[360px] lg:h-[372px] rounded-[44px] overflow-hidden shadow-2xl transition-colors duration-300"
+          style={{ backgroundColor: bannerBgColor }}
+        >
           {/* Custom CMS Background Image & Gradient */}
           {bgImgUrl ? (
             <div className="absolute inset-0 pointer-events-none">

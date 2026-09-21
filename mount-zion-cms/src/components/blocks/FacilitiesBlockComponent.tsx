@@ -22,6 +22,8 @@ export interface FacilitiesProps {
   heading?: string | null
   description?: string | null
   tabs?: FacilitiesTabItem[] | null
+  backgroundColor?: string | null
+  backgroundImage?: number | Media | string | null
 }
 
 /* =========================================================================
@@ -44,7 +46,20 @@ export const FacilitiesBlockComponent: React.FC<Partial<FacilitiesProps>> = ({
   heading = 'Where Learning, Discovery & Growth Come Together',
   description = 'At our school, every corner of the campus is designed to inspire learning and personal growth. From state-of-the-art classrooms and creative studios to sports facilities and collaborative spaces, students enjoy an environment that nurtures academic excellence alongside creativity, leadership, teamwork, and well-being.',
   tabs,
+  backgroundColor = '#f4f6f8',
+  backgroundImage,
 }) => {
+  // Helper to extract image URL from CMS upload or string
+  const resolveMediaUrl = (
+    media: number | Media | string | null | undefined,
+  ): string | null => {
+    if (!media) return null
+    if (typeof media === 'string' && media.trim()) return media
+    if (typeof media === 'object' && media?.url) return media.url
+    return null
+  }
+
+  const bgImgUrl = resolveMediaUrl(backgroundImage)
   // Use CMS tabs if available (or fallback placeholder tab if none added yet in CMS)
   const tabNames =
     tabs && tabs.length > 0
@@ -107,8 +122,16 @@ export const FacilitiesBlockComponent: React.FC<Partial<FacilitiesProps>> = ({
     return heading
   }
 
+  const sectionBgColor = backgroundColor || '#f4f6f8'
+
   return (
-    <section className="relative w-full bg-[#f4f6f8] py-14 sm:py-20 lg:py-24 overflow-hidden">
+    <section
+      className="relative w-full py-14 sm:py-20 lg:py-24 overflow-hidden transition-colors duration-300 bg-cover bg-center"
+      style={{
+        backgroundColor: sectionBgColor,
+        backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,
+      }}
+    >
       <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* 1. Header Grid: Left Headline & Tag, Right Description */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start mb-8 sm:mb-10">

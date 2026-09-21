@@ -36,8 +36,23 @@ export default async function DynamicPage({ params }: PageProps) {
     return notFound()
   }
 
+  const pageBgColor = (page as any)?.backgroundColor || '#FFFFFF'
+  const bgMedia = (page as any)?.backgroundImage
+  const pageBgImg =
+    typeof bgMedia === 'object' && bgMedia?.url
+      ? bgMedia.url
+      : typeof bgMedia === 'string' && bgMedia
+        ? bgMedia
+        : null
+
   return (
-    <main className="w-full min-h-screen bg-white">
+    <main
+      className="w-full min-h-screen transition-colors duration-300 bg-cover bg-center"
+      style={{
+        backgroundColor: pageBgColor,
+        backgroundImage: pageBgImg ? `url(${pageBgImg})` : undefined,
+      }}
+    >
       <RenderBlocks blocks={page.layout} />
     </main>
   )

@@ -74,7 +74,7 @@ async function run() {
             hasDropdown: false,
           },
         ],
-      },
+      } as any,
     })
     console.log('Header Global seeded successfully!')
     process.exit(0)

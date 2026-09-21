@@ -24,6 +24,8 @@ export interface AboutUsProps {
   stat2Value?: string | null
   stat2Label?: string | null
   stat2Icon?: number | Media | string | null
+  backgroundColor?: string | null
+  backgroundImage?: number | Media | string | null
 }
 
 export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
@@ -43,6 +45,8 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
   stat2Value = '10',
   stat2Label = 'Experience',
   stat2Icon,
+  backgroundColor = '#FFFFFF',
+  backgroundImage,
 }) => {
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
@@ -53,6 +57,9 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
     if (typeof media === 'object' && media?.url) return media.url
     return null
   }
+
+  // Resolve Background Image
+  const bgImgUrl = resolveMediaUrl(backgroundImage)
 
   // Resolve Left Student Image (Strict CMS - null if not uploaded)
   const studentImg = resolveMediaUrl(imageOne)
@@ -69,8 +76,16 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
   // Resolve Stat 2 Icon (Idea / Experience - Strict CMS - null if not uploaded)
   const ideaIconImg = resolveMediaUrl(stat2Icon)
 
+  const sectionBgColor = backgroundColor || '#FFFFFF'
+
   return (
-    <section className="relative w-full bg-white py-14 sm:py-20 lg:py-24 overflow-hidden">
+    <section
+      className="relative w-full py-14 sm:py-20 lg:py-24 overflow-hidden transition-colors duration-300 bg-cover bg-center"
+      style={{
+        backgroundColor: sectionBgColor,
+        backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,
+      }}
+    >
       <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 xl:gap-14">
           {/* 1. Left Student Image (361 x 456 on Desktop) */}

@@ -64,6 +64,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         showTopBar: header.topBar?.showTopBar ?? true,
         phone: header.topBar?.phone || '',
         email: header.topBar?.email || '',
+        backgroundColor: (header.topBar as any)?.backgroundColor || '#EAB308',
+        textColor: (header.topBar as any)?.textColor || '#0F172A',
         navItems,
       }
     }

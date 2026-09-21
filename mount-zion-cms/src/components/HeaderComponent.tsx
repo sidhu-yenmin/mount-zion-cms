@@ -70,11 +70,11 @@ export const HeaderComponent: React.FC<{ header?: HeaderType | null }> = ({ head
 
         {/* Nav Links */}
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-          {header.navItems && header.navItems.length > 0 ? (
-            header.navItems.map((item, idx) => (
+          {(header as any).navItems && (header as any).navItems.length > 0 ? (
+            (header as any).navItems.map((item: any, idx: number) => (
               <a
                 key={idx}
-                href={item.link}
+                href={item.link || item.url || '#'}
                 style={{
                   color: '#ffffff',
                   textDecoration: 'none',

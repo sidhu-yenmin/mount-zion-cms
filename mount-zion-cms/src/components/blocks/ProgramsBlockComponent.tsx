@@ -19,6 +19,7 @@ export interface ProgramsProps {
   secondaryImage?: number | Media | string | null
   backgroundImage?: number | Media | string | null
   bannerText?: string | null
+  backgroundColor?: string | null
 }
 
 export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
@@ -33,6 +34,7 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
   secondaryImage,
   backgroundImage,
   bannerText = 'Learning • Innovation • Achievement',
+  backgroundColor = '#044438',
 }) => {
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
@@ -55,10 +57,15 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
   // Resolve Background Image from CMS
   const bgImgUrl = resolveMediaUrl(backgroundImage)
 
+  const sectionBgColor = backgroundColor || '#044438'
+
   return (
     <section
-      className="relative w-full bg-[#044438] bg-cover bg-center overflow-hidden py-16 sm:py-20 lg:py-24"
-      style={bgImgUrl ? { backgroundImage: `url('${bgImgUrl}')` } : { backgroundImage: "url('/images/academics-bg-color.png')" }}
+      className="relative w-full bg-cover bg-center overflow-hidden py-16 sm:py-20 lg:py-24 transition-colors duration-300"
+      style={{
+        backgroundColor: sectionBgColor,
+        backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,
+      }}
     >
       <div className="relative z-10 w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* 1. Header Section */}

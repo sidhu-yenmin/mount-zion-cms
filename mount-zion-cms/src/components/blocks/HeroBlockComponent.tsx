@@ -26,8 +26,10 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
   secondaryButtonUrl = '#admission',
   videoUrl,
   stats,
-}) => {
+  backgroundColor,
+}: HeroBlockProps & { backgroundColor?: string | null }) => {
   const [videoModalOpen, setVideoModalOpen] = useState(false)
+  const heroBgColor = backgroundColor || '#0c2e26'
 
   // 1. Resolve Background Image (CMS Media object or string path - strict CMS)
   const bgImage =
@@ -54,7 +56,10 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
   return (
     <section className="relative w-full bg-white">
       {/* Hero Visual Area */}
-      <div className="relative min-h-[680px] sm:min-h-[740px] lg:min-h-[800px] w-full flex flex-col justify-between overflow-hidden bg-[#0c2e26]">
+      <div
+        className="relative min-h-[680px] sm:min-h-[740px] lg:min-h-[800px] w-full flex flex-col justify-between overflow-hidden transition-colors duration-300"
+        style={{ backgroundColor: heroBgColor }}
+      >
         {/* 1. Background Image */}
         <div className="absolute inset-0 z-0">
           {bgImage && (

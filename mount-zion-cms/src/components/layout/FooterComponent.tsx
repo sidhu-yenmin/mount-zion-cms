@@ -118,6 +118,8 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
   const ctaBannerData = (footer as any)?.ctaBanner
   const showCta = ctaBannerData?.showCtaBanner !== false && Boolean(ctaBannerData?.heading)
 
+  const footerBgColor = (footer as any)?.backgroundColor || '#03594E'
+
   return (
     <div className="w-full">
       {/* 1. Global Bottom CTA Banner */}
@@ -129,11 +131,15 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
           buttonText={ctaBannerData?.buttonText}
           buttonUrl={ctaBannerData?.buttonUrl}
           backgroundImage={ctaBannerData?.backgroundImage}
+          backgroundColor={ctaBannerData?.backgroundColor}
         />
       )}
 
       {/* 2. Main Footer */}
-      <footer className="w-full bg-[#03594E] text-white pt-[50px] pb-0">
+      <footer
+        className="w-full text-white pt-[50px] pb-0 transition-colors duration-300"
+        style={{ backgroundColor: footerBgColor }}
+      >
         <div className="w-full max-w-[1120px] mx-auto px-4 xl:px-0">
           <div className="flex flex-col lg:flex-row justify-between items-start gap-10 lg:gap-8 pb-12 lg:pb-14">
             {/* Left Column: School Logo, Brand Name, Tagline & Social Icons */}

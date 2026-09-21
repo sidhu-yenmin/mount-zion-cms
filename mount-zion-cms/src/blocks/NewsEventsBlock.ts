@@ -30,6 +30,18 @@ export const NewsEventsBlock: Block = {
       required: true,
     },
     {
+      name: 'backgroundColor',
+      type: 'text',
+      label: 'Section Background Color (Hex / CSS)',
+      defaultValue: '#FFFFFF',
+    },
+    {
+      name: 'backgroundImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Section Background Image (Optional full section background / pattern)',
+    },
+    {
       name: 'exploreMoreText',
       type: 'text',
       label: 'Explore More Button Label',

@@ -19,6 +19,8 @@ export interface TestimonialsProps {
   badge?: string | null
   heading?: string | null
   testimonials?: TestimonialItem[] | null
+  backgroundColor?: string | null
+  backgroundImage?: number | Media | string | null
 }
 
 /* =========================================================================
@@ -91,6 +93,8 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
   badge = 'TESTIMONIALS',
   heading = 'Building Bright Minds for Tomorrow',
   testimonials = [],
+  backgroundColor = '#f4f6f8',
+  backgroundImage,
 }) => {
   // Carousel active indicator state (default index 2 matching reference screenshot)
   const [activeSlide, setActiveSlide] = useState<number>(2)
@@ -104,6 +108,8 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
     if (typeof media === 'object' && media?.url) return media.url
     return null
   }
+
+  const bgImgUrl = resolveMediaUrl(backgroundImage)
 
   // Use CMS testimonials or fallback to clean placeholders
   const hasCmsTestimonials = testimonials && testimonials.length > 0
@@ -121,7 +127,7 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
       ))
     }
 
-    if (heading.includes('for Tomorrow')) {
+    if (heading.includes('Building Bright Minds') || heading.includes('for Tomorrow')) {
       return (
         <>
           <span className="block">Building Bright Minds</span>
@@ -133,8 +139,16 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
     return heading
   }
 
+  const sectionBgColor = backgroundColor || '#f4f6f8'
+
   return (
-    <section className="relative w-full bg-[#f4f6f8] pt-[70px] pb-[90px] overflow-hidden">
+    <section
+      className="relative w-full pt-[70px] pb-[90px] overflow-hidden transition-colors duration-300 bg-cover bg-center"
+      style={{
+        backgroundColor: sectionBgColor,
+        backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,
+      }}
+    >
       <div className="w-full max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* 1. Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-[54px]">

@@ -29,7 +29,25 @@ export const Header: GlobalConfig = {
           label: 'Email Address',
           defaultValue: 'info@mountzion.com',
         },
+        {
+          name: 'backgroundColor',
+          type: 'text',
+          label: 'Top Bar Background Color',
+          defaultValue: '#EAB308',
+        },
+        {
+          name: 'textColor',
+          type: 'text',
+          label: 'Top Bar Text Color',
+          defaultValue: '#0F172A',
+        },
       ],
+    },
+    {
+      name: 'navBackgroundColor',
+      type: 'text',
+      label: 'Main Navigation Bar Background Color (For Solid Header)',
+      defaultValue: '#022C22',
     },
     {
       name: 'logo',
