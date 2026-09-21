@@ -1,6 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
-import { BookOpen, Users, GraduationCap, Trophy, LucideIcon } from 'lucide-react'
 
 interface StatItem {
   icon?: string | null
@@ -13,55 +11,108 @@ interface StatsStripProps {
   stats?: StatItem[] | null
 }
 
-const iconMap: Record<string, LucideIcon> = {
-  book: BookOpen,
-  students: Users,
-  teacher: GraduationCap,
-  trophy: Trophy,
+/* =========================================================================
+   [OPTION A: STATIC FALLBACK METRICS IMAGE - COMMENTED OUT]
+   import Image from 'next/image'
+   const fallbackMetricsImg = '/images/metrics.png'
+========================================================================= */
+
+// Exact Gold Book Emblem Icon matching Figma specification
+function FigmaGoldBookEmblem() {
+  return (
+    <svg
+      viewBox="0 0 54 54"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-11 h-11 lg:w-[48px] lg:h-[48px] text-[#F5A623] shrink-0"
+    >
+      {/* Outer cradle U-shape */}
+      <path
+        d="M10 20V37C10 43 14 46.5 27 46.5C40 46.5 44 43 44 37V20"
+        stroke="#F5A623"
+        strokeWidth="3.2"
+        strokeLinecap="round"
+      />
+      {/* Left book lobe */}
+      <path
+        d="M18 19C18 15 22 13 27 16V38C22 35 18 36 18 38V19Z"
+        stroke="#F5A623"
+        strokeWidth="3.2"
+        strokeLinejoin="round"
+      />
+      {/* Right book lobe */}
+      <path
+        d="M36 19C36 15 32 13 27 16V38C32 35 36 36 36 38V19Z"
+        stroke="#F5A623"
+        strokeWidth="3.2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
 }
 
-export function StatsStrip({ stats }: StatsStripProps) {
-  // If dynamic stats array is provided from CMS, render dynamic counter cards
-  if (stats && stats.length > 0) {
+function FormattedStatValue({ value }: { value: string }) {
+  const trimmed = (value || '').trim()
+  if (trimmed.endsWith('+')) {
+    const num = trimmed.slice(0, -1)
     return (
-      <div className="w-full max-w-[1140px] mx-auto px-4 sm:px-6">
-        <div className="w-full bg-[#0a3a30]/95 backdrop-blur-md border border-white/20 rounded-2xl sm:rounded-3xl shadow-2xl px-6 sm:px-10 py-6 sm:py-8 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 items-center">
-          {stats.map((stat, idx) => {
-            const IconComponent = (stat.icon && iconMap[stat.icon]) || BookOpen
-            return (
-              <div key={stat.id || idx} className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 text-[#f5a623]">
-                  <IconComponent className="w-6 h-6 stroke-[2.2]" />
-                </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs sm:text-sm text-neutral-300 font-medium leading-snug">
-                    {stat.label}
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
+      <div className="font-['Inter',sans-serif] font-black italic text-[26px] sm:text-[32px] lg:text-[36px] leading-none text-white tracking-tight flex items-baseline">
+        <span>{num}</span>
+        <span className="text-[#F5A623] font-black not-italic ml-1 text-[24px] sm:text-[28px] lg:text-[32px] leading-none">+</span>
       </div>
     )
   }
-
-  // Fallback to exact Figma metrics image
   return (
-    <div className="w-full max-w-[1140px] mx-auto px-4 sm:px-6">
-      <div className="relative w-full flex justify-center">
-        <Image
-          src="/images/metrics.png"
-          alt="Mount Zion Metrics: 30+ Academic Experience, 3000+ Students Enrolled, 50+ Dedicated Educators, 10+ Awards & Achievements"
-          width={1120}
-          height={152}
-          priority
-          unoptimized
-          className="w-full h-auto max-w-[1120px] object-contain drop-shadow-2xl select-none"
-        />
+    <div className="font-['Inter',sans-serif] font-black italic text-[26px] sm:text-[32px] lg:text-[36px] leading-none text-white tracking-tight">
+      {trimmed}
+    </div>
+  )
+}
+
+export function StatsStrip({ stats }: StatsStripProps) {
+  // [STRICT CMS DATA BINDING - Only render when configured in CMS]
+  if (!stats || stats.length === 0) {
+    return null
+  }
+
+  return (
+    <div className="w-full max-w-[1120px] mx-auto px-4 xl:px-0">
+      {/* Exact Figma Translucent Emerald Card: rgba green backdrop-blur with gold border */}
+      <div
+        className="relative w-full min-h-[130px] lg:h-[152px] rounded-[28px] sm:rounded-[36px] shadow-2xl backdrop-blur-md flex items-center px-4 sm:px-8 lg:px-6 py-5 lg:py-0 border border-[#F5A623]/60"
+        style={{
+          backgroundColor: 'rgba(8, 72, 60, 0.88)',
+          boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.4)',
+        }}
+      >
+        {/* Row of Stat Items spread evenly horizontally from CMS */}
+        <div className="w-full flex flex-col sm:flex-row items-center justify-between">
+          {stats.map((stat, idx) => {
+            const isNotLast = idx < stats.length - 1
+
+            return (
+              <React.Fragment key={stat.id || idx}>
+                <div className="flex-1 w-full sm:w-auto flex items-center justify-center gap-3.5 sm:gap-4 px-2 sm:px-4 py-2 sm:py-0">
+                  {/* Figma Gold Book Emblem */}
+                  <FigmaGoldBookEmblem />
+
+                  {/* Dynamic CMS Number & Description */}
+                  <div className="flex flex-col justify-center text-left">
+                    <FormattedStatValue value={stat.value} />
+                    <span className="font-['Inter',sans-serif] font-medium text-[13px] sm:text-[14px] leading-[17px] text-white/95 mt-1 whitespace-pre-line max-w-[150px]">
+                      {stat.label}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Vertical Divider between items */}
+                {isNotLast && (
+                  <div className="hidden sm:block h-[50px] w-[1px] bg-white/30 shrink-0" />
+                )}
+              </React.Fragment>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
