@@ -75,22 +75,58 @@ export const Footer: GlobalConfig = {
       label: 'Contact Information',
       fields: [
         {
-          name: 'address',
-          type: 'textarea',
-          label: 'School Address',
-          defaultValue: 'Pilivalam, Lembalakkudi,\nPudukottai - 622507',
+          type: 'row',
+          fields: [
+            {
+              name: 'phone',
+              type: 'text',
+              label: 'Phone Number',
+              admin: { width: '60%' },
+            },
+            {
+              name: 'phoneIcon',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Phone Icon (Optional)',
+              admin: { width: '40%' },
+            },
+          ],
         },
         {
-          name: 'phone',
-          type: 'text',
-          label: 'Phone Number',
-          defaultValue: '+9173737 51513',
+          type: 'row',
+          fields: [
+            {
+              name: 'email',
+              type: 'text',
+              label: 'Email Address',
+              admin: { width: '60%' },
+            },
+            {
+              name: 'emailIcon',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Email Icon (Optional)',
+              admin: { width: '40%' },
+            },
+          ],
         },
         {
-          name: 'email',
-          type: 'text',
-          label: 'Email Address',
-          defaultValue: 'cbse@mountzionschools.com',
+          type: 'row',
+          fields: [
+            {
+              name: 'address',
+              type: 'textarea',
+              label: 'School Address',
+              admin: { width: '60%' },
+            },
+            {
+              name: 'addressIcon',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Address Icon (Optional)',
+              admin: { width: '40%' },
+            },
+          ],
         },
       ],
     },
@@ -152,6 +188,7 @@ export const Footer: GlobalConfig = {
             { label: 'Custom / Other', value: 'other' },
           ],
           defaultValue: 'facebook',
+          required: true,
         },
         {
           name: 'icon',
