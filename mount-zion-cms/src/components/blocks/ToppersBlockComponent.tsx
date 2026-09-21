@@ -310,34 +310,12 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
                   {/* Right Column: Student Portrait or Clean Placeholder */}
                   <div className="absolute right-0 top-0 w-[226px] h-[291px] flex items-end justify-end pointer-events-none overflow-hidden rounded-r-[20px]">
                     {photoUrl ? (
-                      <>
-                        {/* Golden laurel wreath SVG background */}
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <svg
-                            viewBox="0 0 160 160"
-                            className="w-[140px] h-[140px] opacity-90 text-[#F8C62F]"
-                            fill="currentColor"
-                          >
-                            <circle cx="80" cy="80" r="56" fill="#03594E" />
-                            <circle cx="80" cy="80" r="54" fill="#00796B" opacity="0.4" />
-                            <path
-                              d="M80,24 C64,24 50,38 48,56 C46,74 54,92 68,104 C64,98 62,90 62,82 C62,64 70,48 80,40 Z"
-                              fill="#F8C62F"
-                            />
-                            <path
-                              d="M80,24 C96,24 110,38 112,56 C114,74 106,92 92,104 C96,98 98,90 98,82 C98,64 90,48 80,40 Z"
-                              fill="#F8C62F"
-                            />
-                          </svg>
-                        </div>
-
-                        {/* Custom CMS Student Photo */}
-                        <img
-                          src={photoUrl}
-                          alt={student.studentName || 'Topper Student'}
-                          className="w-full h-full object-cover object-right-bottom select-none"
-                        />
-                      </>
+                      /* Custom CMS Student Photo */
+                      <img
+                        src={photoUrl}
+                        alt={student.studentName || 'Topper Student'}
+                        className="w-full h-full object-cover object-right-bottom select-none"
+                      />
                     ) : (
                       /* Placeholder Student Avatar Box */
                       <div className="w-full h-full flex flex-col items-center justify-center bg-[#024a41]/60 border-l border-[#F8C62F]/30 p-4 text-center select-none">
