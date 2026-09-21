@@ -41,8 +41,14 @@ export function TopHeader({ data }: TopHeaderProps) {
     return null
   }
 
-  const phone = data?.phone || '+91 - 9876543210'
-  const email = data?.email || 'info@mountzion.com'
+  /* =========================================================================
+     [OPTION A: STATIC FALLBACK HEADER DATA - COMMENTED OUT]
+     const fallbackPhone = '+91 - 9876543210'
+     const fallbackEmail = 'info@mountzion.com'
+  ========================================================================= */
+
+  const phone = data?.phone || ''
+  const email = data?.email || ''
   const navItems = data?.navItems || []
 
   // If everything is empty and no nav items, return null
