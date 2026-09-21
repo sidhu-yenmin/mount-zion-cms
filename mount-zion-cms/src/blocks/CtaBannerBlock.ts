@@ -8,6 +8,15 @@ export const CtaBannerBlock: Block = {
   },
   fields: [
     {
+      name: 'hideSection',
+      type: 'checkbox',
+      label: 'Hide this section on frontend?',
+      defaultValue: false,
+      admin: {
+        description: 'Check to temporarily hide this section from the live page without deleting it',
+      },
+    },
+    {
       name: 'tagline',
       type: 'text',
       label: 'Tagline',
