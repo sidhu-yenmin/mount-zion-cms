@@ -733,6 +733,11 @@ export interface Header {
     | {
         label: string;
         link: string;
+        isActive?: boolean | null;
+        /**
+         * Option to display the (v) expand arrow icon next to this menu item
+         */
+        showExpandIcon?: boolean | null;
         hasDropdown?: boolean | null;
         subItems?:
           | {
@@ -800,6 +805,8 @@ export interface HeaderSelect<T extends boolean = true> {
     | {
         label?: T;
         link?: T;
+        isActive?: T;
+        showExpandIcon?: T;
         hasDropdown?: T;
         subItems?:
           | T

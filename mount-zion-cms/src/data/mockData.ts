@@ -13,10 +13,12 @@ export const mockHeaderData: HeaderData = {
   phone: '+91 - 9876543210',
   email: 'info@mountzion.com',
   navItems: [
-    { label: 'Home', url: '/', isActive: true },
+    { label: 'Home', url: '/', isActive: true, showExpandIcon: false },
     {
       label: 'Our School',
       url: '#about',
+      isActive: false,
+      showExpandIcon: true,
       children: [
         { label: 'About Mount Zion', url: '#about' },
         { label: 'Vision & Mission', url: '#vision' },
@@ -26,6 +28,8 @@ export const mockHeaderData: HeaderData = {
     {
       label: 'Education',
       url: '#education',
+      isActive: false,
+      showExpandIcon: true,
       children: [
         { label: 'CBSE Curriculum', url: '#curriculum' },
         { label: 'Primary School', url: '#primary' },
@@ -36,14 +40,16 @@ export const mockHeaderData: HeaderData = {
     {
       label: 'Student Life',
       url: '#student-life',
+      isActive: false,
+      showExpandIcon: true,
       children: [
         { label: 'Sports & Athletics', url: '#sports' },
         { label: 'Arts & Culture', url: '#arts' },
         { label: 'Student Clubs', url: '#clubs' },
       ],
     },
-    { label: 'Admissions', url: '#admissions' },
-    { label: 'Contact', url: '#contact' },
+    { label: 'Admissions', url: '#admissions', isActive: false, showExpandIcon: false },
+    { label: 'Contact', url: '#contact', isActive: false, showExpandIcon: false },
   ],
 }
 

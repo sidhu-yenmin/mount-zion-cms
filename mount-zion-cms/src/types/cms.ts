@@ -16,6 +16,8 @@ export interface NavItem {
   label: string
   url: string
   isActive?: boolean
+  showExpandIcon?: boolean
+  hasDropdown?: boolean
   children?: NavDropdownItem[]
 }
 

@@ -56,6 +56,21 @@ export const Header: GlobalConfig = {
           label: 'URL / Path (e.g. /about or #)',
         },
         {
+          name: 'isActive',
+          type: 'checkbox',
+          label: 'Active Menu Item (Bold #0F172A)',
+          defaultValue: false,
+        },
+        {
+          name: 'showExpandIcon',
+          type: 'checkbox',
+          label: 'Show Expand Vector Icon (v)',
+          defaultValue: false,
+          admin: {
+            description: 'Option to display the (v) expand arrow icon next to this menu item',
+          },
+        },
+        {
           name: 'hasDropdown',
           type: 'checkbox',
           label: 'Has Submenu Dropdown?',
@@ -81,6 +96,48 @@ export const Header: GlobalConfig = {
             },
           ],
         },
+      ],
+      defaultValue: [
+        { label: 'Home', link: '/', isActive: true, showExpandIcon: false },
+        {
+          label: 'Our School',
+          link: '#about',
+          isActive: false,
+          showExpandIcon: true,
+          hasDropdown: true,
+          subItems: [
+            { label: 'About Mount Zion', link: '#about' },
+            { label: 'Vision & Mission', link: '#vision' },
+            { label: 'Leadership', link: '#leadership' },
+          ],
+        },
+        {
+          label: 'Education',
+          link: '#education',
+          isActive: false,
+          showExpandIcon: true,
+          hasDropdown: true,
+          subItems: [
+            { label: 'CBSE Curriculum', link: '#curriculum' },
+            { label: 'Primary School', link: '#primary' },
+            { label: 'Middle School', link: '#middle' },
+            { label: 'Senior Secondary', link: '#senior' },
+          ],
+        },
+        {
+          label: 'Student Life',
+          link: '#student-life',
+          isActive: false,
+          showExpandIcon: true,
+          hasDropdown: true,
+          subItems: [
+            { label: 'Sports & Athletics', link: '#sports' },
+            { label: 'Arts & Culture', link: '#arts' },
+            { label: 'Student Clubs', link: '#clubs' },
+          ],
+        },
+        { label: 'Admissions', link: '#admissions', isActive: false, showExpandIcon: false },
+        { label: 'Contact', link: '#contact', isActive: false, showExpandIcon: false },
       ],
     },
     {

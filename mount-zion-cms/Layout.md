@@ -772,3 +772,86 @@ letter-spacing: 0%;
 vertical-align: middle;
 background: #FFFFFF;
 
+# Home Banner
+
+Header Container:
+width: 1440;
+height: 53;
+left: -0.19px;
+angle: 0 deg;
+opacity: 1;
+background: #EAB308;
+
+Phone Icon: phone-icon.png
+width: 16.5px;
+height: 16.5px;
+angle: -180 deg;
+opacity: 1;
+
++91 - 9876543210
+font-family: Inter;
+font-weight: 400;
+font-style: Regular;
+font-size: 16.67px;
+leading-trim: NONE;
+line-height: 100%;
+letter-spacing: 0px;
+text-transform: capitalize;
+background: #373737;
+
+Mail Icon: mail-icon.png
+width: 16.669843673706055;
+height: 11.668889999389648;
+angle: 0 deg;
+opacity: 1;
+border: 1.33px solid #373737
+
+info@mountzion.com
+font-family: Inter;
+font-weight: 400;
+font-style: Regular;
+font-size: 16.67px;
+leading-trim: NONE;
+line-height: 100%;
+letter-spacing: 0px;
+background: #373737;
+
+Header Single Menu Container:
+width: 92;
+height: 42;
+angle: 0 deg;
+opacity: 1;
+gap: 10px;
+padding-top: 10px;
+padding-right: 20px;
+padding-bottom: 10px;
+padding-left: 20px;
+
+Home, Our School (v), Education (v), Student Life (v), Admissions, Contact
+Active Menu Text Style: font-family: Inter;
+font-weight: 700;
+font-style: Bold;
+font-size: 18px;
+leading-trim: NONE;
+line-height: 100%;
+letter-spacing: 0%;
+background: #0F172A;
+
+Inactive Menu Style: font-family: Inter;
+font-weight: 400;
+font-style: Regular;
+font-size: 18px;
+leading-trim: NONE;
+line-height: 100%;
+letter-spacing: 0%;
+background: #0F172A;
+
+(v) expand vector: width: 7;
+height: 3.5;
+angle: 0 deg;
+opacity: 1;
+border: 2px solid #0F172A
+
+For (v) expand vector icon, make it as an option to add to a menu or not from admin panel
+
+
