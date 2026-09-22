@@ -412,6 +412,7 @@ export interface Page {
     | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -745,6 +746,7 @@ export interface PagesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -813,6 +815,7 @@ export interface Menu {
         id?: string | null;
       }[]
     | null;
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -835,6 +838,7 @@ export interface Header {
     label?: string | null;
     url?: string | null;
   };
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -883,6 +887,7 @@ export interface Footer {
       }[]
     | null;
   copyright?: string | null;
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -912,6 +917,7 @@ export interface MenuSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -938,6 +944,7 @@ export interface HeaderSelect<T extends boolean = true> {
         label?: T;
         url?: T;
       };
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -990,6 +997,7 @@ export interface FooterSelect<T extends boolean = true> {
         id?: T;
       };
   copyright?: T;
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

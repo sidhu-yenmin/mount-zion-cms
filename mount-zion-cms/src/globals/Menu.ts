@@ -6,6 +6,9 @@ export const Menu: GlobalConfig = {
   access: {
     read: () => true,
   },
+  versions: {
+    drafts: true,
+  },
   fields: [
     {
       name: 'menuItems',
