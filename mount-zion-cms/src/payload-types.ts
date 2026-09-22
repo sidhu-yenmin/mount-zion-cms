@@ -848,6 +848,7 @@ export interface Footer {
         page?: (number | null) | Page;
         customUrl?: string | null;
         label?: string | null;
+        openInNewTab?: boolean | null;
         id?: string | null;
       }[]
     | null;
@@ -957,6 +958,7 @@ export interface FooterSelect<T extends boolean = true> {
         page?: T;
         customUrl?: T;
         label?: T;
+        openInNewTab?: T;
         id?: T;
       };
   socialLinks?:

@@ -99,6 +99,7 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
   const cmsQuickLinks = (footer?.quickLinks || []).map((link: any) => ({
     label: resolveLinkLabel(link),
     url: resolveLinkUrl(link),
+    openInNewTab: Boolean(link?.openInNewTab),
   }))
   const midPoint = Math.ceil(cmsQuickLinks.length / 2)
   const col1Links = cmsQuickLinks.slice(0, midPoint)
@@ -217,6 +218,8 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
                       <Link
                         key={`${link.label}-${idx}`}
                         href={link.url}
+                        target={link.openInNewTab ? '_blank' : undefined}
+                        rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
                         className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[20.59px] text-white/80 hover:text-white transition-colors duration-200"
                       >
                         {link.label}
@@ -231,6 +234,8 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
                         <Link
                           key={`${link.label}-${idx}`}
                           href={link.url}
+                          target={link.openInNewTab ? '_blank' : undefined}
+                          rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
                           className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[20.59px] text-white/80 hover:text-white transition-colors duration-200"
                         >
                           {link.label}
