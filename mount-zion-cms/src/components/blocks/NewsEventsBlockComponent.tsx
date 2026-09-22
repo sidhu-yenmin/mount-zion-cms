@@ -123,33 +123,107 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
           )}
         </div>
 
-        {/* 2. Top Divider Line (1120px, 1px solid #B2B2B2) */}
-        <div className="w-full border-t border-[#B2B2B2]" />
+        {/* 2. Top Divider Line (1120px, 1px solid #B2B2B2, Desktop only) */}
+        <div className="hidden md:block w-full border-t border-[#B2B2B2]" />
 
         {/* 3. News & Events Rows List */}
-        <div className="w-full flex flex-col">
+        <div className="w-full flex flex-col py-2 md:min-h-[460px]">
           {displayItems.map((item, idx) => {
             const isActive = activeRow === idx
             const imageSrc = resolveMediaUrl(item.image, '/images/news.png')
 
+            const arrowButton = (
+              <div
+                className={`w-[36px] h-[36px] sm:w-[38px] sm:h-[38px] rounded-full flex items-center justify-center transition-all duration-300 shrink-0 ${
+                  isActive
+                    ? 'bg-[#03594E] text-white shadow-sm'
+                    : 'border border-[#03594E] bg-transparent text-[#03594E] group-hover:bg-[#03594E] group-hover:text-white'
+                }`}
+              >
+                <svg
+                  className="w-[13px] h-[13px] sm:w-[14px] sm:h-[14px]"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="7" y1="17" x2="17" y2="7" />
+                  <polyline points="7 7 17 7 17 17" />
+                </svg>
+              </div>
+            )
+
             return (
               <div
                 key={idx}
+                onMouseEnter={() => setActiveRow(idx)}
                 onClick={() => setActiveRow(idx)}
-                className={`group w-full border-b border-[#B2B2B2] transition-all duration-300 cursor-pointer ${
-                  isActive ? 'py-[24px] sm:py-[28px]' : 'py-[18px] sm:py-[22px]'
+                onFocus={() => setActiveRow(idx)}
+                tabIndex={0}
+                className={`group w-full transition-[background-color,border-color,box-shadow] duration-200 cursor-pointer ${
+                  isActive
+                    ? 'bg-[#03594E]/[0.06] border border-[#03594E]/20 shadow-sm rounded-[16px] md:rounded-[20px] p-4 sm:p-5 md:px-6 lg:px-8 md:py-[18px] mb-3 md:mb-1'
+                    : 'bg-white/70 md:bg-transparent border border-black/[0.08] md:border md:border-b-[#B2B2B2]/60 md:border-t-transparent md:border-x-transparent rounded-[16px] md:rounded-none hover:bg-white md:hover:bg-[#03594E]/[0.025] p-4 sm:p-5 md:px-6 lg:px-8 md:py-[18px] mb-3 md:mb-1'
                 }`}
               >
-                <div className="w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6">
+                {/* Mobile View (< md) */}
+                <div className="flex flex-col w-full md:hidden">
+                  {/* Top Bar: Date & Arrow */}
+                  <div className="flex items-center justify-between w-full">
+                    <p className="font-['Roboto',sans-serif] font-medium text-[15px] leading-[140%] text-neutral-600">
+                      {item.date}
+                    </p>
+                    {arrowButton}
+                  </div>
+
+                  {/* Title */}
+                  <h3
+                    className={`font-['Roboto',sans-serif] font-bold text-[19px] sm:text-[21px] leading-[135%] whitespace-pre-line mt-2 transition-colors duration-200 ${
+                      isActive ? 'text-[#03594E]' : 'text-black'
+                    }`}
+                  >
+                    {item.title}
+                  </h3>
+
+                  {/* Preview Image (Mobile - Smooth Accordion without fixed height) */}
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateRows: isActive ? '1fr' : '0fr',
+                      opacity: isActive ? 1 : 0,
+                      transition:
+                        'grid-template-rows 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 250ms ease',
+                    }}
+                    className="w-full"
+                  >
+                    <div className="overflow-hidden min-h-0">
+                      <div className="relative w-full h-[160px] sm:h-[180px] rounded-[14px] overflow-hidden mt-3 shadow-sm">
+                        <Image
+                          src={imageSrc}
+                          alt={item.title.replace('\n', ' ')}
+                          fill
+                          unoptimized
+                          className="object-cover object-center"
+                          sizes="(max-width: 768px) 100vw, 343px"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Desktop View (md+) */}
+                <div className="hidden md:flex w-full flex-row items-center justify-between gap-6">
                   {/* Left: Date */}
-                  <div className="w-full md:w-[170px] shrink-0">
+                  <div className="w-[170px] shrink-0">
                     <p className="font-['Roboto',sans-serif] font-medium text-[18px] leading-[140%] text-black">
                       {item.date}
                     </p>
                   </div>
 
-                  {/* Middle Left: Title */}
-                  <div className="w-full md:w-[340px] shrink-0">
+                  {/* Middle Left: Title (Standardized height to guarantee identical row geometry) */}
+                  <div className="w-[340px] shrink-0 min-h-[65px] flex items-center">
                     <h3
                       className={`font-['Roboto',sans-serif] font-bold text-[22px] sm:text-[24px] leading-[135%] whitespace-pre-line transition-colors duration-200 ${
                         isActive ? 'text-[#03594E]' : 'text-black group-hover:text-[#03594E]'
@@ -159,10 +233,10 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
                     </h3>
                   </div>
 
-                  {/* Middle: Preview Image (Displayed based on click on active row) */}
+                  {/* Middle: Preview Image (Active only, zero empty space on inactive) */}
                   <div className="flex-1 w-full flex justify-center items-center">
                     {isActive && (
-                      <div className="relative w-full max-w-[320px] sm:max-w-[343px] h-[140px] sm:h-[160px] rounded-[20px] overflow-hidden shadow-sm transition-all duration-300 ease-out">
+                      <div className="relative w-full max-w-[343px] h-[140px] lg:h-[150px] rounded-[20px] overflow-hidden shadow-sm animate-in fade-in-50 zoom-in-95 duration-200">
                         <Image
                           src={imageSrc}
                           alt={item.title.replace('\n', ' ')}
@@ -175,34 +249,9 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
                     )}
                   </div>
 
-                  {/* Right: Arrow Button (38 x 38px) */}
-                  <div className="shrink-0 flex justify-end items-center self-end md:self-center">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        setActiveRow(idx)
-                      }}
-                      aria-label={`Select ${item.title}`}
-                      className={`w-[38px] h-[38px] rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer ${
-                        isActive
-                          ? 'bg-[#03594E] text-white shadow-sm'
-                          : 'border border-[#03594E] bg-transparent text-[#03594E] hover:bg-[#03594E] hover:text-white'
-                      }`}
-                    >
-                      <svg
-                        className="w-[14px] h-[14px]"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <line x1="7" y1="17" x2="17" y2="7" />
-                        <polyline points="7 7 17 7 17 17" />
-                      </svg>
-                    </button>
+                  {/* Right: Arrow Button */}
+                  <div className="shrink-0 flex justify-end items-center">
+                    {arrowButton}
                   </div>
                 </div>
               </div>

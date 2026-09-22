@@ -225,19 +225,19 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
       const numerator = parts[0]?.trim() || ''
       const denominator = parts[1]?.trim() || ''
       return (
-        <div className="flex items-baseline font-['Roboto',sans-serif] text-[#F8C62F] leading-none my-2 sm:my-2 lg:my-2.5">
-          <span className="text-[36px] sm:text-[44px] lg:text-[64px] font-medium leading-[34px] sm:leading-[40px] lg:leading-[40.58px] tracking-normal">
+        <div className="h-[44px] sm:h-[48px] flex items-baseline font-['Roboto',sans-serif] text-[#F8C62F] leading-none my-1 sm:my-1.5">
+          <span className="text-[48px] sm:text-[56px] lg:text-[64px] font-medium leading-[38px] sm:leading-[40.58px] tracking-normal">
             {numerator}
           </span>
-          <span className="text-[14px] sm:text-[16px] lg:text-[20px] font-medium leading-none ml-1">/</span>
-          <span className="text-[14px] sm:text-[16px] lg:text-[20px] font-normal leading-none ml-0.5">
+          <span className="text-[18px] sm:text-[20px] font-medium leading-none ml-1">/</span>
+          <span className="text-[18px] sm:text-[20px] font-normal leading-none ml-0.5">
             {denominator}
           </span>
         </div>
       )
     }
     return (
-      <div className="font-['Roboto',sans-serif] text-[#F8C62F] text-[36px] sm:text-[44px] lg:text-[64px] font-medium leading-[34px] sm:leading-[40px] lg:leading-[40.58px] my-2 sm:my-2 lg:my-2.5">
+      <div className="h-[44px] sm:h-[48px] flex items-baseline font-['Roboto',sans-serif] text-[#F8C62F] text-[48px] sm:text-[56px] lg:text-[64px] font-medium leading-[38px] sm:leading-[40.58px] my-1 sm:my-1.5">
         {score}
       </div>
     )
@@ -297,8 +297,8 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
 
           {/* Content Row: Years Navigation on Left, Student Cards on Right */}
           <div className="w-full flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 sm:gap-7 lg:gap-8 xl:gap-10">
-            {/* Years Navigation Buttons: 2x2 on mobile, single column stacked on desktop */}
-            <div className="flex flex-row flex-wrap lg:flex-col items-center lg:items-start justify-center gap-3 sm:gap-3.5 lg:gap-3 w-full max-w-[390px] lg:max-w-none lg:w-auto shrink-0">
+            {/* Years Navigation Buttons: 2x2 on mobile, single column locked to 197px on desktop to prevent container shifting */}
+            <div className="flex flex-row flex-wrap lg:flex-col items-center lg:items-start justify-center gap-3 sm:gap-3.5 lg:gap-3 w-full max-w-[390px] lg:max-w-none lg:w-[197px] shrink-0">
               {yearsList.map((item) => {
                 const isActive = activeYear === item.year
                 return (
@@ -308,7 +308,7 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
                     onClick={() => handleYearClick(item.year)}
                     className={`flex items-center justify-between px-4.5 sm:px-5 lg:px-[25px] py-2 sm:py-2.5 lg:py-[15px] h-[48px] sm:h-[54px] lg:h-[63px] rounded-[16px] lg:rounded-[20px] cursor-pointer transition-all duration-300 shadow-md ${
                       isActive
-                        ? 'w-[calc(50%-6px)] sm:w-[calc(50%-7px)] lg:w-[197px] bg-[#F8C62F] text-[#0F172A] shadow-amber-500/20 scale-[1.02]'
+                        ? 'w-[calc(50%-6px)] sm:w-[calc(50%-7px)] lg:w-[197px] bg-[#F8C62F] text-[#0F172A] shadow-amber-500/20'
                         : 'w-[calc(50%-6px)] sm:w-[calc(50%-7px)] lg:w-[172px] bg-[#FFFFFF] text-[#03594E] hover:bg-slate-50 hover:lg:w-[182px]'
                     }`}
                     aria-pressed={isActive}
@@ -333,87 +333,96 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
               )}
             </div>
 
-            {/* Student Cards Grid: Stacked with generous spacing on mobile, side-by-side on desktop */}
-            <div
-              key={activeYear}
-              className="flex flex-col lg:flex-row items-center justify-center gap-5 sm:gap-5.5 lg:gap-6 w-full max-w-[420px] lg:max-w-[900px] animate-in fade-in-50 zoom-in-95 duration-300"
-            >
-            {rankHolders.map((student, idx) => {
-              const photoUrl = getPhotoUrl(student.photo, idx)
-              const isCustomPhoto =
-                student.photo &&
-                typeof student.photo === 'object' &&
-                student.photo.url
+            {/* Student Cards Grid: Fixed container width on desktop without zoom-in to eliminate layout shift */}
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-5 sm:gap-5.5 lg:gap-6 w-full max-w-[420px] lg:max-w-none lg:w-[864px] shrink-0">
+              {rankHolders.map((student, idx) => {
+                const photoUrl = getPhotoUrl(student.photo, idx)
+                const isCustomPhoto =
+                  student.photo &&
+                  typeof student.photo === 'object' &&
+                  student.photo.url
 
-              return (
-                <div
-                  key={idx}
-                  className="w-full lg:w-[420px] h-[215px] sm:h-[240px] lg:h-[291px] rounded-[18px] lg:rounded-[20px] border border-[#F8C62F] bg-[#03594E] p-4.5 sm:p-5.5 lg:p-6 relative overflow-hidden flex justify-between shadow-xl transition-all duration-300 hover:shadow-2xl hover:border-[#fcd34d]"
-                >
-                  {/* Left Column Info */}
-                  <div className="flex flex-col justify-between z-20 relative h-full w-[170px] sm:w-[195px] lg:w-[210px] flex-shrink-0">
-                    <div>
-                      {/* Medal Icon */}
-                      <img
-                        src="/images/star-medal.png"
-                        alt="Medal"
-                        className="w-[42px] h-[52px] sm:w-[54px] sm:h-[66px] lg:w-[72px] lg:h-[88.11px] object-contain drop-shadow-md mb-2 lg:mb-2.5"
-                      />
+                return (
+                  <div
+                    key={idx}
+                    className="w-full sm:w-[420px] h-[280px] sm:h-[291px] rounded-[20px] bg-[#03594E] p-5 sm:p-6 relative overflow-hidden flex justify-between shadow-xl transition-shadow duration-300 hover:shadow-2xl shrink-0"
+                  >
+                    {/* Crisp uniform gold border overlay */}
+                    <div className="absolute inset-0 rounded-[20px] border border-[#F8C62F] pointer-events-none z-30" />
 
-                      {/* Rank Label */}
-                      <div className="font-['Roboto',sans-serif] text-[12px] sm:text-[13px] lg:text-[13px] text-white/95 font-medium tracking-wide">
-                        {student.rank || 'HSC Topper'}
+                    {/* Inner Animated Content - Smooth Cross-fade without layout shift */}
+                    <div
+                      key={`${activeYear}-${student.studentName}-${idx}`}
+                      className="w-full h-full flex justify-between animate-in fade-in duration-200 fill-mode-forwards"
+                    >
+                      {/* Left Column Info */}
+                      <div className="flex flex-col justify-between z-20 relative h-full w-[170px] sm:w-[195px] flex-shrink-0">
+                        <div>
+                          {/* Medal Icon */}
+                          <img
+                            src="/images/star-medal.png"
+                            alt="Medal"
+                            className="w-[50px] h-[62px] sm:w-[60px] sm:h-[74px] lg:w-[68px] lg:h-[84px] object-contain drop-shadow-md mb-1.5 sm:mb-2"
+                          />
+
+                          {/* Rank Label */}
+                          <div className="h-[20px] flex items-center font-['Roboto',sans-serif] text-[13px] sm:text-[14px] text-white font-medium tracking-wide">
+                            {student.rank || 'HSC Topper'}
+                          </div>
+
+                          {/* Score */}
+                          {renderScore(student.score || '485/500')}
+
+                          {/* Grade / Standard */}
+                          <div className="h-[18px] flex items-center font-['Roboto',sans-serif] font-normal text-[11px] sm:text-[12px] leading-tight uppercase text-white/90 tracking-wide mt-1">
+                            {student.standard || 'IN GRADE 10'}
+                          </div>
+
+                          {/* Gold Divider Line matching Card 2 */}
+                          <div className="w-[72px] sm:w-[76px] h-[2px] bg-[#F8C62F] rounded-full my-2.5 sm:my-3" />
+
+                          {/* Student Name with fixed min-height */}
+                          <div className="min-h-[44px] sm:min-h-[48px] flex items-center font-['Roboto',sans-serif] font-semibold text-[18px] sm:text-[20px] leading-tight text-white tracking-tight">
+                            {student.studentName}
+                          </div>
+                        </div>
                       </div>
 
-                      {/* Score */}
-                      {renderScore(student.score || '485/500')}
+                      {/* Right Column: Student Portrait with Laurel Frame */}
+                      <div className="absolute right-0 top-0 bottom-0 w-[215px] sm:w-[226px] h-full flex items-end justify-end pointer-events-none select-none overflow-hidden rounded-r-[20px]">
+                        {/* If custom CMS photo, render golden laurel wreath SVG background behind portrait */}
+                        {isCustomPhoto && (
+                          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            <svg
+                              viewBox="0 0 160 160"
+                              className="w-[125px] h-[125px] sm:w-[140px] sm:h-[140px] opacity-90 text-[#F8C62F]"
+                              fill="currentColor"
+                            >
+                              <circle cx="80" cy="80" r="56" fill="#03594E" />
+                              <circle cx="80" cy="80" r="54" fill="#00796B" opacity="0.4" />
+                              <path
+                                d="M80,24 C64,24 50,38 48,56 C46,74 54,92 68,104 C64,98 62,90 62,82 C62,64 70,48 80,40 Z"
+                                fill="#F8C62F"
+                              />
+                              <path
+                                d="M80,24 C96,24 110,38 112,56 C114,74 106,92 92,104 C96,98 98,90 98,82 C98,64 90,48 80,40 Z"
+                                fill="#F8C62F"
+                              />
+                            </svg>
+                          </div>
+                        )}
 
-                      {/* Grade / Standard */}
-                      <div className="font-['Roboto',sans-serif] font-normal text-[10px] sm:text-[11px] lg:text-[12px] leading-tight lg:leading-[13.53px] uppercase text-white/85 tracking-wide mt-1">
-                        {student.standard || 'IN GRADE 10'}
+                        {/* Student Image */}
+                        <img
+                          src={photoUrl}
+                          alt={student.studentName}
+                          className="w-full h-full object-cover object-right-bottom select-none"
+                        />
                       </div>
                     </div>
-
-                    {/* Student Name */}
-                    <div className="font-['Roboto',sans-serif] font-semibold text-[16px] sm:text-[18px] lg:text-[20px] leading-tight lg:leading-[23.67px] text-white truncate pt-1">
-                      {student.studentName}
-                    </div>
                   </div>
-
-                  {/* Right Column: Student Portrait with Laurel Frame (Exact 226:291 ratio, never cut off on the left) */}
-                  <div className="absolute right-0 bottom-0 h-full aspect-[226/291] flex items-end justify-end pointer-events-none select-none overflow-hidden rounded-r-[18px] lg:rounded-r-[20px]">
-                    {/* If custom CMS photo, render golden laurel wreath SVG background behind portrait */}
-                    {isCustomPhoto && (
-                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <svg
-                          viewBox="0 0 160 160"
-                          className="w-[105px] h-[105px] sm:w-[125px] sm:h-[125px] lg:w-[140px] lg:h-[140px] opacity-90 text-[#F8C62F]"
-                          fill="currentColor"
-                        >
-                          <circle cx="80" cy="80" r="56" fill="#03594E" />
-                          <circle cx="80" cy="80" r="54" fill="#00796B" opacity="0.4" />
-                          <path
-                            d="M80,24 C64,24 50,38 48,56 C46,74 54,92 68,104 C64,98 62,90 62,82 C62,64 70,48 80,40 Z"
-                            fill="#F8C62F"
-                          />
-                          <path
-                            d="M80,24 C96,24 110,38 112,56 C114,74 106,92 92,104 C96,98 98,90 98,82 C98,64 90,48 80,40 Z"
-                            fill="#F8C62F"
-                          />
-                        </svg>
-                      </div>
-                    )}
-
-                    {/* Student Image */}
-                    <img
-                      src={photoUrl}
-                      alt={student.studentName}
-                      className="w-full h-full object-contain object-right-bottom select-none"
-                    />
-                  </div>
-                </div>
-              )
-            })}
+                )
+              })}
             </div>
           </div>
         </div>

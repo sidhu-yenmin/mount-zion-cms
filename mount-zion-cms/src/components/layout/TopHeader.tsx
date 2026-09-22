@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -13,7 +13,28 @@ interface TopHeaderProps {
 
 export function TopHeader({ data }: TopHeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({})
   const pathname = usePathname()
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileMenuOpen])
+
+  // Toggle accordion submenu for mobile nav
+  const toggleSubmenu = (menuKey: string) => {
+    setExpandedMenus((prev) => ({
+      ...prev,
+      [menuKey]: !prev[menuKey],
+    }))
+  }
 
   // If topbar is explicitly hidden in CMS, do not render
   if (data?.showTopBar === false) {
@@ -171,100 +192,162 @@ export function TopHeader({ data }: TopHeaderProps) {
         {/* Mobile Hamburger Button */}
         {navItems.length > 0 && (
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => setMobileMenuOpen(true)}
             className="lg:hidden p-1.5 rounded-md hover:bg-black/10 transition-colors text-[#0F172A]"
-            aria-label="Toggle navigation menu"
+            aria-label="Open navigation menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <Menu className="w-6 h-6" />
           </button>
         )}
       </div>
 
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && navItems.length > 0 && (
-        <div className="lg:hidden bg-[#EAB308] border-t border-black/10 px-6 py-4 space-y-3 font-['Inter']">
+      {/* Mobile Slide-Over Drawer Backdrop */}
+      <div
+        className={`fixed inset-0 bg-black/50 z-50 transition-opacity duration-300 lg:hidden ${
+          mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setMobileMenuOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* Mobile Slide-Over Drawer Panel (Slides from Right) */}
+      <aside
+        className={`fixed top-0 right-0 bottom-0 h-full w-[290px] sm:w-[320px] max-w-[85vw] bg-[#EAB308] z-50 shadow-2xl flex flex-col transition-transform duration-300 ease-in-out font-['Inter'] lg:hidden ${
+          mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+        aria-label="Mobile Navigation Menu"
+      >
+        {/* Drawer Header with Title & Close Button */}
+        <div className="flex items-center justify-between px-5 h-[53px] border-b border-black/10 shrink-0">
+          <span className="font-semibold text-[17px] text-[#0F172A]">Menu</span>
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            className="p-1.5 rounded-full hover:bg-black/10 transition-colors text-[#0F172A]"
+            aria-label="Close navigation menu"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+
+        {/* Drawer Nav Items List (Scrollable, Submenus Collapsed by Default) */}
+        <div className="flex-1 overflow-y-auto px-5 py-3 space-y-1">
           {navItems.map((item, idx) => {
             const isItemActive = Boolean(item.isActive || (item.url !== '#' && pathname === item.url))
-            const showVectorIcon = Boolean(item.showExpandIcon ?? (item.children && item.children.length > 0))
+            const hasSubmenu = Boolean(item.children && item.children.length > 0)
+            const menuKey = `menu-${item.label}-${idx}`
+            const isExpanded = Boolean(expandedMenus[menuKey])
 
             return (
-              <div key={`mobile-${item.label}-${idx}`}>
-                <div className="flex items-center justify-between py-1.5">
-                  <Link
-                    href={item.url}
-                    className={`text-[17px] text-[#0F172A] ${isItemActive ? 'font-bold' : 'font-normal'}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                  {showVectorIcon && (
-                    <svg
-                      width="10"
-                      height="6"
-                      viewBox="0 0 10 6"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-[10px] h-[6px] shrink-0"
+              <div key={`mobile-${item.label}-${idx}`} className="border-b border-black/10 last:border-b-0 pb-1">
+                <div className="flex items-center justify-between py-2">
+                  {hasSubmenu ? (
+                    <button
+                      type="button"
+                      onClick={() => toggleSubmenu(menuKey)}
+                      className={`flex-1 text-left text-[17px] text-[#0F172A] flex items-center justify-between group cursor-pointer ${
+                        isItemActive ? 'font-bold' : 'font-medium'
+                      }`}
+                      aria-expanded={isExpanded}
                     >
-                      <path
-                        d="M1 1.25L5 5.25L9 1.25"
-                        stroke="#0F172A"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                      <span>{item.label}</span>
+                      <div
+                        className={`p-1 rounded-sm text-[#0F172A] transition-transform duration-200 ${
+                          isExpanded ? 'rotate-180' : 'rotate-0'
+                        }`}
+                      >
+                        <svg
+                          width="12"
+                          height="7"
+                          viewBox="0 0 10 6"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-3 h-2"
+                        >
+                          <path
+                            d="M1 1.25L5 5.25L9 1.25"
+                            stroke="#0F172A"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  ) : (
+                    <Link
+                      href={item.url}
+                      className={`flex-1 text-[17px] text-[#0F172A] py-0.5 ${
+                        isItemActive ? 'font-bold' : 'font-medium'
+                      }`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
                   )}
                 </div>
 
-                {item.children && item.children.length > 0 && (
-                  <div className="pl-4 space-y-1.5 mt-1 border-l-2 border-black/15">
-                    {item.children.map((sub, sIdx) => (
-                      <Link
-                        key={`mob-sub-${sub.label}-${sIdx}`}
-                        href={sub.url}
-                        className="block py-1 text-sm font-medium text-slate-800 hover:text-[#0F172A]"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {sub.label}
-                      </Link>
-                    ))}
+                {/* Collapsible Submenu Accordion */}
+                {hasSubmenu && (
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                      isExpanded ? 'max-h-96 opacity-100 pb-2' : 'max-h-0 opacity-0'
+                    }`}
+                  >
+                    <div className="pl-4 space-y-2 mt-1 border-l-2 border-black/20">
+                      {item.children?.map((sub, sIdx) => (
+                        <Link
+                          key={`mob-sub-${sub.label}-${sIdx}`}
+                          href={sub.url}
+                          className="block py-1 text-[15px] font-normal text-[#0F172A]/90 hover:text-[#0F172A] transition-colors"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
             )
           })}
-
-          {(phone || email) && (
-            <div className="pt-3 border-t border-black/15 flex flex-col gap-2 text-sm text-[#373737]">
-              {phone && (
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="/images/phone-icon.png"
-                    alt="Phone"
-                    width={15}
-                    height={15}
-                    className="w-[15px] h-[15px] object-contain"
-                  />
-                  <span>{phone}</span>
-                </div>
-              )}
-              {email && (
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="/images/mail-icon.png"
-                    alt="Mail"
-                    width={15}
-                    height={11}
-                    className="w-[15px] h-[11px] object-contain"
-                  />
-                  <span>{email}</span>
-                </div>
-              )}
-            </div>
-          )}
         </div>
-      )}
+
+        {/* Drawer Footer Contact Info */}
+        {(phone || email) && (
+          <div className="p-5 border-t border-black/10 bg-black/[0.03] shrink-0 space-y-2.5 text-sm text-[#373737]">
+            {phone && (
+              <a
+                href={`tel:${phone.replace(/[\s-]+/g, '')}`}
+                className="flex items-center gap-2.5 hover:text-[#0F172A] transition-colors"
+              >
+                <Image
+                  src="/images/phone-icon.png"
+                  alt="Phone"
+                  width={15}
+                  height={15}
+                  className="w-[15px] h-[15px] object-contain shrink-0"
+                />
+                <span className="font-medium">{phone}</span>
+              </a>
+            )}
+            {email && (
+              <a
+                href={`mailto:${email}`}
+                className="flex items-center gap-2.5 hover:text-[#0F172A] transition-colors"
+              >
+                <Image
+                  src="/images/mail-icon.png"
+                  alt="Mail"
+                  width={15}
+                  height={11}
+                  className="w-[15px] h-[11px] object-contain shrink-0"
+                />
+                <span className="font-medium">{email}</span>
+              </a>
+            )}
+          </div>
+        )}
+      </aside>
     </header>
   )
 }
