@@ -11,6 +11,7 @@ import { Pages } from './collections/Pages'
 import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
 import { Menu } from './globals/Menu'
+import { ThemeSettings } from './globals/ThemeSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,7 +24,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Pages],
-  globals: [Menu, Header, Footer],
+  globals: [Menu, Header, Footer, ThemeSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

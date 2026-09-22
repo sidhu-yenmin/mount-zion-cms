@@ -93,11 +93,13 @@ export interface Config {
     menu: Menu;
     header: Header;
     footer: Footer;
+    theme: Theme;
   };
   globalsSelect: {
     menu: MenuSelect<false> | MenuSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    theme: ThemeSelect<false> | ThemeSelect<true>;
   };
   locale: null;
   widgets: {
@@ -240,19 +242,19 @@ export interface Page {
             description?: string | null;
             buttonText?: string | null;
             buttonUrl?: string | null;
-            floatingBadgeLine1?: string | null;
-            floatingBadgeLine2?: string | null;
-            stat1Value?: string | null;
-            stat1Label?: string | null;
-            stat2Value?: string | null;
-            stat2Label?: string | null;
-            backgroundColor?: string | null;
-            backgroundImage?: (number | null) | Media;
             imageOne?: (number | null) | Media;
             imageTwo?: (number | null) | Media;
+            floatingBadgeLine1?: string | null;
+            floatingBadgeLine2?: string | null;
             floatingBadgeIcon?: (number | null) | Media;
+            stat1Value?: string | null;
+            stat1Label?: string | null;
             stat1Icon?: (number | null) | Media;
+            stat2Value?: string | null;
+            stat2Label?: string | null;
             stat2Icon?: (number | null) | Media;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             id?: string | null;
             blockName?: string | null;
             blockType: 'aboutUs';
@@ -268,10 +270,10 @@ export interface Page {
             buttonText?: string | null;
             buttonUrl?: string | null;
             bannerText?: string | null;
-            backgroundColor?: string | null;
-            backgroundImage?: (number | null) | Media;
             imageOne?: (number | null) | Media;
             imageTwo?: (number | null) | Media;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             id?: string | null;
             blockName?: string | null;
             blockType: 'programs';
@@ -588,19 +590,19 @@ export interface PagesSelect<T extends boolean = true> {
               description?: T;
               buttonText?: T;
               buttonUrl?: T;
-              floatingBadgeLine1?: T;
-              floatingBadgeLine2?: T;
-              stat1Value?: T;
-              stat1Label?: T;
-              stat2Value?: T;
-              stat2Label?: T;
-              backgroundColor?: T;
-              backgroundImage?: T;
               imageOne?: T;
               imageTwo?: T;
+              floatingBadgeLine1?: T;
+              floatingBadgeLine2?: T;
               floatingBadgeIcon?: T;
+              stat1Value?: T;
+              stat1Label?: T;
               stat1Icon?: T;
+              stat2Value?: T;
+              stat2Label?: T;
               stat2Icon?: T;
+              backgroundColor?: T;
+              backgroundImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -614,10 +616,10 @@ export interface PagesSelect<T extends boolean = true> {
               buttonText?: T;
               buttonUrl?: T;
               bannerText?: T;
-              backgroundColor?: T;
-              backgroundImage?: T;
               imageOne?: T;
               imageTwo?: T;
+              backgroundColor?: T;
+              backgroundImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -898,6 +900,33 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme".
+ */
+export interface Theme {
+  id: number;
+  siteName: string;
+  tagline?: string | null;
+  logo?: (number | null) | Media;
+  footerLogo?: (number | null) | Media;
+  favicon?: (number | null) | Media;
+  headingFont?:
+    | ('Plus Jakarta Sans' | 'Inter' | 'Roboto' | 'Outfit' | 'K2D' | 'Playfair Display' | 'Merriweather' | 'system-ui')
+    | null;
+  bodyFont?: ('Plus Jakarta Sans' | 'Inter' | 'Roboto' | 'Open Sans' | 'Outfit' | 'system-ui') | null;
+  baseFontSize?: ('14px' | '16px' | '18px') | null;
+  headingWeight?: ('600' | '700' | '800') | null;
+  primaryColor?: string | null;
+  accentColor?: string | null;
+  backgroundColor?: string | null;
+  textColor?: string | null;
+  headerNavBackground?: string | null;
+  footerBackground?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "menu_select".
  */
 export interface MenuSelect<T extends boolean = true> {
@@ -1003,6 +1032,31 @@ export interface FooterSelect<T extends boolean = true> {
       };
   logo?: T;
   backgroundColor?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme_select".
+ */
+export interface ThemeSelect<T extends boolean = true> {
+  siteName?: T;
+  tagline?: T;
+  logo?: T;
+  footerLogo?: T;
+  favicon?: T;
+  headingFont?: T;
+  bodyFont?: T;
+  baseFontSize?: T;
+  headingWeight?: T;
+  primaryColor?: T;
+  accentColor?: T;
+  backgroundColor?: T;
+  textColor?: T;
+  headerNavBackground?: T;
+  footerBackground?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

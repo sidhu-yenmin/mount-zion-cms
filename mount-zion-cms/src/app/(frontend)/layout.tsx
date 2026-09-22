@@ -16,12 +16,22 @@ export const metadata = {
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
-  let headerCmsData: (HeaderData & { showTopBar?: boolean }) | undefined = undefined
+  let headerCmsData: (HeaderData & { showTopBar?: boolean; logo?: any }) | undefined = undefined
   let footerCmsData: FooterType | null = null
+  let themeData: any = null
 
   try {
     const payloadConfig = await config
     const payload = await getPayload({ config: payloadConfig })
+
+    try {
+      themeData = await payload.findGlobal({
+        slug: 'theme',
+        depth: 2,
+      })
+    } catch {
+      // Theme global not initialized yet
+    }
 
     let menuData: any = null
     try {
@@ -59,6 +69,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       }))
     }
 
+    const resolvedHeaderLogo = header?.logo || themeData?.logo || null
+
     if (header) {
       headerCmsData = {
         showTopBar: header.topBar?.showTopBar ?? true,
@@ -67,6 +79,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         backgroundColor: (header.topBar as any)?.backgroundColor || '#EAB308',
         textColor: (header.topBar as any)?.textColor || '#0F172A',
         navItems,
+        logo: resolvedHeaderLogo,
       }
     }
 
@@ -74,9 +87,36 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       slug: 'footer',
       depth: 2,
     })) as FooterType
+
+    if (footerCmsData && !footerCmsData.logo && themeData?.footerLogo) {
+      footerCmsData.logo = themeData.footerLogo
+    }
   } catch (err) {
-    console.log('Error fetching header/footer:', err)
+    console.log('Error fetching globals:', err)
   }
+
+  // Dynamic Theme CSS variables
+  const headingFont = themeData?.headingFont || 'Plus Jakarta Sans'
+  const bodyFont = themeData?.bodyFont || 'Plus Jakarta Sans'
+  const baseFontSize = themeData?.baseFontSize || '16px'
+  const headingWeight = themeData?.headingWeight || '700'
+  const primaryColor = themeData?.primaryColor || '#03594E'
+  const accentColor = themeData?.accentColor || '#EAB308'
+  const pageBgColor = themeData?.backgroundColor || '#F8FAFC'
+  const textColor = themeData?.textColor || '#0F172A'
+
+  const dynamicStyles = `
+    :root {
+      --font-heading: '${headingFont}', sans-serif;
+      --font-body: '${bodyFont}', sans-serif;
+      --font-size-base: ${baseFontSize};
+      --font-weight-heading: ${headingWeight};
+      --color-primary: ${primaryColor};
+      --color-accent: ${accentColor};
+      --color-page-bg: ${pageBgColor};
+      --color-text-main: ${textColor};
+    }
+  `
 
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
@@ -84,12 +124,17 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=K2D:wght@800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=K2D:wght@700;800&family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&family=Outfit:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"
           rel="stylesheet"
         />
+        <style dangerouslySetInnerHTML={{ __html: dynamicStyles }} />
       </head>
       <body
-        className="bg-slate-50 text-neutral-900 antialiased min-h-screen flex flex-col"
+        className="antialiased min-h-screen flex flex-col"
+        style={{
+          backgroundColor: 'var(--color-page-bg, #F8FAFC)',
+          color: 'var(--color-text-main, #0F172A)',
+        }}
         suppressHydrationWarning
       >
         {/* Dynamic CMS Header */}
