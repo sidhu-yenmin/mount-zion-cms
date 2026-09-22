@@ -17,47 +17,70 @@ export const CtaBannerBlock: Block = {
       },
     },
     {
-      name: 'tagline',
-      type: 'text',
-      label: 'Tagline',
-      defaultValue: 'Start your journey',
-    },
-    {
-      name: 'heading',
-      type: 'text',
-      label: 'Heading',
-      defaultValue: 'Towards a brighter future.',
-      required: true,
-    },
-    {
-      name: 'backgroundColor',
-      type: 'text',
-      label: 'Banner Background Color',
-      defaultValue: '#03594E',
-    },
-    {
-      name: 'description',
-      type: 'textarea',
-      label: 'Description',
-      defaultValue: 'Give your child the right foundation to learn, grow, and achieve their dreams in a nurturing and inspiring environment.',
-    },
-    {
-      name: 'buttonText',
-      type: 'text',
-      label: 'Button Label',
-      defaultValue: 'Get Started',
-    },
-    {
-      name: 'buttonUrl',
-      type: 'text',
-      label: 'Button URL',
-      defaultValue: '/admissions',
-    },
-    {
-      name: 'backgroundImage',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Background Banner Image (Chalkboard graphic)',
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Content',
+          fields: [
+            {
+              name: 'tagline',
+              type: 'text',
+              label: 'Tagline',
+              defaultValue: 'Start your journey',
+            },
+            {
+              name: 'heading',
+              type: 'text',
+              label: 'Heading',
+              defaultValue: 'Towards a brighter future.',
+              required: true,
+            },
+            {
+              name: 'description',
+              type: 'textarea',
+              label: 'Description',
+              defaultValue:
+                'Give your child the right foundation to learn, grow, and achieve their dreams in a nurturing and inspiring environment.',
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'buttonText',
+                  type: 'text',
+                  label: 'Button Label',
+                  defaultValue: 'Get Started',
+                  admin: { width: '50%' },
+                },
+                {
+                  name: 'buttonUrl',
+                  type: 'text',
+                  label: 'Button URL',
+                  defaultValue: '/admissions',
+                  admin: { width: '50%' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Design & Media',
+          fields: [
+            {
+              name: 'backgroundColor',
+              type: 'text',
+              label: 'Banner Background Color (Hex / CSS)',
+              defaultValue: '#03594E',
+            },
+            {
+              name: 'backgroundImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Background Banner Image (Chalkboard graphic)',
+            },
+          ],
+        },
+      ],
     },
   ],
 }

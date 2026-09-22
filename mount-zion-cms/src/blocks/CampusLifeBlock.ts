@@ -17,101 +17,130 @@ export const CampusLifeBlock: Block = {
       },
     },
     {
-      name: 'badge',
-      type: 'text',
-      label: 'Badge / Tagline',
-      defaultValue: 'OUR GALLERY',
-    },
-    {
-      name: 'heading',
-      type: 'text',
-      label: 'Section Heading',
-      defaultValue: 'Empowering Future Leaders Around the World',
-      required: true,
-    },
-    {
-      name: 'backgroundColor',
-      type: 'text',
-      label: 'Section Background Color (Hex / CSS)',
-      defaultValue: '#FFFFFF',
-    },
-    {
-      name: 'backgroundImage',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Section Background Image (Optional full section background / pattern)',
-    },
-    {
-      name: 'viewMoreText',
-      type: 'text',
-      label: 'View More Button Label',
-      defaultValue: 'View More',
-    },
-    {
-      name: 'viewMoreLink',
-      type: 'text',
-      label: 'View More URL',
-      defaultValue: '/gallery',
-    },
-    {
-      name: 'galleryImages',
-      type: 'array',
-      label: 'Bento Grid Images (6 Images Recommended)',
-      minRows: 1,
-      fields: [
+      type: 'tabs',
+      tabs: [
         {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
-          required: true,
+          label: 'Content',
+          fields: [
+            {
+              name: 'badge',
+              type: 'text',
+              label: 'Badge / Tagline',
+              defaultValue: 'OUR GALLERY',
+            },
+            {
+              name: 'heading',
+              type: 'text',
+              label: 'Section Heading',
+              defaultValue: 'Empowering Future Leaders Around the World',
+              required: true,
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'viewMoreText',
+                  type: 'text',
+                  label: 'View More Button Label',
+                  defaultValue: 'View More',
+                  admin: { width: '50%' },
+                },
+                {
+                  name: 'viewMoreLink',
+                  type: 'text',
+                  label: 'View More URL',
+                  defaultValue: '/gallery',
+                  admin: { width: '50%' },
+                },
+              ],
+            },
+            {
+              name: 'galleryImages',
+              type: 'array',
+              label: 'Bento Grid Images (6 Images Recommended)',
+              minRows: 1,
+              fields: [
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: true,
+                },
+                {
+                  name: 'caption',
+                  type: 'text',
+                  label: 'Optional Caption / Alt Text',
+                },
+              ],
+            },
+            {
+              name: 'ctaBar',
+              type: 'group',
+              label: 'High School CTA Bar (Bottom)',
+              fields: [
+                {
+                  name: 'showCtaBar',
+                  type: 'checkbox',
+                  label: 'Show CTA Bar below gallery?',
+                  defaultValue: true,
+                },
+                {
+                  name: 'tagline',
+                  type: 'text',
+                  label: 'CTA Tagline (e.g. Looking for the Right School?)',
+                  defaultValue: 'Looking for the Right School?',
+                },
+                {
+                  name: 'heading',
+                  type: 'text',
+                  label: 'CTA Heading',
+                  defaultValue: "Start Your Child's Journey with Us",
+                },
+                {
+                  name: 'studentImage',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Student Graphic / Photo',
+                },
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'buttonText',
+                      type: 'text',
+                      label: 'CTA Button Label',
+                      defaultValue: 'Apply Now',
+                      admin: { width: '50%' },
+                    },
+                    {
+                      name: 'buttonUrl',
+                      type: 'text',
+                      label: 'CTA Button URL',
+                      defaultValue: '/admissions',
+                      admin: { width: '50%' },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
         {
-          name: 'caption',
-          type: 'text',
-          label: 'Optional Caption / Alt Text',
-        },
-      ],
-    },
-    {
-      name: 'ctaBar',
-      type: 'group',
-      label: 'High School CTA Bar (Bottom)',
-      fields: [
-        {
-          name: 'showCtaBar',
-          type: 'checkbox',
-          label: 'Show CTA Bar below gallery?',
-          defaultValue: true,
-        },
-        {
-          name: 'tagline',
-          type: 'text',
-          label: 'CTA Tagline (e.g. Looking for the Right School?)',
-          defaultValue: 'Looking for the Right School?',
-        },
-        {
-          name: 'heading',
-          type: 'text',
-          label: 'CTA Heading',
-          defaultValue: "Start Your Child's Journey with Us",
-        },
-        {
-          name: 'studentImage',
-          type: 'upload',
-          relationTo: 'media',
-          label: 'Student Graphic / Photo',
-        },
-        {
-          name: 'buttonText',
-          type: 'text',
-          label: 'CTA Button Label',
-          defaultValue: 'Apply Now',
-        },
-        {
-          name: 'buttonUrl',
-          type: 'text',
-          label: 'CTA Button URL',
-          defaultValue: '/admissions',
+          label: 'Design & Media',
+          fields: [
+            {
+              name: 'backgroundColor',
+              type: 'text',
+              label: 'Section Background Color (Hex / CSS)',
+              defaultValue: '#FFFFFF',
+            },
+            {
+              name: 'backgroundImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Section Background Image (Optional full section background / pattern)',
+            },
+          ],
         },
       ],
     },

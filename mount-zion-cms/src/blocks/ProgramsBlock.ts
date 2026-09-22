@@ -17,73 +17,88 @@ export const ProgramsBlock: Block = {
       },
     },
     {
-      name: 'badge',
-      type: 'text',
-      label: 'Badge / Tagline',
-      defaultValue: 'ACADEMIC EXCELLENCE',
-    },
-    {
-      name: 'heading',
-      type: 'text',
-      label: 'Section Heading',
-      defaultValue: "Shaping Bright Minds for Tomorrow's World",
-      required: true,
-    },
-    {
-      name: 'backgroundColor',
-      type: 'text',
-      label: 'Section Background Color',
-      defaultValue: '#FFFFFF',
-    },
-    {
-      name: 'description',
-      type: 'textarea',
-      label: 'Description Text',
-      defaultValue:
-        'Through a balanced blend of academics, technology, creativity, and values, we inspire students to think independently, solve real-world challenges, and achieve excellence in every stage of their educational journey.',
-    },
-    {
-      type: 'row',
-      fields: [
+      type: 'tabs',
+      tabs: [
         {
-          name: 'buttonText',
-          type: 'text',
-          label: 'Button Label',
-          defaultValue: 'Explore Academics',
-          admin: { width: '50%' },
+          label: 'Content',
+          fields: [
+            {
+              name: 'badge',
+              type: 'text',
+              label: 'Badge / Tagline',
+              defaultValue: 'ACADEMIC EXCELLENCE',
+            },
+            {
+              name: 'heading',
+              type: 'text',
+              label: 'Section Heading',
+              defaultValue: "Shaping Bright Minds for Tomorrow's World",
+              required: true,
+            },
+            {
+              name: 'description',
+              type: 'textarea',
+              label: 'Description Text',
+              defaultValue:
+                'Through a balanced blend of academics, technology, creativity, and values, we inspire students to think independently, solve real-world challenges, and achieve excellence in every stage of their educational journey.',
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'buttonText',
+                  type: 'text',
+                  label: 'Button Label',
+                  defaultValue: 'Explore Academics',
+                  admin: { width: '50%' },
+                },
+                {
+                  name: 'buttonUrl',
+                  type: 'text',
+                  label: 'Button URL',
+                  defaultValue: '#academics',
+                  admin: { width: '50%' },
+                },
+              ],
+            },
+            {
+              name: 'bannerText',
+              type: 'text',
+              label: 'Floating Banner Text',
+              defaultValue: 'Learning • Innovation • Achievement',
+            },
+          ],
         },
         {
-          name: 'buttonUrl',
-          type: 'text',
-          label: 'Button URL',
-          defaultValue: '#academics',
-          admin: { width: '50%' },
+          label: 'Design & Media',
+          fields: [
+            {
+              name: 'backgroundColor',
+              type: 'text',
+              label: 'Section Background Color (Hex / CSS)',
+              defaultValue: '#03594E',
+            },
+            {
+              name: 'backgroundImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Background Pattern Image (Optional)',
+            },
+            {
+              name: 'imageOne',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Academics Image 1 (Classroom 591x298px)',
+            },
+            {
+              name: 'imageTwo',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Academics Image 2 (Tree Planting 475x528px)',
+            },
+          ],
         },
       ],
-    },
-    {
-      name: 'imageOne',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Academics Image 1 (Classroom 591x298px)',
-    },
-    {
-      name: 'imageTwo',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Academics Image 2 (Tree Planting 475x528px)',
-    },
-    {
-      name: 'backgroundImage',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Background Pattern Image (Optional)',
-    },
-    {
-      name: 'bannerText',
-      type: 'text',
-      label: 'Floating Banner Text',
-      defaultValue: 'Learning • Innovation • Achievement',
     },
   ],
 }
