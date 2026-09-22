@@ -17,6 +17,9 @@ export const Pages: CollectionConfig = {
   access: {
     read: () => true,
   },
+  versions: {
+    drafts: true,
+  },
   fields: [
     {
       name: 'title',

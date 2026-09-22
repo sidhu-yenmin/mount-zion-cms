@@ -5,6 +5,9 @@ export const Footer: GlobalConfig = {
   access: {
     read: () => true,
   },
+  versions: {
+    drafts: true,
+  },
   fields: [
     {
       name: 'ctaBanner',
