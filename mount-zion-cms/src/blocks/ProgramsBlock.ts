@@ -67,6 +67,25 @@ export const ProgramsBlock: Block = {
               label: 'Floating Banner Text',
               defaultValue: 'Learning • Innovation • Achievement',
             },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'imageOne',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Academics Image 1 (Classroom 591x298px)',
+                  admin: { width: '50%' },
+                },
+                {
+                  name: 'imageTwo',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Academics Image 2 (Tree Planting 475x528px)',
+                  admin: { width: '50%' },
+                },
+              ],
+            },
           ],
         },
         {
@@ -83,18 +102,6 @@ export const ProgramsBlock: Block = {
               type: 'upload',
               relationTo: 'media',
               label: 'Background Pattern Image (Optional)',
-            },
-            {
-              name: 'imageOne',
-              type: 'upload',
-              relationTo: 'media',
-              label: 'Academics Image 1 (Classroom 591x298px)',
-            },
-            {
-              name: 'imageTwo',
-              type: 'upload',
-              relationTo: 'media',
-              label: 'Academics Image 2 (Tree Planting 475x528px)',
             },
           ],
         },
