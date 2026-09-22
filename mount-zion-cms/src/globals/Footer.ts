@@ -136,6 +136,12 @@ export const Footer: GlobalConfig = {
                   type: 'text',
                   label: 'Custom Link Label (Optional - auto-uses Page Title if left blank)',
                 },
+                {
+                  name: 'openInNewTab',
+                  type: 'checkbox',
+                  label: 'Open in new tab?',
+                  defaultValue: false,
+                },
               ],
             },
             {
