@@ -17,73 +17,88 @@ export const FacilitiesBlock: Block = {
       },
     },
     {
-      name: 'badge',
-      type: 'text',
-      label: 'Badge / Tagline',
-      defaultValue: 'CAMPUS EXPERIENCE & BEYOND ACADEMICS',
-    },
-    {
-      name: 'heading',
-      type: 'text',
-      label: 'Section Heading',
-      defaultValue: 'Where Learning, Discovery & Growth Come Together',
-      required: true,
-    },
-    {
-      name: 'backgroundColor',
-      type: 'text',
-      label: 'Section Background Color (Hex / CSS)',
-      defaultValue: '#F4F6F8',
-    },
-    {
-      name: 'backgroundImage',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Section Background Image (Optional full section background / pattern)',
-    },
-    {
-      name: 'description',
-      type: 'textarea',
-      label: 'Section Description',
-      defaultValue:
-        'At our school, every corner of the campus is designed to inspire learning and personal growth. From state-of-the-art classrooms and creative studios to sports facilities and collaborative spaces, students enjoy an environment that nurtures academic excellence alongside creativity, leadership, teamwork, and well-being.',
-    },
-    {
-      name: 'tabs',
-      type: 'array',
-      label: 'Facility Categories & Photos',
-      defaultValue: [
-        { tabName: 'Classrooms' },
-        { tabName: 'Self defence' },
-        { tabName: 'Swimming' },
-        { tabName: 'Dance & Music' },
-        { tabName: 'Sports' },
-        { tabName: 'Arts' },
-        { tabName: 'Fitness' },
-      ],
-      minRows: 1,
-      fields: [
+      type: 'tabs',
+      tabs: [
         {
-          name: 'tabName',
-          type: 'text',
-          label: 'Category Name (e.g. Classrooms, Swimming, Sports)',
-          required: true,
-        },
-        {
-          name: 'images',
-          type: 'array',
-          label: 'Category Images',
+          label: 'Content',
           fields: [
             {
-              name: 'image',
-              type: 'upload',
-              relationTo: 'media',
+              name: 'badge',
+              type: 'text',
+              label: 'Badge / Tagline',
+              defaultValue: 'CAMPUS EXPERIENCE & BEYOND ACADEMICS',
+            },
+            {
+              name: 'heading',
+              type: 'text',
+              label: 'Section Heading',
+              defaultValue: 'Where Learning, Discovery & Growth Come Together',
               required: true,
             },
             {
-              name: 'caption',
+              name: 'description',
+              type: 'textarea',
+              label: 'Section Description',
+              defaultValue:
+                'At our school, every corner of the campus is designed to inspire learning and personal growth. From state-of-the-art classrooms and creative studios to sports facilities and collaborative spaces, students enjoy an environment that nurtures academic excellence alongside creativity, leadership, teamwork, and well-being.',
+            },
+            {
+              name: 'tabs',
+              type: 'array',
+              label: 'Facility Categories & Photos',
+              defaultValue: [
+                { tabName: 'Classrooms' },
+                { tabName: 'Self defence' },
+                { tabName: 'Swimming' },
+                { tabName: 'Dance & Music' },
+                { tabName: 'Sports' },
+                { tabName: 'Arts' },
+                { tabName: 'Fitness' },
+              ],
+              minRows: 1,
+              fields: [
+                {
+                  name: 'tabName',
+                  type: 'text',
+                  label: 'Category Name (e.g. Classrooms, Swimming, Sports)',
+                  required: true,
+                },
+                {
+                  name: 'images',
+                  type: 'array',
+                  label: 'Category Images',
+                  fields: [
+                    {
+                      name: 'image',
+                      type: 'upload',
+                      relationTo: 'media',
+                      required: true,
+                    },
+                    {
+                      name: 'caption',
+                      type: 'text',
+                      label: 'Caption / Facility Title',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Design & Media',
+          fields: [
+            {
+              name: 'backgroundColor',
               type: 'text',
-              label: 'Caption / Facility Title',
+              label: 'Section Background Color (Hex / CSS)',
+              defaultValue: '#F4F6F8',
+            },
+            {
+              name: 'backgroundImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Section Background Image (Optional full section background / pattern)',
             },
           ],
         },

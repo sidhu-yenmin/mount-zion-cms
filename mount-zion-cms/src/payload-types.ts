@@ -224,6 +224,8 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            backgroundColor?: string | null;
+            backgroundImage: number | Media;
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero';
@@ -235,21 +237,21 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
-            backgroundColor?: string | null;
-            backgroundImage?: (number | null) | Media;
             description?: string | null;
             buttonText?: string | null;
             buttonUrl?: string | null;
-            imageOne?: (number | null) | Media;
-            imageTwo?: (number | null) | Media;
-            floatingBadgeIcon?: (number | null) | Media;
             floatingBadgeLine1?: string | null;
             floatingBadgeLine2?: string | null;
             stat1Value?: string | null;
             stat1Label?: string | null;
-            stat1Icon?: (number | null) | Media;
             stat2Value?: string | null;
             stat2Label?: string | null;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
+            imageOne?: (number | null) | Media;
+            imageTwo?: (number | null) | Media;
+            floatingBadgeIcon?: (number | null) | Media;
+            stat1Icon?: (number | null) | Media;
             stat2Icon?: (number | null) | Media;
             id?: string | null;
             blockName?: string | null;
@@ -262,14 +264,14 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
-            backgroundColor?: string | null;
             description?: string | null;
             buttonText?: string | null;
             buttonUrl?: string | null;
+            bannerText?: string | null;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             imageOne?: (number | null) | Media;
             imageTwo?: (number | null) | Media;
-            backgroundImage?: (number | null) | Media;
-            bannerText?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'programs';
@@ -281,8 +283,6 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
-            backgroundColor?: string | null;
-            backgroundImage?: (number | null) | Media;
             description?: string | null;
             tabs?:
               | {
@@ -297,6 +297,8 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             id?: string | null;
             blockName?: string | null;
             blockType: 'facilities';
@@ -308,8 +310,6 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
-            backgroundColor?: string | null;
-            backgroundImage?: (number | null) | Media;
             academicYears?:
               | {
                   year: string;
@@ -326,6 +326,8 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             id?: string | null;
             blockName?: string | null;
             blockType: 'toppers';
@@ -337,8 +339,6 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
-            backgroundColor?: string | null;
-            backgroundImage?: (number | null) | Media;
             viewMoreText?: string | null;
             viewMoreLink?: string | null;
             galleryImages?:
@@ -356,6 +356,8 @@ export interface Page {
               buttonText?: string | null;
               buttonUrl?: string | null;
             };
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             id?: string | null;
             blockName?: string | null;
             blockType: 'campusLife';
@@ -367,8 +369,6 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
-            backgroundColor?: string | null;
-            backgroundImage?: (number | null) | Media;
             testimonials?:
               | {
                   cardStyle?: ('green' | 'yellow') | null;
@@ -380,6 +380,8 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             id?: string | null;
             blockName?: string | null;
             blockType: 'testimonials';
@@ -391,8 +393,6 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
-            backgroundColor?: string | null;
-            backgroundImage?: (number | null) | Media;
             exploreMoreText?: string | null;
             viewAllUrl?: string | null;
             items?:
@@ -404,6 +404,8 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
             id?: string | null;
             blockName?: string | null;
             blockType: 'newsEvents';
@@ -572,6 +574,8 @@ export interface PagesSelect<T extends boolean = true> {
                     label?: T;
                     id?: T;
                   };
+              backgroundColor?: T;
+              backgroundImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -581,21 +585,21 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
-              backgroundColor?: T;
-              backgroundImage?: T;
               description?: T;
               buttonText?: T;
               buttonUrl?: T;
-              imageOne?: T;
-              imageTwo?: T;
-              floatingBadgeIcon?: T;
               floatingBadgeLine1?: T;
               floatingBadgeLine2?: T;
               stat1Value?: T;
               stat1Label?: T;
-              stat1Icon?: T;
               stat2Value?: T;
               stat2Label?: T;
+              backgroundColor?: T;
+              backgroundImage?: T;
+              imageOne?: T;
+              imageTwo?: T;
+              floatingBadgeIcon?: T;
+              stat1Icon?: T;
               stat2Icon?: T;
               id?: T;
               blockName?: T;
@@ -606,14 +610,14 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
-              backgroundColor?: T;
               description?: T;
               buttonText?: T;
               buttonUrl?: T;
+              bannerText?: T;
+              backgroundColor?: T;
+              backgroundImage?: T;
               imageOne?: T;
               imageTwo?: T;
-              backgroundImage?: T;
-              bannerText?: T;
               id?: T;
               blockName?: T;
             };
@@ -623,8 +627,6 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
-              backgroundColor?: T;
-              backgroundImage?: T;
               description?: T;
               tabs?:
                 | T
@@ -639,6 +641,8 @@ export interface PagesSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              backgroundColor?: T;
+              backgroundImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -648,8 +652,6 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
-              backgroundColor?: T;
-              backgroundImage?: T;
               academicYears?:
                 | T
                 | {
@@ -666,6 +668,8 @@ export interface PagesSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              backgroundColor?: T;
+              backgroundImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -675,8 +679,6 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
-              backgroundColor?: T;
-              backgroundImage?: T;
               viewMoreText?: T;
               viewMoreLink?: T;
               galleryImages?:
@@ -696,6 +698,8 @@ export interface PagesSelect<T extends boolean = true> {
                     buttonText?: T;
                     buttonUrl?: T;
                   };
+              backgroundColor?: T;
+              backgroundImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -705,8 +709,6 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
-              backgroundColor?: T;
-              backgroundImage?: T;
               testimonials?:
                 | T
                 | {
@@ -718,6 +720,8 @@ export interface PagesSelect<T extends boolean = true> {
                     authorPhoto?: T;
                     id?: T;
                   };
+              backgroundColor?: T;
+              backgroundImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -727,8 +731,6 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
-              backgroundColor?: T;
-              backgroundImage?: T;
               exploreMoreText?: T;
               viewAllUrl?: T;
               items?:
@@ -740,6 +742,8 @@ export interface PagesSelect<T extends boolean = true> {
                     link?: T;
                     id?: T;
                   };
+              backgroundColor?: T;
+              backgroundImage?: T;
               id?: T;
               blockName?: T;
             };
@@ -832,12 +836,12 @@ export interface Header {
     backgroundColor?: string | null;
     textColor?: string | null;
   };
-  navBackgroundColor?: string | null;
-  logo?: (number | null) | Media;
   ctaButton?: {
     label?: string | null;
     url?: string | null;
   };
+  logo?: (number | null) | Media;
+  navBackgroundColor?: string | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -848,18 +852,6 @@ export interface Header {
  */
 export interface Footer {
   id: number;
-  ctaBanner: {
-    showCtaBanner?: boolean | null;
-    tagline?: string | null;
-    heading: string;
-    description?: string | null;
-    buttonText?: string | null;
-    buttonUrl?: string | null;
-    backgroundImage?: (number | null) | Media;
-    backgroundColor?: string | null;
-  };
-  backgroundColor?: string | null;
-  logo?: (number | null) | Media;
   description?: string | null;
   contactInfo?: {
     phone?: string | null;
@@ -887,6 +879,18 @@ export interface Footer {
       }[]
     | null;
   copyright?: string | null;
+  ctaBanner: {
+    showCtaBanner?: boolean | null;
+    tagline?: string | null;
+    heading: string;
+    description?: string | null;
+    buttonText?: string | null;
+    buttonUrl?: string | null;
+    backgroundColor?: string | null;
+    backgroundImage?: (number | null) | Media;
+  };
+  logo?: (number | null) | Media;
+  backgroundColor?: string | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -936,14 +940,14 @@ export interface HeaderSelect<T extends boolean = true> {
         backgroundColor?: T;
         textColor?: T;
       };
-  navBackgroundColor?: T;
-  logo?: T;
   ctaButton?:
     | T
     | {
         label?: T;
         url?: T;
       };
+  logo?: T;
+  navBackgroundColor?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -954,20 +958,6 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  ctaBanner?:
-    | T
-    | {
-        showCtaBanner?: T;
-        tagline?: T;
-        heading?: T;
-        description?: T;
-        buttonText?: T;
-        buttonUrl?: T;
-        backgroundImage?: T;
-        backgroundColor?: T;
-      };
-  backgroundColor?: T;
-  logo?: T;
   description?: T;
   contactInfo?:
     | T
@@ -997,6 +987,20 @@ export interface FooterSelect<T extends boolean = true> {
         id?: T;
       };
   copyright?: T;
+  ctaBanner?:
+    | T
+    | {
+        showCtaBanner?: T;
+        tagline?: T;
+        heading?: T;
+        description?: T;
+        buttonText?: T;
+        buttonUrl?: T;
+        backgroundColor?: T;
+        backgroundImage?: T;
+      };
+  logo?: T;
+  backgroundColor?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
