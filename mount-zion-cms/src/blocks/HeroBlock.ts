@@ -19,32 +19,6 @@ export const HeroBlock: Block = {
       },
     },
     {
-      name: 'badge',
-      type: 'text',
-      label: 'Badge / Tagline',
-      defaultValue: 'MOUNTZION',
-    },
-    {
-      name: 'heading',
-      type: 'textarea',
-      label: 'Main Heading',
-      defaultValue: 'Nurturing Minds. Building Character. Inspiring Future Leaders.',
-      required: true,
-    },
-    {
-      name: 'backgroundColor',
-      type: 'text',
-      label: 'Section Background Color',
-      defaultValue: '#022C22',
-    },
-    {
-      name: 'backgroundImage',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Hero Background / Student Image',
-      required: true,
-    },
-    {
       name: 'carouselImages',
       type: 'array',
       label: 'Hero Carousel Background Images',
@@ -61,8 +35,8 @@ export const HeroBlock: Block = {
       ],
     },
     {
-      type: 'row',
-      fields: [
+      type: 'tabs',
+      tabs: [
         {
           label: 'Content',
           fields: [

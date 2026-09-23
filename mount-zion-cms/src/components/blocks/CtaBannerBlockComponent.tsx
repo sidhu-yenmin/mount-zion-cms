@@ -123,7 +123,8 @@ export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = (props
             {/* Get Started Button (Figma: width 215px, height 58px, top 216px, left 820px in 1120 frame) */}
             <div className="mt-8 lg:mt-0 lg:absolute lg:right-[85px] lg:top-[216px]">
               <Link
-                href={buttonUrl || '/admissions'}
+                href={resolvedButtonUrl || '/admissions'}
+                {...(openInNewTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 className="inline-flex items-center justify-center gap-[10px] w-auto sm:w-[215px] h-[50px] sm:h-[58px] px-8 sm:px-0 rounded-[100px] bg-[#F8C62F] border border-[#F8C62F] text-black font-['Roboto',sans-serif] font-medium text-[18px] sm:text-[20px] transition-all duration-300 hover:brightness-105 hover:shadow-xl active:scale-95 group whitespace-nowrap shrink-0"
               >
                 <span>{resolvedButtonText}</span>

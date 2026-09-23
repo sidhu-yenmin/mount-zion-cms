@@ -106,38 +106,6 @@ const placeholderTestimonials: TestimonialItem[] = [
     authorPhoto: null,
   },
 ]
-========================================================================= */
-
-// Clean placeholder structure when no CMS reviews exist
-const placeholderTestimonials: TestimonialItem[] = [
-  {
-    cardStyle: 'green',
-    rating: 5,
-    quote:
-      'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
-    authorName: 'Parent / Reviewer Name',
-    authorRole: 'Parent of Grade 10 Student',
-    authorPhoto: null,
-  },
-  {
-    cardStyle: 'yellow',
-    rating: 5,
-    quote:
-      'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
-    authorName: 'Parent / Reviewer Name',
-    authorRole: 'Parent of Grade 8 Student',
-    authorPhoto: null,
-  },
-  {
-    cardStyle: 'green',
-    rating: 5,
-    quote:
-      'Preparing students for board examinations, higher education, and future careers through academic excellence, career guidance, innovation, and life skills.',
-    authorName: 'Parent / Reviewer Name',
-    authorRole: 'Parent of Grade 12 Student',
-    authorPhoto: null,
-  },
-]
 
 export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = ({
   badge = 'TESTIMONIALS',
@@ -146,9 +114,18 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
   backgroundColor = '#f4f6f8',
   backgroundImage,
 }) => {
+  const resolveMediaUrl = (
+    media: any,
+  ): string | null => {
+    if (!media) return null
+    if (typeof media === 'string' && media.trim()) return media
+    if (typeof media === 'object' && media?.url) return media.url
+    return null
+  }
+
   // Use CMS testimonials or fallback to default list
-  const displayItems =
-    testimonials && testimonials.length > 0 ? testimonials : defaultTestimonials
+  const displayItems: TestimonialItem[] =
+    testimonials && testimonials.length > 0 ? testimonials : placeholderTestimonials
 
   const [activeSlide, setActiveSlide] = useState<number>(0)
   const [isDesktop, setIsDesktop] = useState<boolean>(false)
@@ -245,16 +222,6 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
     }
   }
 
-  // Helper to extract image URL from CMS upload or string
-  const resolveMediaUrl = (
-    media: number | Media | string | null | undefined,
-  ): string | null => {
-    if (!media) return null
-    if (typeof media === 'string' && media.trim()) return media
-    if (typeof media === 'object' && media?.url) return media.url
-    return null
-  }
-
   // Split heading into 2 lines matching design
   const renderHeading = () => {
     if (!heading) return null
@@ -341,10 +308,9 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
                     : `translateX(-${activeSlide * 100}%)`,
                 }}
               >
-                {displayItems.map((item, idx) => {
+                {displayItems.map((item: TestimonialItem, idx: number) => {
                   const isYellow = item.cardStyle === 'yellow'
-                  const defaultAvatar = defaultTestimonials[idx % defaultTestimonials.length]?.authorPhoto as string
-                  const avatarSrc = resolveMediaUrl(item.authorPhoto, defaultAvatar)
+                  const avatarSrc = resolveMediaUrl(item.authorPhoto) || '/images/testimonial1.png'
                   const ratingCount = Math.min(Math.max(item.rating || 5, 1), 5)
 
                   return (

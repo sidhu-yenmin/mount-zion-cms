@@ -35,10 +35,6 @@ export interface CampusLifeBlockProps {
   backgroundImage?: number | Media | string | null
 }
 
-/* =========================================================================
-   [OPTION A: STATIC FALLBACK GALLERY & STUDENT IMAGES - COMMENTED OUT]
-   Uncomment below if you want hardcoded demo gallery photos & student cutout:
-
 const defaultGalleryImages = [
   { src: '/images/facilities2.png', alt: 'School Architecture Staircase', category: 'Campus Architecture', ratio: 260 },
   { src: '/images/facilities1.png', alt: 'Students Collaborating in Classroom', category: 'Collaborative Learning', ratio: 558 },
@@ -47,9 +43,6 @@ const defaultGalleryImages = [
   { src: '/images/gallery3.png', alt: 'Student Writing with Pencil', category: 'Focused Academics', ratio: 350 },
   { src: '/images/gallery4.png', alt: 'Modern Classroom Layout', category: 'Smart Classrooms', ratio: 364 },
 ]
-========================================================================= */
-
-const defaultRatios = [260, 558, 260, 364, 350, 364]
 
 export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> = ({
   badge = 'OUR GALLERY',
@@ -95,14 +88,13 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
 
   const bgImgUrl = resolveMediaUrl(backgroundImage)
 
-  // [OPTION B: STRICT CMS - Only load images when uploaded in CMS]
-  const deckImages = defaultRatios.map((ratio, idx) => {
+  const deckImages = defaultGalleryImages.map((defaultImg, idx) => {
     const cmsItem = galleryImages?.[idx]
     const resolvedUrl = resolveMediaUrl(cmsItem?.image)
-    const caption = cmsItem?.caption || `Gallery Photo 0${idx + 1}`
+    const caption = cmsItem?.caption || defaultImg.alt
 
     return {
-      src: resolvedUrl,
+      src: resolvedUrl || defaultImg.src,
       alt: caption,
       category: defaultImg.category,
       ratio: defaultImg.ratio,
@@ -118,9 +110,11 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
   const showCta = ctaBar?.showCtaBar !== false
   const ctaTagline = ctaBar?.tagline || 'Looking for the Right School?'
   const ctaHeading = ctaBar?.heading || "Start Your Child's Journey with Us"
+  const ctaButtonText = ctaBar?.button?.text || ctaBar?.buttonText || 'Apply Now'
+  const ctaButtonUrl = resolveLinkUrl(ctaBar?.button || ctaBar?.buttonUrl, '/admissions')
 
   // Only show student cutout when uploaded in CMS
-  const ctaStudentImg = resolveMediaUrl(ctaBar?.studentImage)
+  const ctaStudentImg = resolveMediaUrl(ctaBar?.studentImage) || '/images/cta-student-girl.png'
 
   // Split heading into 2 lines matching the reference design
   const renderHeading = () => {

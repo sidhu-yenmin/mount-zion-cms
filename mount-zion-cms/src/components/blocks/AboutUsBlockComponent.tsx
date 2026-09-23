@@ -117,20 +117,20 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = (props) =>
   // Resolve Background Image
   const bgImgUrl = resolveMediaUrl(backgroundImage)
 
-  // Resolve Left Student Image (Strict CMS - null if not uploaded)
-  const studentImg = resolveMediaUrl(imageOne)
+  // Resolve Left Student Image (Fallback to default if not uploaded)
+  const studentImg = resolveMediaUrl(imageOne) || '/images/about-student.png'
 
-  // Resolve Classroom Activity Image (Strict CMS - null if not uploaded)
-  const classroomImg = resolveMediaUrl(imageTwo)
+  // Resolve Classroom Activity Image (Fallback to default if not uploaded)
+  const classroomImg = resolveMediaUrl(imageTwo) || '/images/why-mount-zion.png'
 
-  // Resolve Sunburst Badge Icon (Strict CMS - null if not uploaded)
-  const sunIconImg = resolveMediaUrl(floatingBadgeIcon)
+  // Resolve Sunburst Badge Icon (Fallback to default if not uploaded)
+  const sunIconImg = resolveMediaUrl(floatingBadgeIcon) || '/images/badge-icon.png'
 
-  // Resolve Stat 1 Icon (Graduation - Strict CMS - null if not uploaded)
-  const graduateIconImg = resolveMediaUrl(stat1Icon)
+  // Resolve Stat 1 Icon (Graduation - Fallback to default if not uploaded)
+  const graduateIconImg = resolveMediaUrl(stat1Icon) || '/images/graduate-icon.png'
 
-  // Resolve Stat 2 Icon (Idea / Experience - Strict CMS - null if not uploaded)
-  const ideaIconImg = resolveMediaUrl(stat2Icon)
+  // Resolve Stat 2 Icon (Idea / Experience - Fallback to default if not uploaded)
+  const ideaIconImg = resolveMediaUrl(stat2Icon) || '/images/experience-icon.png'
 
   // Scroll-triggered viewport slide-in / slide-out presentation
   const [isInView, setIsInView] = useState(false)
@@ -211,10 +211,11 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = (props) =>
               {/* Know More Button */}
               <div>
                 <Link
-                  href={buttonUrl || '#academics'}
+                  href={resolvedButtonUrl || '#academics'}
+                  {...(openInNewTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                   className="group inline-flex items-center justify-center gap-2.5 sm:gap-3 min-h-[48px] sm:min-h-[58px] px-7 sm:px-10 rounded-full border border-[#919191] bg-[#FFFFFF] hover:bg-neutral-50 hover:border-[#03594E] text-[#353535] hover:text-[#03594E] font-medium text-[16px] sm:text-[20px] transition-all duration-300 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:scale-95 cursor-pointer whitespace-nowrap shrink-0"
                 >
-                  <span>{buttonText}</span>
+                  <span>{resolvedButtonText}</span>
                   <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2] text-[#353535] group-hover:text-[#03594E] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5" />
                 </Link>
               </div>

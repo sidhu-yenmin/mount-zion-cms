@@ -16,6 +16,11 @@ export type HeroBlockProps = Omit<
 > & {
   backgroundImage?: number | Media | string | null
   carouselImages?: Array<{ image?: number | Media | string | null }> | null
+  primaryButtonText?: string | null
+  primaryButtonUrl?: string | null
+  secondaryButtonText?: string | null
+  secondaryButtonUrl?: string | null
+  backgroundColor?: string | null
 }
 
 const defaultHeroImages = [
@@ -25,19 +30,28 @@ const defaultHeroImages = [
   '/images/facilities1.png',
 ]
 
-export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
-  badge = 'MOUNTZION',
-  heading = 'Nurturing Minds. Building Character. Inspiring Future Leaders.',
-  backgroundImage,
-  carouselImages,
-  primaryButtonText = 'Explore',
-  primaryButtonUrl = '#explore',
-  secondaryButtonText = 'Admission',
-  secondaryButtonUrl = '#admission',
-  videoUrl,
-  stats,
-  backgroundColor,
-}: HeroBlockProps & { backgroundColor?: string | null }) => {
+export const HeroBlockComponent: React.FC<HeroBlockProps> = (props) => {
+  const {
+    badge = 'MOUNTZION',
+    heading = 'Nurturing Minds. Building Character. Inspiring Future Leaders.',
+    backgroundImage,
+    carouselImages,
+    primaryButton,
+    secondaryButton,
+    primaryButtonText,
+    primaryButtonUrl,
+    secondaryButtonText,
+    secondaryButtonUrl,
+    videoUrl,
+    stats,
+    backgroundColor,
+  } = props
+
+  const resolvedPrimaryText = primaryButton?.text || primaryButtonText || 'Explore'
+  const resolvedPrimaryUrl = resolveLinkUrl(primaryButton || primaryButtonUrl, '#explore')
+  const resolvedSecondaryText = secondaryButton?.text || secondaryButtonText || 'Admission'
+  const resolvedSecondaryUrl = resolveLinkUrl(secondaryButton || secondaryButtonUrl, '#admission')
+
   const [videoModalOpen, setVideoModalOpen] = useState(false)
   const heroBgColor = backgroundColor || '#0c2e26'
 
@@ -253,24 +267,24 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
                 className="flex flex-wrap items-center gap-3 sm:gap-4 animate-hero-fade-up"
                 style={{ animationDelay: '700ms' }}
               >
-                {primaryButtonText && (
+                {resolvedPrimaryText && (
                   <Link
-                    href={primaryButtonUrl || '#explore'}
+                    href={resolvedPrimaryUrl || '#explore'}
                     className="group relative overflow-hidden inline-flex items-center justify-center gap-2 bg-[#f5a623] hover:bg-[#e29517] text-[#111] font-bold text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-amber-500/35 hover:-translate-y-0.5 active:scale-95 whitespace-nowrap shrink-0"
                   >
                     {/* Diagonal Light Sheen */}
                     <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none animate-hero-shimmer" />
-                    <span className="relative z-10">{primaryButtonText}</span>
+                    <span className="relative z-10">{resolvedPrimaryText}</span>
                     <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5] relative z-10 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5" />
                   </Link>
                 )}
 
                 {resolvedSecondaryText && (
                   <Link
-                    href={secondaryButtonUrl || '#admission'}
+                    href={resolvedSecondaryUrl || '#admission'}
                     className="group inline-flex items-center justify-center gap-2 border border-white/80 hover:border-white text-white hover:bg-white/15 font-semibold text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-all duration-300 backdrop-blur-xs hover:shadow-md hover:-translate-y-0.5 active:scale-95 whitespace-nowrap shrink-0"
                   >
-                    <span>{secondaryButtonText}</span>
+                    <span>{resolvedSecondaryText}</span>
                     <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5" />
                   </Link>
                 )}

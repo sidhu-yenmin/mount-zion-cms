@@ -197,17 +197,6 @@ export interface Page {
              * Check to temporarily hide this section from the live page without deleting it
              */
             hideSection?: boolean | null;
-            headerCtaButton?: {
-              text?: string | null;
-              linkType?: ('page' | 'custom') | null;
-              page?: (number | null) | Page;
-              customUrl?: string | null;
-              openInNewTab?: boolean | null;
-            };
-            badge?: string | null;
-            heading: string;
-            backgroundColor?: string | null;
-            backgroundImage: number | Media;
             /**
              * Optional additional background images to display as a rotating carousel in the hero banner
              */
@@ -217,10 +206,29 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
-            primaryButtonText?: string | null;
-            primaryButtonUrl?: string | null;
-            secondaryButtonText?: string | null;
-            secondaryButtonUrl?: string | null;
+            headerCtaButton?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
+            badge?: string | null;
+            heading: string;
+            primaryButton?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
+            secondaryButton?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
             /**
              * Link to YouTube, Vimeo, or video modal
              */
@@ -587,6 +595,12 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideSection?: T;
+              carouselImages?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
               headerCtaButton?:
                 | T
                 | {
@@ -598,18 +612,24 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               badge?: T;
               heading?: T;
-              backgroundColor?: T;
-              backgroundImage?: T;
-              carouselImages?:
+              primaryButton?:
                 | T
                 | {
-                    image?: T;
-                    id?: T;
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
                   };
-              primaryButtonText?: T;
-              primaryButtonUrl?: T;
-              secondaryButtonText?: T;
-              secondaryButtonUrl?: T;
+              secondaryButton?:
+                | T
+                | {
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                  };
               videoUrl?: T;
               stats?:
                 | T

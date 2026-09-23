@@ -382,10 +382,10 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
     )
   }
 
-  const getPhotoUrl = (photo: any): string | null => {
+  const getPhotoUrl = (photo: any, idx?: number): string => {
     if (typeof photo === 'string' && photo.length > 0) return photo
     if (photo && typeof photo === 'object' && photo.url) return photo.url
-    return null
+    return idx !== undefined && idx % 2 === 1 ? '/images/topper-student2.png' : '/images/topper-student1.png'
   }
 
   const bgImgUrl = getPhotoUrl(backgroundImage)

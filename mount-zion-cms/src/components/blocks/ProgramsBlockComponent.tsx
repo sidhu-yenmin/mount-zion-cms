@@ -60,22 +60,22 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
     return () => observer.disconnect()
   }, [])
 
+  const resolveMediaUrl = (
+    media: any,
+  ): string | null => {
+    if (!media) return null
+    if (typeof media === 'string' && media.trim()) return media
+    if (typeof media === 'object' && media?.url) return media.url
+    return null
+  }
+
   // Resolve Image 1 (Classroom 591x298)
   const resolvedImg1 = imageOne || mainImage
-  const img1Src =
-    typeof resolvedImg1 === 'object' && resolvedImg1?.url
-      ? resolvedImg1.url
-      : typeof resolvedImg1 === 'string' && resolvedImg1
-        ? resolvedImg1
-        : '/images/academics-img1.png'
+  const img1Src = resolveMediaUrl(resolvedImg1) || '/images/academics-img1.png'
 
-  // Resolve Image 1 (Classroom 591x298 - strict CMS)
-  const resolvedImg1 = imageOne || mainImage
-  const img1Src = resolveMediaUrl(resolvedImg1)
-
-  // Resolve Image 2 (Tree planting 475x528 - strict CMS)
+  // Resolve Image 2 (Tree planting 475x528)
   const resolvedImg2 = imageTwo || secondaryImage
-  const img2Src = resolveMediaUrl(resolvedImg2)
+  const img2Src = resolveMediaUrl(resolvedImg2) || '/images/academics-img2.png'
 
   // Resolve Background Image from CMS
   const bgImgUrl = resolveMediaUrl(backgroundImage)
