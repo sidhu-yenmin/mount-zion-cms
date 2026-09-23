@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { createButtonField } from '../fields/buttonField'
 
 export const CampusLifeBlock: Block = {
   slug: 'campusLife',
@@ -35,25 +36,13 @@ export const CampusLifeBlock: Block = {
               defaultValue: 'Empowering Future Leaders Around the World',
               required: true,
             },
-            {
-              type: 'row',
-              fields: [
-                {
-                  name: 'viewMoreText',
-                  type: 'text',
-                  label: 'View More Button Label',
-                  defaultValue: 'View More',
-                  admin: { width: '50%' },
-                },
-                {
-                  name: 'viewMoreLink',
-                  type: 'text',
-                  label: 'View More URL',
-                  defaultValue: '/gallery',
-                  admin: { width: '50%' },
-                },
-              ],
-            },
+            createButtonField({
+              name: 'viewMoreButton',
+              label: 'View More Button',
+              defaultText: 'View More',
+              defaultUrl: '/gallery',
+              defaultLinkType: 'page',
+            }),
             {
               name: 'galleryImages',
               type: 'array',
@@ -102,25 +91,13 @@ export const CampusLifeBlock: Block = {
                   relationTo: 'media',
                   label: 'Student Graphic / Photo',
                 },
-                {
-                  type: 'row',
-                  fields: [
-                    {
-                      name: 'buttonText',
-                      type: 'text',
-                      label: 'CTA Button Label',
-                      defaultValue: 'Apply Now',
-                      admin: { width: '50%' },
-                    },
-                    {
-                      name: 'buttonUrl',
-                      type: 'text',
-                      label: 'CTA Button URL',
-                      defaultValue: '/admissions',
-                      admin: { width: '50%' },
-                    },
-                  ],
-                },
+                createButtonField({
+                  name: 'button',
+                  label: 'CTA Bar Action Button',
+                  defaultText: 'Apply Now',
+                  defaultUrl: '/admissions',
+                  defaultLinkType: 'page',
+                }),
               ],
             },
           ],

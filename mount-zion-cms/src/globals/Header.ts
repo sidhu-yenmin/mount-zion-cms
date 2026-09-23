@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { createButtonField } from '../fields/buttonField'
 
 export const Header: GlobalConfig = {
   slug: 'header',
@@ -52,25 +53,15 @@ export const Header: GlobalConfig = {
                 },
               ],
             },
-            {
+            /* ctaButton is currently managed directly inside the Hero Banner block overlay on pages:
+            createButtonField({
               name: 'ctaButton',
-              type: 'group',
               label: 'Header Action Button',
-              fields: [
-                {
-                  name: 'label',
-                  type: 'text',
-                  label: 'Button Label',
-                  defaultValue: 'Apply Now',
-                },
-                {
-                  name: 'url',
-                  type: 'text',
-                  label: 'Button URL',
-                  defaultValue: '/admissions',
-                },
-              ],
-            },
+              defaultText: 'Apply Now',
+              defaultUrl: '/admissions',
+              defaultLinkType: 'page',
+            }),
+            */
           ],
         },
         {

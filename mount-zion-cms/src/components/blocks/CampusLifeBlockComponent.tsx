@@ -3,6 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { resolveLinkUrl } from '@/utils/resolveLink'
 import type { Media } from '@/payload-types'
 
 export interface GalleryImageItem {
@@ -18,6 +19,7 @@ export interface CampusLifeCtaBar {
   studentImage?: number | Media | string | null
   buttonText?: string | null
   buttonUrl?: string | null
+  button?: any
 }
 
 export interface CampusLifeBlockProps {
@@ -26,38 +28,35 @@ export interface CampusLifeBlockProps {
   heading?: string | null
   viewMoreText?: string | null
   viewMoreLink?: string | null
+  viewMoreButton?: any
   galleryImages?: GalleryImageItem[] | null
   ctaBar?: CampusLifeCtaBar | null
   backgroundColor?: string | null
   backgroundImage?: number | Media | string | null
 }
 
-/* =========================================================================
-   [OPTION A: STATIC FALLBACK GALLERY & STUDENT IMAGES - COMMENTED OUT]
-   Uncomment below if you want hardcoded demo gallery photos & student cutout:
-
-const defaultGalleryImages = [
-  { src: '/images/facilities2.png', alt: 'School Architecture Staircase', ratio: 260 },
-  { src: '/images/facilities1.png', alt: 'Students Collaborating in Classroom', ratio: 558 },
-  { src: '/images/gallery1.png', alt: 'Student Reading in Library', ratio: 260 },
-  { src: '/images/gallery2.png', alt: 'Students in Uniform in Hallway', ratio: 364 },
-  { src: '/images/gallery3.png', alt: 'Student Writing with Pencil', ratio: 350 },
-  { src: '/images/gallery4.png', alt: 'Modern Classroom Layout', ratio: 364 },
-]
-========================================================================= */
-
 const defaultRatios = [260, 558, 260, 364, 350, 364]
 
-export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> = ({
-  badge = 'OUR GALLERY',
-  heading = 'Empowering Future Leaders Around the World',
-  viewMoreText = 'View More',
-  viewMoreLink = '/gallery',
-  galleryImages,
-  ctaBar,
-  backgroundColor = '#f4f6f8',
-  backgroundImage,
-}) => {
+export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> = (props) => {
+  const {
+    badge = 'OUR GALLERY',
+    heading = 'Empowering Future Leaders Around the World',
+    viewMoreText = 'View More',
+    viewMoreLink = '/gallery',
+    viewMoreButton,
+    galleryImages,
+    ctaBar,
+    backgroundColor = '#f4f6f8',
+    backgroundImage,
+  } = props
+
+  const resolvedViewMoreText = viewMoreButton?.text || viewMoreText || 'View More'
+  const resolvedViewMoreUrl = resolveLinkUrl(viewMoreButton || viewMoreLink, '/gallery')
+  const viewMoreOpenInNewTab = Boolean(viewMoreButton?.openInNewTab)
+
+  const ctaButtonText = ctaBar?.button?.text || ctaBar?.buttonText || 'Apply Now'
+  const ctaButtonUrl = resolveLinkUrl(ctaBar?.button || ctaBar?.buttonUrl, '/admissions')
+  const ctaOpenInNewTab = Boolean(ctaBar?.button?.openInNewTab)
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
     media: number | Media | string | null | undefined,
@@ -92,8 +91,6 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
   const showCta = ctaBar?.showCtaBar !== false
   const ctaTagline = ctaBar?.tagline || 'Looking for the Right School?'
   const ctaHeading = ctaBar?.heading || "Start Your Child's Journey with Us"
-  const ctaButtonText = ctaBar?.buttonText || 'Apply Now'
-  const ctaButtonUrl = ctaBar?.buttonUrl || '/admissions'
 
   // Only show student cutout when uploaded in CMS
   const ctaStudentImg = resolveMediaUrl(ctaBar?.studentImage)
@@ -146,12 +143,14 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
             {renderHeading()}
           </h2>
 
-          {viewMoreLink && (
+          {resolvedViewMoreUrl && (
             <Link
-              href={viewMoreLink}
+              href={resolvedViewMoreUrl}
+              target={viewMoreOpenInNewTab ? '_blank' : undefined}
+              rel={viewMoreOpenInNewTab ? 'noopener noreferrer' : undefined}
               className="inline-flex items-center justify-center gap-[10px] w-[199px] h-[58px] rounded-[100px] border border-[#919191] bg-white text-[#353535] font-['Roboto',sans-serif] font-medium text-[20px] transition-all duration-300 hover:border-black hover:bg-slate-50 hover:shadow-md shrink-0 self-start md:self-end group mb-1 md:mb-0"
             >
-              <span>{viewMoreText}</span>
+              <span>{resolvedViewMoreText}</span>
               <Image
                 src="/images/know-more-btn-icon.png"
                 alt="Arrow"
@@ -293,6 +292,8 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
                 {/* Apply Now Button: 199 x 58px, #F8C62F, rounded-full */}
                 <Link
                   href={ctaButtonUrl}
+                  target={ctaOpenInNewTab ? '_blank' : undefined}
+                  rel={ctaOpenInNewTab ? 'noopener noreferrer' : undefined}
                   className="inline-flex items-center justify-center gap-[10px] w-[199px] h-[58px] rounded-[100px] bg-[#F8C62F] border border-[#F8C62F] text-black font-['Roboto',sans-serif] font-medium text-[20px] transition-all duration-300 hover:brightness-105 hover:shadow-lg shrink-0 group"
                 >
                   <span>{ctaButtonText}</span>

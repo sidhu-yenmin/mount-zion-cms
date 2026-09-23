@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { createButtonField } from '../fields/buttonField'
 
 export const NewsEventsBlock: Block = {
   slug: 'newsEvents',
@@ -35,25 +36,13 @@ export const NewsEventsBlock: Block = {
               defaultValue: 'Explore Our World-Class Academic Programs',
               required: true,
             },
-            {
-              type: 'row',
-              fields: [
-                {
-                  name: 'exploreMoreText',
-                  type: 'text',
-                  label: 'Explore More Button Label',
-                  defaultValue: 'Explore More',
-                  admin: { width: '50%' },
-                },
-                {
-                  name: 'viewAllUrl',
-                  type: 'text',
-                  label: 'View All URL',
-                  defaultValue: '/news',
-                  admin: { width: '50%' },
-                },
-              ],
-            },
+            createButtonField({
+              name: 'exploreMoreButton',
+              label: 'Explore More Button',
+              defaultText: 'Explore More',
+              defaultUrl: '/news',
+              defaultLinkType: 'page',
+            }),
             {
               name: 'items',
               type: 'array',
@@ -62,17 +51,20 @@ export const NewsEventsBlock: Block = {
                 {
                   date: '13 Mar 2026',
                   title: 'Explore Our World-Class\nAcademic Programs',
-                  link: '#',
+                  linkType: 'custom',
+                  customUrl: '#',
                 },
                 {
                   date: '17 Apr 2026',
                   title: 'Discover the New Academic Programs',
-                  link: '#',
+                  linkType: 'custom',
+                  customUrl: '#',
                 },
                 {
                   date: '09 Jun 2026',
                   title: 'New Academic Fees Structures',
-                  link: '#',
+                  linkType: 'custom',
+                  customUrl: '#',
                 },
               ],
               minRows: 1,
@@ -96,10 +88,32 @@ export const NewsEventsBlock: Block = {
                   label: 'Optional Thumbnail / Preview Image',
                 },
                 {
-                  name: 'link',
+                  name: 'linkType',
+                  type: 'radio',
+                  label: 'Link Type',
+                  defaultValue: 'custom',
+                  options: [
+                    { label: 'Select CMS Page', value: 'page' },
+                    { label: 'Custom URL / Anchor', value: 'custom' },
+                  ],
+                },
+                {
+                  name: 'page',
+                  type: 'relationship',
+                  relationTo: 'pages',
+                  label: 'Select CMS Page',
+                  admin: {
+                    condition: (_, siblingData) => siblingData?.linkType === 'page',
+                  },
+                },
+                {
+                  name: 'customUrl',
                   type: 'text',
                   label: 'Target URL',
                   defaultValue: '#',
+                  admin: {
+                    condition: (_, siblingData) => siblingData?.linkType === 'custom',
+                  },
                 },
               ],
             },

@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { resolveLinkUrl } from '@/utils/resolveLink'
 import type { Media } from '@/payload-types'
 
 export interface NewsEventItem {
@@ -10,6 +11,9 @@ export interface NewsEventItem {
   title: string
   image?: number | Media | string | null
   link?: string | null
+  linkType?: string | null
+  page?: any
+  customUrl?: string | null
   id?: string | null
 }
 
@@ -19,38 +23,12 @@ export interface NewsEventsProps {
   heading?: string | null
   exploreMoreText?: string | null
   viewAllUrl?: string | null
+  exploreMoreButton?: any
   items?: NewsEventItem[] | null
   backgroundColor?: string | null
   backgroundImage?: number | Media | string | null
 }
 
-/* =========================================================================
-   [OPTION A: STATIC FALLBACK NEWS & EVENTS DATA - COMMENTED OUT]
-   Uncomment below if you want hardcoded demo events & stock news photos:
-
-const defaultItems: NewsEventItem[] = [
-  {
-    date: '13 Mar 2026',
-    title: 'Explore Our World-Class\nAcademic Programs',
-    image: '/images/news.png',
-    link: '#',
-  },
-  {
-    date: '17 Apr 2026',
-    title: 'Discover the New Academic Programs',
-    image: '/images/news.png',
-    link: '#',
-  },
-  {
-    date: '09 Jun 2026',
-    title: 'New Academic Fees Structures',
-    image: '/images/news.png',
-    link: '#',
-  },
-]
-========================================================================= */
-
-// Clean placeholder structure when no CMS news/events exist
 const placeholderItems: NewsEventItem[] = [
   {
     date: 'Date Placeholder',
@@ -72,15 +50,21 @@ const placeholderItems: NewsEventItem[] = [
   },
 ]
 
-export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
-  badge = 'OUR EVENTS & NEWS',
-  heading = 'Explore Our World-Class Academic Programs',
-  exploreMoreText = 'Explore More',
-  viewAllUrl = '/news',
-  items = [],
-  backgroundColor = '#FFFFFF',
-  backgroundImage,
-}) => {
+export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = (props) => {
+  const {
+    badge = 'OUR EVENTS & NEWS',
+    heading = 'Explore Our World-Class Academic Programs',
+    exploreMoreText = 'Explore More',
+    viewAllUrl = '/news',
+    exploreMoreButton,
+    items = [],
+    backgroundColor = '#FFFFFF',
+    backgroundImage,
+  } = props
+
+  const resolvedExploreText = exploreMoreButton?.text || exploreMoreText || 'Explore More'
+  const resolvedExploreUrl = resolveLinkUrl(exploreMoreButton || viewAllUrl, '/news')
+  const exploreOpenInNewTab = Boolean(exploreMoreButton?.openInNewTab)
   // Track active row placed on click (default to index 0 matching reference design)
   const [activeRow, setActiveRow] = useState<number>(0)
 
@@ -147,12 +131,14 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = ({
             {renderHeading()}
           </h2>
 
-          {viewAllUrl && (
+          {resolvedExploreUrl && (
             <Link
-              href={viewAllUrl}
+              href={resolvedExploreUrl}
+              target={exploreOpenInNewTab ? '_blank' : undefined}
+              rel={exploreOpenInNewTab ? 'noopener noreferrer' : undefined}
               className="inline-flex items-center justify-center gap-[10px] w-[233px] h-[58px] rounded-[100px] border border-[#919191] bg-white text-[#353535] font-['Roboto',sans-serif] font-medium text-[20px] transition-all duration-300 hover:border-black hover:bg-slate-50 hover:shadow-md shrink-0 self-start md:self-end group mb-1 md:mb-0"
             >
-              <span>{exploreMoreText}</span>
+              <span>{resolvedExploreText}</span>
               <Image
                 src="/images/know-more-btn-icon.png"
                 alt="Arrow"

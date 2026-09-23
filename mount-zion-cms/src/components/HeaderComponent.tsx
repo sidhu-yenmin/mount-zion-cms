@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import { resolveLinkUrl } from '@/utils/resolveLink'
 import type { Header as HeaderType } from '@/payload-types'
 
 export const HeaderComponent: React.FC<{ header?: HeaderType | null }> = ({ header }) => {
@@ -95,9 +96,11 @@ export const HeaderComponent: React.FC<{ header?: HeaderType | null }> = ({ head
             </>
           )}
 
-          {header.ctaButton?.label && (
+          {(((header as any)?.ctaButton)?.text || ((header as any)?.ctaButton)?.label) && (
             <a
-              href={header.ctaButton.url || '#'}
+              href={resolveLinkUrl((header as any)?.ctaButton, '#')}
+              target={((header as any)?.ctaButton)?.openInNewTab ? '_blank' : undefined}
+              rel={((header as any)?.ctaButton)?.openInNewTab ? 'noopener noreferrer' : undefined}
               style={{
                 backgroundColor: '#ffffff',
                 color: '#000000',
@@ -108,7 +111,7 @@ export const HeaderComponent: React.FC<{ header?: HeaderType | null }> = ({ head
                 textDecoration: 'none',
               }}
             >
-              {header.ctaButton.label} ↗
+              {(((header as any)?.ctaButton)?.text || ((header as any)?.ctaButton)?.label)} ↗
             </a>
           )}
         </div>

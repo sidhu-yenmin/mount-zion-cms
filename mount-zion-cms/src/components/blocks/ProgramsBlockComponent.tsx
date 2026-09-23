@@ -4,6 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
+import { resolveLinkUrl } from '@/utils/resolveLink'
 import type { Media } from '@/payload-types'
 
 export interface ProgramsProps {
@@ -13,6 +14,7 @@ export interface ProgramsProps {
   description?: string | null
   buttonText?: string | null
   buttonUrl?: string | null
+  button?: any
   imageOne?: number | Media | string | null
   mainImage?: number | Media | string | null
   imageTwo?: number | Media | string | null
@@ -22,20 +24,24 @@ export interface ProgramsProps {
   backgroundColor?: string | null
 }
 
-export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
-  badge = 'ACADEMIC EXCELLENCE',
-  heading = "Shaping Bright Minds for Tomorrow's World",
-  description = 'Through a balanced blend of academics, technology, creativity, and values, we inspire students to think independently, solve real-world challenges, and achieve excellence in every stage of their educational journey.',
-  buttonText = 'Explore Academics',
-  buttonUrl = '#academics',
-  imageOne,
-  mainImage,
-  imageTwo,
-  secondaryImage,
-  backgroundImage,
-  bannerText = 'Learning • Innovation • Achievement',
-  backgroundColor = '#044438',
-}) => {
+export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = (props) => {
+  const {
+    badge = 'ACADEMIC EXCELLENCE',
+    heading = "Shaping Bright Minds for Tomorrow's World",
+    description = 'Through a balanced blend of academics, technology, creativity, and values, we inspire students to think independently, solve real-world challenges, and achieve excellence in every stage of their educational journey.',
+    imageOne,
+    mainImage,
+    imageTwo,
+    secondaryImage,
+    backgroundImage,
+    bannerText = 'Learning • Innovation • Achievement',
+    backgroundColor = '#044438',
+    button,
+  } = props
+
+  const resolvedButtonText = button?.text || props.buttonText || 'Explore Academics'
+  const resolvedButtonUrl = resolveLinkUrl(button || props.buttonUrl, '/academics')
+  const openInNewTab = Boolean(button?.openInNewTab)
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
     media: number | Media | string | null | undefined,
@@ -130,10 +136,12 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
             {/* Explore Academics Button */}
             <div>
               <Link
-                href={buttonUrl || '#academics'}
+                href={resolvedButtonUrl}
+                target={openInNewTab ? '_blank' : undefined}
+                rel={openInNewTab ? 'noopener noreferrer' : undefined}
                 className="inline-flex items-center justify-center gap-3 min-h-[54px] sm:min-h-[58px] px-8 sm:px-10 rounded-full border border-[#919191] bg-white hover:bg-neutral-100 text-[#353535] font-medium text-[17px] sm:text-[18px] transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 cursor-pointer select-none"
               >
-                <span>{buttonText}</span>
+                <span>{resolvedButtonText}</span>
                 <ArrowUpRight className="w-5 h-5 stroke-[2.2] text-[#353535]" />
               </Link>
             </div>

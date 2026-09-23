@@ -30,14 +30,15 @@ export const RenderBlocks: React.FC<{ blocks?: Blocks | null }> = ({ blocks }) =
     return null
   }
 
+  const visibleBlocks = blocks.filter((block: any) => block?.hideSection !== true)
+
+  if (visibleBlocks.length === 0) {
+    return null
+  }
+
   return (
     <div>
-      {blocks.map((block: any, index) => {
-        // Skip rendering if admin toggled hideSection
-        if (block?.hideSection === true) {
-          return null
-        }
-
+      {visibleBlocks.map((block: any, index) => {
         const { blockType } = block
         if (blockType && blockType in componentsMap) {
           const Component = componentsMap[blockType]

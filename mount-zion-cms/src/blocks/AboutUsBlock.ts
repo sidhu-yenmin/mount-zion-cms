@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { createButtonField } from '../fields/buttonField'
 
 export const AboutUsBlock: Block = {
   slug: 'aboutUs',
@@ -42,25 +43,13 @@ export const AboutUsBlock: Block = {
               defaultValue:
                 'Mount Zion School dedicated to providing quality learning, research, and innovation. It offers a wide range of undergraduate, graduate, and postgraduate programs designed to prepare students for professional success.',
             },
-            {
-              type: 'row',
-              fields: [
-                {
-                  name: 'buttonText',
-                  type: 'text',
-                  label: 'Button Label',
-                  defaultValue: 'Know More',
-                  admin: { width: '50%' },
-                },
-                {
-                  name: 'buttonUrl',
-                  type: 'text',
-                  label: 'Button URL',
-                  defaultValue: '#academics',
-                  admin: { width: '50%' },
-                },
-              ],
-            },
+            createButtonField({
+              name: 'button',
+              label: 'Action Button (e.g. Know More)',
+              defaultText: 'Know More',
+              defaultUrl: '/about',
+              defaultLinkType: 'page',
+            }),
             {
               type: 'row',
               fields: [

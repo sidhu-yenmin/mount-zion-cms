@@ -18,14 +18,24 @@ export default async function DynamicPage({ params }: PageProps) {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
-  // Fetch Page by Slug
+  // Fetch ONLY published Page by Slug (ignore drafts)
   const pagesResult = await payload.find({
     collection: 'pages',
     where: {
-      slug: {
-        equals: slug,
-      },
+      and: [
+        {
+          slug: {
+            equals: slug,
+          },
+        },
+        {
+          _status: {
+            equals: 'published',
+          },
+        },
+      ],
     },
+    draft: false,
     limit: 1,
     depth: 2,
   })
@@ -46,14 +56,14 @@ export default async function DynamicPage({ params }: PageProps) {
         : null
 
   return (
-    <main
-      className="w-full min-h-screen transition-colors duration-300 bg-cover bg-center"
+    <div
+      className="w-full transition-colors duration-300 bg-cover bg-center"
       style={{
         backgroundColor: pageBgColor,
         backgroundImage: pageBgImg ? `url(${pageBgImg})` : undefined,
       }}
     >
       <RenderBlocks blocks={page.layout} />
-    </main>
+    </div>
   )
 }

@@ -129,6 +129,7 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
           tagline={ctaBannerData?.tagline}
           heading={ctaBannerData?.heading}
           description={ctaBannerData?.description}
+          button={ctaBannerData?.button}
           buttonText={ctaBannerData?.buttonText}
           buttonUrl={ctaBannerData?.buttonUrl}
           backgroundImage={ctaBannerData?.backgroundImage}

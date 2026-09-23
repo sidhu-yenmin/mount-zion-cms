@@ -15,8 +15,11 @@ async function run() {
           heading: 'Towards a brighter future.',
           description:
             'Give your child the right foundation to learn, grow, and achieve their dreams in a nurturing and inspiring environment.',
-          buttonText: 'Get Started',
-          buttonUrl: '/admissions',
+          button: {
+            text: 'Get Started',
+            linkType: 'custom',
+            customUrl: '/admissions',
+          },
         },
         description: 'Inspiring Minds. Shaping Futures.\nNurturing Excellence. Building Leaders.',
         contactInfo: {

@@ -4,6 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
+import { resolveLinkUrl } from '@/utils/resolveLink'
 import type { Media } from '@/payload-types'
 
 export interface AboutUsProps {
@@ -13,6 +14,7 @@ export interface AboutUsProps {
   description?: string | null
   buttonText?: string | null
   buttonUrl?: string | null
+  button?: any
   imageOne?: number | Media | string | null
   imageTwo?: number | Media | string | null
   floatingBadgeIcon?: number | Media | string | null
@@ -28,26 +30,30 @@ export interface AboutUsProps {
   backgroundImage?: number | Media | string | null
 }
 
-export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
-  badge = 'WHY MOUNT ZION',
-  heading = 'Explore Our World-Class Academic Programs',
-  description = 'Mount Zion School dedicated to providing quality learning, research, and innovation. It offers a wide range of undergraduate, graduate, and postgraduate programs designed to prepare students for professional success.',
-  buttonText = 'Know More',
-  buttonUrl = '#academics',
-  imageOne,
-  imageTwo,
-  floatingBadgeIcon,
-  floatingBadgeLine1 = 'UNLOCKING POTENTIALS',
-  floatingBadgeLine2 = 'HIGHER EDUCATION',
-  stat1Value = '9K',
-  stat1Label = 'Students',
-  stat1Icon,
-  stat2Value = '10',
-  stat2Label = 'Experience',
-  stat2Icon,
-  backgroundColor = '#FFFFFF',
-  backgroundImage,
-}) => {
+export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = (props) => {
+  const {
+    badge = 'WHY MOUNT ZION',
+    heading = 'Explore Our World-Class Academic Programs',
+    description = 'Mount Zion School dedicated to providing quality learning, research, and innovation. It offers a wide range of undergraduate, graduate, and postgraduate programs designed to prepare students for professional success.',
+    imageOne,
+    imageTwo,
+    floatingBadgeIcon,
+    floatingBadgeLine1 = 'UNLOCKING POTENTIALS',
+    floatingBadgeLine2 = 'HIGHER EDUCATION',
+    stat1Value = '9K',
+    stat1Label = 'Students',
+    stat1Icon,
+    stat2Value = '10',
+    stat2Label = 'Experience',
+    stat2Icon,
+    backgroundColor = '#FFFFFF',
+    backgroundImage,
+    button,
+  } = props
+
+  const resolvedButtonText = button?.text || props.buttonText || 'Know More'
+  const resolvedButtonUrl = resolveLinkUrl(button || props.buttonUrl, '/about')
+  const openInNewTab = Boolean(button?.openInNewTab)
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
     media: number | Media | string | null | undefined,
@@ -138,10 +144,12 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
               {/* Know More Button */}
               <div>
                 <Link
-                  href={buttonUrl || '#academics'}
+                  href={resolvedButtonUrl}
+                  target={openInNewTab ? '_blank' : undefined}
+                  rel={openInNewTab ? 'noopener noreferrer' : undefined}
                   className="inline-flex items-center justify-center gap-3 min-h-[52px] sm:min-h-[58px] px-8 sm:px-10 rounded-full border border-[#919191] bg-[#FFFFFF] hover:bg-neutral-50 text-[#353535] font-medium text-[18px] sm:text-[20px] transition-all duration-200 shadow-xs hover:shadow-md active:scale-95 cursor-pointer"
                 >
-                  <span>{buttonText}</span>
+                  <span>{resolvedButtonText}</span>
                   <ArrowUpRight className="w-5 h-5 stroke-[2.2] text-[#353535]" />
                 </Link>
               </div>

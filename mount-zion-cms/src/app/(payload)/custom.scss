@@ -1,43 +1,49 @@
 /* Payload Admin Custom Styles */
 
+.payload-clear-input-wrapper {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+}
+
 .payload-clear-btn {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: rgba(148, 163, 184, 0.2);
-  color: #94a3b8;
-  border: none;
-  font-size: 11px;
-  font-weight: 700;
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  background: rgba(148, 163, 184, 0.25) !important;
+  color: #94a3b8 !important;
+  border: none !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
   display: none;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10;
-  padding: 0;
-  line-height: 1;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
 }
 
 .payload-clear-btn:hover {
   background: #ef4444 !important;
   color: #ffffff !important;
-  transform: translateY(-50%) scale(1.1);
+  transform: translateY(-50%) scale(1.1) !important;
 }
 
 .payload-clear-btn:active {
-  transform: translateY(-50%) scale(0.95);
+  transform: translateY(-50%) scale(0.95) !important;
 }
 
 /* Textarea clear button positioning */
 .payload-clear-btn.textarea-clear-btn {
-  top: 10px !important;
-  right: 12px !important;
+  top: 12px !important;
+  right: 14px !important;
   transform: none !important;
 }
 
@@ -55,9 +61,9 @@ input[type="email"][data-has-clear-button="true"],
 input[type="url"][data-has-clear-button="true"],
 input[type="tel"][data-has-clear-button="true"],
 input[type="number"][data-has-clear-button="true"] {
-  padding-right: 34px !important;
+  padding-right: 36px !important;
 }
 
 textarea[data-has-clear-button="true"] {
-  padding-right: 36px !important;
+  padding-right: 38px !important;
 }

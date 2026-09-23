@@ -7,6 +7,7 @@ import { ArrowUpRight, X } from 'lucide-react'
 import { SchoolLogo } from '../layout/SchoolLogo'
 import { DiscoverMoreBadge } from '../ui/DiscoverMoreBadge'
 import { StatsStrip } from '../sections/StatsStrip'
+import { resolveLinkUrl } from '@/utils/resolveLink'
 import type { Page, Media } from '@/payload-types'
 
 export type HeroBlockProps = Omit<
@@ -14,22 +15,42 @@ export type HeroBlockProps = Omit<
   'backgroundImage'
 > & {
   backgroundImage?: number | Media | string | null
+  headerCtaButton?: any
+  primaryButton?: any
+  secondaryButton?: any
+  primaryButtonText?: string | null
+  primaryButtonUrl?: string | null
+  secondaryButtonText?: string | null
+  secondaryButtonUrl?: string | null
 }
 
-export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
-  badge = 'MOUNTZION',
-  heading = 'Nurturing Minds. Building Character. Inspiring Future Leaders.',
-  backgroundImage,
-  primaryButtonText = 'Explore',
-  primaryButtonUrl = '#explore',
-  secondaryButtonText = 'Admission',
-  secondaryButtonUrl = '#admission',
-  videoUrl,
-  stats,
-  backgroundColor,
-}: HeroBlockProps & { backgroundColor?: string | null }) => {
+export const HeroBlockComponent: React.FC<HeroBlockProps> = (props: HeroBlockProps & { backgroundColor?: string | null }) => {
+  const {
+    badge = 'MOUNTZION',
+    heading = 'Nurturing Minds. Building Character. Inspiring Future Leaders.',
+    backgroundImage,
+    videoUrl,
+    stats,
+    backgroundColor,
+    headerCtaButton,
+    primaryButton,
+    secondaryButton,
+  } = props
+
   const [videoModalOpen, setVideoModalOpen] = useState(false)
   const heroBgColor = backgroundColor || '#0c2e26'
+
+  const resolvedHeaderCtaText = headerCtaButton?.text || 'Apply Now'
+  const resolvedHeaderCtaUrl = resolveLinkUrl(headerCtaButton, '/admissions')
+  const headerCtaOpenInNewTab = Boolean(headerCtaButton?.openInNewTab)
+
+  const resolvedPrimaryText = primaryButton?.text || (props as any).primaryButtonText || 'Explore'
+  const resolvedPrimaryUrl = resolveLinkUrl(primaryButton || (props as any).primaryButtonUrl, '/about')
+  const primaryOpenInNewTab = Boolean(primaryButton?.openInNewTab)
+
+  const resolvedSecondaryText = secondaryButton?.text || (props as any).secondaryButtonText || 'Admission'
+  const resolvedSecondaryUrl = resolveLinkUrl(secondaryButton || (props as any).secondaryButtonUrl, '/admissions')
+  const secondaryOpenInNewTab = Boolean(secondaryButton?.openInNewTab)
 
   // 1. Resolve Background Image (CMS Media object or string path - strict CMS)
   const bgImage =
@@ -88,10 +109,12 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
           </Link>
 
           <Link
-            href="#apply"
+            href={resolvedHeaderCtaUrl}
+            target={headerCtaOpenInNewTab ? '_blank' : undefined}
+            rel={headerCtaOpenInNewTab ? 'noopener noreferrer' : undefined}
             className="inline-flex items-center gap-1.5 bg-white hover:bg-neutral-100 text-neutral-900 font-bold text-xs sm:text-sm px-6 py-2.5 sm:py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 cursor-pointer"
           >
-            <span>Apply Now</span>
+            <span>{resolvedHeaderCtaText}</span>
             <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
           </Link>
         </div>
@@ -126,22 +149,26 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
 
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-4">
-                {primaryButtonText && (
+                {resolvedPrimaryText && (
                   <Link
-                    href={primaryButtonUrl || '#explore'}
+                    href={resolvedPrimaryUrl}
+                    target={primaryOpenInNewTab ? '_blank' : undefined}
+                    rel={primaryOpenInNewTab ? 'noopener noreferrer' : undefined}
                     className="inline-flex items-center gap-2 bg-[#f5a623] hover:bg-[#e29517] text-[#111] font-bold text-sm sm:text-base px-7 sm:px-8 py-3 sm:py-3.5 rounded-full transition-all duration-200 shadow-lg hover:shadow-amber-500/30 active:scale-95"
                   >
-                    <span>{primaryButtonText}</span>
+                    <span>{resolvedPrimaryText}</span>
                     <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
                   </Link>
                 )}
 
-                {secondaryButtonText && (
+                {resolvedSecondaryText && (
                   <Link
-                    href={secondaryButtonUrl || '#admission'}
+                    href={resolvedSecondaryUrl}
+                    target={secondaryOpenInNewTab ? '_blank' : undefined}
+                    rel={secondaryOpenInNewTab ? 'noopener noreferrer' : undefined}
                     className="inline-flex items-center gap-2 border border-white/80 hover:border-white text-white hover:bg-white/10 font-semibold text-sm sm:text-base px-7 sm:px-8 py-3 sm:py-3.5 rounded-full transition-all duration-200 backdrop-blur-xs active:scale-95"
                   >
-                    <span>{secondaryButtonText}</span>
+                    <span>{resolvedSecondaryText}</span>
                     <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
                   </Link>
                 )}

@@ -28,6 +28,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       themeData = await payload.findGlobal({
         slug: 'theme',
         depth: 2,
+        draft: false,
       })
     } catch {
       // Theme global not initialized yet
@@ -38,6 +39,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       menuData = await payload.findGlobal({
         slug: 'menu',
         depth: 2,
+        draft: false,
       })
     } catch {
       // Menu global not initialized yet
@@ -46,6 +48,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     const header = (await payload.findGlobal({
       slug: 'header',
       depth: 2,
+      draft: false,
     })) as HeaderType
 
     const resolveItemUrl = (item: any): string => {
@@ -86,6 +89,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     footerCmsData = (await payload.findGlobal({
       slug: 'footer',
       depth: 2,
+      draft: false,
     })) as FooterType
 
     if (footerCmsData && !footerCmsData.logo && themeData?.footerLogo) {

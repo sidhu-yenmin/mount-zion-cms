@@ -30,7 +30,7 @@ export const AdminInputClearHelper: React.FC = () => {
     }
 
     const attachClearButton = (field: HTMLInputElement | HTMLTextAreaElement) => {
-      // Ignore hidden, checkbox, radio, file, submit, button, date inputs
+      // Ignore hidden, checkbox, radio, file, submit, button, date, color inputs
       if (field instanceof HTMLInputElement) {
         const type = field.type?.toLowerCase()
         if (
@@ -41,28 +41,33 @@ export const AdminInputClearHelper: React.FC = () => {
           type === 'submit' ||
           type === 'button' ||
           type === 'range' ||
-          type === 'color'
+          type === 'color' ||
+          type === 'date' ||
+          type === 'time'
         ) {
           return
         }
       }
 
-      // If already processed, skip
-      if (field.dataset.hasClearButton === 'true') {
+      // If already processed or parent is our wrapper, skip
+      if (
+        field.dataset.hasClearButton === 'true' ||
+        field.parentElement?.classList.contains('payload-clear-input-wrapper')
+      ) {
         return
       }
 
-      // Find suitable container (field parent or wrapper)
       const parent = field.parentElement
       if (!parent) return
 
-      // Ensure parent has relative positioning
-      const computedPos = window.getComputedStyle(parent).position
-      if (computedPos === 'static') {
-        parent.style.position = 'relative'
-      }
-
       const isTextarea = field instanceof HTMLTextAreaElement
+
+      // Create a tight wrapper around the input/textarea ONLY
+      const wrapper = document.createElement('div')
+      wrapper.className = 'payload-clear-input-wrapper'
+      wrapper.style.position = 'relative'
+      wrapper.style.display = 'block'
+      wrapper.style.width = '100%'
 
       // Create clear button element
       const clearBtn = document.createElement('button')
@@ -97,12 +102,10 @@ export const AdminInputClearHelper: React.FC = () => {
       field.addEventListener('change', updateVisibility)
       field.addEventListener('focus', updateVisibility)
 
-      // Add clear button next to the input
-      if (field.nextSibling) {
-        parent.insertBefore(clearBtn, field.nextSibling)
-      } else {
-        parent.appendChild(clearBtn)
-      }
+      // Replace field in DOM with wrapper, then place field and button inside wrapper
+      parent.insertBefore(wrapper, field)
+      wrapper.appendChild(field)
+      wrapper.appendChild(clearBtn)
 
       field.dataset.hasClearButton = 'true'
       updateVisibility()

@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { createButtonField } from '../fields/buttonField'
 
 export const HeroBlock: Block = {
   slug: 'hero',
@@ -22,6 +23,13 @@ export const HeroBlock: Block = {
         {
           label: 'Content',
           fields: [
+            createButtonField({
+              name: 'headerCtaButton',
+              label: 'Top Header Overlay Button (e.g. Apply Now)',
+              defaultText: 'Apply Now',
+              defaultUrl: '/admissions',
+              defaultLinkType: 'page',
+            }),
             {
               name: 'badge',
               type: 'text',
@@ -35,44 +43,20 @@ export const HeroBlock: Block = {
               defaultValue: 'Nurturing Minds. Building Character. Inspiring Future Leaders.',
               required: true,
             },
-            {
-              type: 'row',
-              fields: [
-                {
-                  name: 'primaryButtonText',
-                  type: 'text',
-                  label: 'Primary Button Label',
-                  defaultValue: 'Explore',
-                  admin: { width: '50%' },
-                },
-                {
-                  name: 'primaryButtonUrl',
-                  type: 'text',
-                  label: 'Primary Button URL',
-                  defaultValue: '/about',
-                  admin: { width: '50%' },
-                },
-              ],
-            },
-            {
-              type: 'row',
-              fields: [
-                {
-                  name: 'secondaryButtonText',
-                  type: 'text',
-                  label: 'Secondary Button Label',
-                  defaultValue: 'Admission',
-                  admin: { width: '50%' },
-                },
-                {
-                  name: 'secondaryButtonUrl',
-                  type: 'text',
-                  label: 'Secondary Button URL',
-                  defaultValue: '/admissions',
-                  admin: { width: '50%' },
-                },
-              ],
-            },
+            createButtonField({
+              name: 'primaryButton',
+              label: 'Primary Hero Button (e.g. Explore)',
+              defaultText: 'Explore',
+              defaultUrl: '/about',
+              defaultLinkType: 'page',
+            }),
+            createButtonField({
+              name: 'secondaryButton',
+              label: 'Secondary Hero Button (e.g. Admission)',
+              defaultText: 'Admission',
+              defaultUrl: '/admissions',
+              defaultLinkType: 'page',
+            }),
             {
               name: 'videoUrl',
               type: 'text',
