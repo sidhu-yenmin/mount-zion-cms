@@ -197,6 +197,13 @@ export interface Page {
              * Check to temporarily hide this section from the live page without deleting it
              */
             hideSection?: boolean | null;
+            headerCtaButton?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
             badge?: string | null;
             heading: string;
             backgroundColor?: string | null;
@@ -240,8 +247,13 @@ export interface Page {
             badge?: string | null;
             heading: string;
             description?: string | null;
-            buttonText?: string | null;
-            buttonUrl?: string | null;
+            button?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
             imageOne?: (number | null) | Media;
             imageTwo?: (number | null) | Media;
             floatingBadgeLine1?: string | null;
@@ -267,8 +279,13 @@ export interface Page {
             badge?: string | null;
             heading: string;
             description?: string | null;
-            buttonText?: string | null;
-            buttonUrl?: string | null;
+            button?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
             bannerText?: string | null;
             imageOne?: (number | null) | Media;
             imageTwo?: (number | null) | Media;
@@ -341,8 +358,13 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
-            viewMoreText?: string | null;
-            viewMoreLink?: string | null;
+            viewMoreButton?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
             galleryImages?:
               | {
                   image: number | Media;
@@ -355,8 +377,13 @@ export interface Page {
               tagline?: string | null;
               heading?: string | null;
               studentImage?: (number | null) | Media;
-              buttonText?: string | null;
-              buttonUrl?: string | null;
+              button?: {
+                text?: string | null;
+                linkType?: ('page' | 'custom') | null;
+                page?: (number | null) | Page;
+                customUrl?: string | null;
+                openInNewTab?: boolean | null;
+              };
             };
             backgroundColor?: string | null;
             backgroundImage?: (number | null) | Media;
@@ -395,14 +422,21 @@ export interface Page {
             hideSection?: boolean | null;
             badge?: string | null;
             heading: string;
-            exploreMoreText?: string | null;
-            viewAllUrl?: string | null;
+            exploreMoreButton?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
             items?:
               | {
                   date: string;
                   title: string;
                   image?: (number | null) | Media;
-                  link?: string | null;
+                  linkType?: ('page' | 'custom') | null;
+                  page?: (number | null) | Page;
+                  customUrl?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -553,6 +587,15 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideSection?: T;
+              headerCtaButton?:
+                | T
+                | {
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                  };
               badge?: T;
               heading?: T;
               backgroundColor?: T;
@@ -588,8 +631,15 @@ export interface PagesSelect<T extends boolean = true> {
               badge?: T;
               heading?: T;
               description?: T;
-              buttonText?: T;
-              buttonUrl?: T;
+              button?:
+                | T
+                | {
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                  };
               imageOne?: T;
               imageTwo?: T;
               floatingBadgeLine1?: T;
@@ -613,8 +663,15 @@ export interface PagesSelect<T extends boolean = true> {
               badge?: T;
               heading?: T;
               description?: T;
-              buttonText?: T;
-              buttonUrl?: T;
+              button?:
+                | T
+                | {
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                  };
               bannerText?: T;
               imageOne?: T;
               imageTwo?: T;
@@ -681,8 +738,15 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
-              viewMoreText?: T;
-              viewMoreLink?: T;
+              viewMoreButton?:
+                | T
+                | {
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                  };
               galleryImages?:
                 | T
                 | {
@@ -697,8 +761,15 @@ export interface PagesSelect<T extends boolean = true> {
                     tagline?: T;
                     heading?: T;
                     studentImage?: T;
-                    buttonText?: T;
-                    buttonUrl?: T;
+                    button?:
+                      | T
+                      | {
+                          text?: T;
+                          linkType?: T;
+                          page?: T;
+                          customUrl?: T;
+                          openInNewTab?: T;
+                        };
                   };
               backgroundColor?: T;
               backgroundImage?: T;
@@ -733,15 +804,24 @@ export interface PagesSelect<T extends boolean = true> {
               hideSection?: T;
               badge?: T;
               heading?: T;
-              exploreMoreText?: T;
-              viewAllUrl?: T;
+              exploreMoreButton?:
+                | T
+                | {
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                  };
               items?:
                 | T
                 | {
                     date?: T;
                     title?: T;
                     image?: T;
-                    link?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
                     id?: T;
                   };
               backgroundColor?: T;
@@ -838,10 +918,6 @@ export interface Header {
     backgroundColor?: string | null;
     textColor?: string | null;
   };
-  ctaButton?: {
-    label?: string | null;
-    url?: string | null;
-  };
   logo?: (number | null) | Media;
   navBackgroundColor?: string | null;
   _status?: ('draft' | 'published') | null;
@@ -887,8 +963,13 @@ export interface Footer {
     tagline?: string | null;
     heading: string;
     description?: string | null;
-    buttonText?: string | null;
-    buttonUrl?: string | null;
+    button?: {
+      text?: string | null;
+      linkType?: ('page' | 'custom') | null;
+      page?: (number | null) | Page;
+      customUrl?: string | null;
+      openInNewTab?: boolean | null;
+    };
     backgroundColor?: string | null;
     backgroundImage?: (number | null) | Media;
   };
@@ -970,12 +1051,6 @@ export interface HeaderSelect<T extends boolean = true> {
         backgroundColor?: T;
         textColor?: T;
       };
-  ctaButton?:
-    | T
-    | {
-        label?: T;
-        url?: T;
-      };
   logo?: T;
   navBackgroundColor?: T;
   _status?: T;
@@ -1025,8 +1100,15 @@ export interface FooterSelect<T extends boolean = true> {
         tagline?: T;
         heading?: T;
         description?: T;
-        buttonText?: T;
-        buttonUrl?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              linkType?: T;
+              page?: T;
+              customUrl?: T;
+              openInNewTab?: T;
+            };
         backgroundColor?: T;
         backgroundImage?: T;
       };

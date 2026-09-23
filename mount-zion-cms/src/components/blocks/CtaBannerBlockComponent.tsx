@@ -3,6 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { resolveLinkUrl } from '@/utils/resolveLink'
 import type { Media } from '@/payload-types'
 
 export interface CtaBannerProps {
@@ -12,26 +13,24 @@ export interface CtaBannerProps {
   description?: string | null
   buttonText?: string | null
   buttonUrl?: string | null
+  button?: any
   backgroundImage?: number | Media | string | null
   backgroundColor?: string | null
 }
 
-/* =========================================================================
-   [OPTION A: STATIC FALLBACK CTA BACKGROUND IMAGE - COMMENTED OUT]
-   Uncomment below if you want hardcoded demo chalkboard background:
+export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = (props) => {
+  const {
+    tagline = 'Start your journey',
+    heading = 'Towards a brighter future.',
+    description = 'Give your child the right foundation to learn, grow, and achieve their dreams in a nurturing and inspiring environment.',
+    backgroundImage,
+    backgroundColor = '#03594E',
+    button,
+  } = props
 
-   const defaultBgImg = '/images/bottom-cta-banner.png'
-========================================================================= */
-
-export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = ({
-  tagline = 'Start your journey',
-  heading = 'Towards a brighter future.',
-  description = 'Give your child the right foundation to learn, grow, and achieve their dreams in a nurturing and inspiring environment.',
-  buttonText = 'Get Started',
-  buttonUrl = '/admissions',
-  backgroundImage,
-  backgroundColor = '#03594E',
-}) => {
+  const resolvedButtonText = button?.text || props.buttonText || 'Get Started'
+  const resolvedButtonUrl = resolveLinkUrl(button || props.buttonUrl, '/admissions')
+  const openInNewTab = Boolean(button?.openInNewTab)
   const resolveMediaUrl = (
     media: any,
   ): string | null => {
@@ -127,7 +126,7 @@ export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = ({
                 href={buttonUrl || '/admissions'}
                 className="inline-flex items-center justify-center gap-[10px] w-auto sm:w-[215px] h-[50px] sm:h-[58px] px-8 sm:px-0 rounded-[100px] bg-[#F8C62F] border border-[#F8C62F] text-black font-['Roboto',sans-serif] font-medium text-[18px] sm:text-[20px] transition-all duration-300 hover:brightness-105 hover:shadow-xl active:scale-95 group whitespace-nowrap shrink-0"
               >
-                <span>{buttonText}</span>
+                <span>{resolvedButtonText}</span>
                 <span className="text-[20px] font-medium leading-none transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                   ↗
                 </span>

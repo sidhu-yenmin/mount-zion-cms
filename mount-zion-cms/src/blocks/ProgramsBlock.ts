@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { createButtonField } from '../fields/buttonField'
 
 export const ProgramsBlock: Block = {
   slug: 'programs',
@@ -42,25 +43,13 @@ export const ProgramsBlock: Block = {
               defaultValue:
                 'Through a balanced blend of academics, technology, creativity, and values, we inspire students to think independently, solve real-world challenges, and achieve excellence in every stage of their educational journey.',
             },
-            {
-              type: 'row',
-              fields: [
-                {
-                  name: 'buttonText',
-                  type: 'text',
-                  label: 'Button Label',
-                  defaultValue: 'Explore Academics',
-                  admin: { width: '50%' },
-                },
-                {
-                  name: 'buttonUrl',
-                  type: 'text',
-                  label: 'Button URL',
-                  defaultValue: '#academics',
-                  admin: { width: '50%' },
-                },
-              ],
-            },
+            createButtonField({
+              name: 'button',
+              label: 'Section Action Button',
+              defaultText: 'Explore Academics',
+              defaultUrl: '/academics',
+              defaultLinkType: 'page',
+            }),
             {
               name: 'bannerText',
               type: 'text',

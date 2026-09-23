@@ -7,6 +7,7 @@ import { ArrowUpRight, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { SchoolLogo } from '../layout/SchoolLogo'
 import { DiscoverMoreBadge } from '../ui/DiscoverMoreBadge'
 import { StatsStrip } from '../sections/StatsStrip'
+import { resolveLinkUrl } from '@/utils/resolveLink'
 import type { Page, Media } from '@/payload-types'
 
 export type HeroBlockProps = Omit<
@@ -264,7 +265,7 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
                   </Link>
                 )}
 
-                {secondaryButtonText && (
+                {resolvedSecondaryText && (
                   <Link
                     href={secondaryButtonUrl || '#admission'}
                     className="group inline-flex items-center justify-center gap-2 border border-white/80 hover:border-white text-white hover:bg-white/15 font-semibold text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-all duration-300 backdrop-blur-xs hover:shadow-md hover:-translate-y-0.5 active:scale-95 whitespace-nowrap shrink-0"

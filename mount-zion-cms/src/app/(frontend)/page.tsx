@@ -13,14 +13,24 @@ export default async function HomePage() {
     const payloadConfig = await config
     const payload = await getPayload({ config: payloadConfig })
 
-    // Fetch the Home page by slug: 'home'
+    // Fetch ONLY published Home page (ignore drafts)
     const pagesResult = await payload.find({
       collection: 'pages',
       where: {
-        slug: {
-          equals: 'home',
-        },
+        and: [
+          {
+            slug: {
+              equals: 'home',
+            },
+          },
+          {
+            _status: {
+              equals: 'published',
+            },
+          },
+        ],
       },
+      draft: false,
       limit: 1,
       depth: 2,
     })
@@ -41,8 +51,8 @@ export default async function HomePage() {
           : null
 
     return (
-      <main
-        className="w-full min-h-screen transition-colors duration-300 bg-cover bg-center"
+      <div
+        className="w-full transition-colors duration-300 bg-cover bg-center"
         style={{
           backgroundColor: pageBgColor,
           backgroundImage: pageBgImg ? `url(${pageBgImg})` : undefined,
@@ -50,17 +60,15 @@ export default async function HomePage() {
       >
         {/* Dynamic Layout Blocks rendered directly from CMS Home Page */}
         <RenderBlocks blocks={layout} />
-      </main>
+      </div>
     )
   } catch (error) {
     console.warn('Could not fetch home page from CMS:', error)
   }
 
   return (
-    <main className="w-full min-h-screen bg-[#f8fafc]">
+    <div className="w-full bg-[#f8fafc]">
       <RenderBlocks blocks={layout} />
-    </main>
+    </div>
   )
 }
-
-

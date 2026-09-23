@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { resolveLinkUrl } from '@/utils/resolveLink'
 import type { Media } from '@/payload-types'
 
 export interface GalleryImageItem {
@@ -18,6 +19,7 @@ export interface CampusLifeCtaBar {
   studentImage?: number | Media | string | null
   buttonText?: string | null
   buttonUrl?: string | null
+  button?: any
 }
 
 export interface CampusLifeBlockProps {
@@ -26,6 +28,7 @@ export interface CampusLifeBlockProps {
   heading?: string | null
   viewMoreText?: string | null
   viewMoreLink?: string | null
+  viewMoreButton?: any
   galleryImages?: GalleryImageItem[] | null
   ctaBar?: CampusLifeCtaBar | null
   backgroundColor?: string | null
@@ -115,8 +118,6 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
   const showCta = ctaBar?.showCtaBar !== false
   const ctaTagline = ctaBar?.tagline || 'Looking for the Right School?'
   const ctaHeading = ctaBar?.heading || "Start Your Child's Journey with Us"
-  const ctaButtonText = ctaBar?.buttonText || 'Apply Now'
-  const ctaButtonUrl = ctaBar?.buttonUrl || '/admissions'
 
   // Only show student cutout when uploaded in CMS
   const ctaStudentImg = resolveMediaUrl(ctaBar?.studentImage)

@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { createButtonField } from '../fields/buttonField'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
@@ -228,25 +229,13 @@ export const Footer: GlobalConfig = {
                           defaultValue:
                             'Give your child the right foundation to learn, grow, and achieve their dreams in a nurturing and inspiring environment.',
                         },
-                        {
-                          type: 'row',
-                          fields: [
-                            {
-                              name: 'buttonText',
-                              type: 'text',
-                              label: 'Button Label',
-                              defaultValue: 'Get Started',
-                              admin: { width: '50%' },
-                            },
-                            {
-                              name: 'buttonUrl',
-                              type: 'text',
-                              label: 'Button URL',
-                              defaultValue: '/admissions',
-                              admin: { width: '50%' },
-                            },
-                          ],
-                        },
+                        createButtonField({
+                          name: 'button',
+                          label: 'Banner Action Button',
+                          defaultText: 'Get Started',
+                          defaultUrl: '/admissions',
+                          defaultLinkType: 'page',
+                        }),
                       ],
                     },
                     {

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
+import { resolveLinkUrl } from '@/utils/resolveLink'
 import type { Media } from '@/payload-types'
 
 export interface ProgramsProps {
@@ -13,6 +14,7 @@ export interface ProgramsProps {
   description?: string | null
   buttonText?: string | null
   buttonUrl?: string | null
+  button?: any
   imageOne?: number | Media | string | null
   mainImage?: number | Media | string | null
   imageTwo?: number | Media | string | null

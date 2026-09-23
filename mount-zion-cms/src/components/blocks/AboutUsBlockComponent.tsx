@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
+import { resolveLinkUrl } from '@/utils/resolveLink'
 import type { Media } from '@/payload-types'
 
 function AnimatedStatValue({ value }: { value: string | null | undefined }) {
@@ -63,6 +64,7 @@ export interface AboutUsProps {
   description?: string | null
   buttonText?: string | null
   buttonUrl?: string | null
+  button?: any
   imageOne?: number | Media | string | null
   imageTwo?: number | Media | string | null
   floatingBadgeIcon?: number | Media | string | null
@@ -78,26 +80,30 @@ export interface AboutUsProps {
   backgroundImage?: number | Media | string | null
 }
 
-export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = ({
-  badge = 'WHY MOUNT ZION',
-  heading = 'Explore Our World-Class Academic Programs',
-  description = 'Mount Zion School dedicated to providing quality learning, research, and innovation. It offers a wide range of undergraduate, graduate, and postgraduate programs designed to prepare students for professional success.',
-  buttonText = 'Know More',
-  buttonUrl = '#academics',
-  imageOne,
-  imageTwo,
-  floatingBadgeIcon,
-  floatingBadgeLine1 = 'UNLOCKING POTENTIALS',
-  floatingBadgeLine2 = 'HIGHER EDUCATION',
-  stat1Value = '9K',
-  stat1Label = 'Students',
-  stat1Icon,
-  stat2Value = '10',
-  stat2Label = 'Experience',
-  stat2Icon,
-  backgroundColor = '#FFFFFF',
-  backgroundImage,
-}) => {
+export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = (props) => {
+  const {
+    badge = 'WHY MOUNT ZION',
+    heading = 'Explore Our World-Class Academic Programs',
+    description = 'Mount Zion School dedicated to providing quality learning, research, and innovation. It offers a wide range of undergraduate, graduate, and postgraduate programs designed to prepare students for professional success.',
+    imageOne,
+    imageTwo,
+    floatingBadgeIcon,
+    floatingBadgeLine1 = 'UNLOCKING POTENTIALS',
+    floatingBadgeLine2 = 'HIGHER EDUCATION',
+    stat1Value = '9K',
+    stat1Label = 'Students',
+    stat1Icon,
+    stat2Value = '10',
+    stat2Label = 'Experience',
+    stat2Icon,
+    backgroundColor = '#FFFFFF',
+    backgroundImage,
+    button,
+  } = props
+
+  const resolvedButtonText = button?.text || props.buttonText || 'Know More'
+  const resolvedButtonUrl = resolveLinkUrl(button || props.buttonUrl, '/about')
+  const openInNewTab = Boolean(button?.openInNewTab)
   // Helper to extract image URL from CMS upload or string
   const resolveMediaUrl = (
     media: number | Media | string | null | undefined,
