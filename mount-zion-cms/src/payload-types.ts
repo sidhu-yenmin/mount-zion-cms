@@ -991,11 +991,77 @@ export interface Theme {
   footerLogo?: (number | null) | Media;
   favicon?: (number | null) | Media;
   headingFont?:
-    | ('Plus Jakarta Sans' | 'Inter' | 'Roboto' | 'Outfit' | 'K2D' | 'Playfair Display' | 'Merriweather' | 'system-ui')
+    | (
+        | 'Plus Jakarta Sans'
+        | 'Poppins'
+        | 'Montserrat'
+        | 'Inter'
+        | 'Roboto'
+        | 'Lato'
+        | 'Outfit'
+        | 'DM Sans'
+        | 'Oswald'
+        | 'Bebas Neue'
+        | 'Raleway'
+        | 'Nunito'
+        | 'Arial'
+        | 'Calibri'
+        | 'Times New Roman'
+        | 'Georgia'
+        | 'Verdana'
+        | 'Trebuchet MS'
+        | 'Cambria'
+        | 'Impact'
+        | 'EB Garamond'
+        | 'Playfair Display'
+        | 'Merriweather'
+        | 'Lora'
+        | 'Bitter'
+        | 'Spectral'
+        | 'Cinzel'
+        | 'Cormorant Garamond'
+        | 'PT Serif'
+        | 'Lexend'
+        | 'Roboto Slab'
+        | 'Source Sans 3'
+        | 'Comfortaa'
+        | 'Caveat'
+        | 'Pacifico'
+        | 'Courier New'
+        | 'system-ui'
+      )
     | null;
-  bodyFont?: ('Plus Jakarta Sans' | 'Inter' | 'Roboto' | 'Open Sans' | 'Outfit' | 'system-ui') | null;
-  baseFontSize?: ('14px' | '16px' | '18px') | null;
-  headingWeight?: ('600' | '700' | '800') | null;
+  bodyFont?:
+    | (
+        | 'Plus Jakarta Sans'
+        | 'Poppins'
+        | 'Inter'
+        | 'Roboto'
+        | 'Open Sans'
+        | 'Lato'
+        | 'DM Sans'
+        | 'Nunito Sans'
+        | 'Outfit'
+        | 'Arial'
+        | 'Calibri'
+        | 'Times New Roman'
+        | 'Georgia'
+        | 'Verdana'
+        | 'Trebuchet MS'
+        | 'Lexend'
+        | 'Source Sans 3'
+        | 'EB Garamond'
+        | 'Merriweather'
+        | 'Lora'
+        | 'Bitter'
+        | 'Spectral'
+        | 'Courier New'
+        | 'system-ui'
+      )
+    | null;
+  baseFontSize?:
+    ('12px' | '13px' | '14px' | '15px' | '16px' | '17px' | '18px' | '19px' | '20px' | '22px' | '24px') | null;
+  headingWeight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900') | null;
   primaryColor?: string | null;
   accentColor?: string | null;
   backgroundColor?: string | null;

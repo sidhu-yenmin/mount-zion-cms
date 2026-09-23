@@ -109,6 +109,35 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const pageBgColor = themeData?.backgroundColor || '#F8FAFC'
   const textColor = themeData?.textColor || '#0F172A'
 
+  // Dynamic Google Font URL generation for whatever font is selected
+  const SYSTEM_FONTS = new Set([
+    'system-ui',
+    'Arial',
+    'Helvetica',
+    'Calibri',
+    'Cambria',
+    'Georgia',
+    'Times New Roman',
+    'Verdana',
+    'Trebuchet MS',
+    'Impact',
+    'Courier New',
+    'sans-serif',
+    'serif',
+    'monospace',
+  ])
+  const fontsToLoad = new Set<string>()
+  if (headingFont && !SYSTEM_FONTS.has(headingFont)) fontsToLoad.add(headingFont)
+  if (bodyFont && !SYSTEM_FONTS.has(bodyFont)) fontsToLoad.add(bodyFont)
+
+  const fontParams = Array.from(fontsToLoad)
+    .map((f) => `family=${f.replace(/ /g, '+')}:wght@300;400;500;600;700;800;900`)
+    .join('&')
+
+  const googleFontsUrl = fontParams
+    ? `https://fonts.googleapis.com/css2?${fontParams}&display=swap`
+    : null
+
   const dynamicStyles = `
     :root {
       --font-heading: '${headingFont}', sans-serif;
@@ -127,10 +156,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=K2D:wght@700;800&family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&family=Outfit:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"
-          rel="stylesheet"
-        />
+        {googleFontsUrl && <link href={googleFontsUrl} rel="stylesheet" />}
         <style dangerouslySetInnerHTML={{ __html: dynamicStyles }} />
       </head>
       <body
