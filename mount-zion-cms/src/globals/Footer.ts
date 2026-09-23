@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { createButtonField } from '../fields/buttonField'
+import { colorField } from '../fields/colorField'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
@@ -241,12 +242,11 @@ export const Footer: GlobalConfig = {
                     {
                       label: 'Design & Media',
                       fields: [
-                        {
+                        colorField({
                           name: 'backgroundColor',
-                          type: 'text',
                           label: 'CTA Banner Background Color',
                           defaultValue: '#03594E',
-                        },
+                        }),
                         {
                           name: 'backgroundImage',
                           type: 'upload',
@@ -270,12 +270,11 @@ export const Footer: GlobalConfig = {
               relationTo: 'media',
               label: 'Footer Logo',
             },
-            {
+            colorField({
               name: 'backgroundColor',
-              type: 'text',
               label: 'Main Footer Background Color',
               defaultValue: '#03594E',
-            },
+            }),
           ],
         },
       ],

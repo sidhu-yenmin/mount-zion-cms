@@ -1,5 +1,6 @@
 import type { Block } from 'payload'
 import { createButtonField } from '../fields/buttonField'
+import { colorField } from '../fields/colorField'
 
 export const AboutUsBlock: Block = {
   slug: 'aboutUs',
@@ -169,12 +170,11 @@ export const AboutUsBlock: Block = {
         {
           label: 'Design & Media',
           fields: [
-            {
+            colorField({
               name: 'backgroundColor',
-              type: 'text',
-              label: 'Section Background Color (Hex / CSS)',
+              label: 'Section Background Color',
               defaultValue: '#FFFFFF',
-            },
+            }),
             {
               name: 'backgroundImage',
               type: 'upload',

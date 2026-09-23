@@ -1,5 +1,6 @@
 import type { Block } from 'payload'
 import { createButtonField } from '../fields/buttonField'
+import { colorField } from '../fields/colorField'
 
 export const CtaBannerBlock: Block = {
   slug: 'ctaBanner',
@@ -55,12 +56,11 @@ export const CtaBannerBlock: Block = {
         {
           label: 'Design & Media',
           fields: [
-            {
+            colorField({
               name: 'backgroundColor',
-              type: 'text',
-              label: 'Banner Background Color (Hex / CSS)',
+              label: 'Banner Background Color',
               defaultValue: '#03594E',
-            },
+            }),
             {
               name: 'backgroundImage',
               type: 'upload',

@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { colorField } from '../fields/colorField'
 
 export const ThemeSettings: GlobalConfig = {
   slug: 'theme',
@@ -185,52 +186,53 @@ export const ThemeSettings: GlobalConfig = {
             {
               type: 'row',
               fields: [
-                {
+                colorField({
                   name: 'primaryColor',
-                  type: 'text',
-                  label: 'Primary Brand Color (Hex / CSS)',
+                  label: 'Primary Brand Color',
                   defaultValue: '#03594E',
                   admin: { width: '50%' },
-                },
-                {
+                }),
+                colorField({
                   name: 'accentColor',
-                  type: 'text',
-                  label: 'Secondary / Accent Color (Gold / Yellow)',
+                  label: 'Secondary / Accent Color (Gold)',
                   defaultValue: '#EAB308',
                   admin: { width: '50%' },
-                },
+                }),
               ],
             },
             {
               type: 'row',
               fields: [
-                {
+                colorField({
                   name: 'backgroundColor',
-                  type: 'text',
                   label: 'Page Background Color',
                   defaultValue: '#F8FAFC',
                   admin: { width: '50%' },
-                },
-                {
+                }),
+                colorField({
                   name: 'textColor',
-                  type: 'text',
                   label: 'Primary Body Text Color',
                   defaultValue: '#0F172A',
                   admin: { width: '50%' },
-                },
+                }),
               ],
             },
             {
-              name: 'headerNavBackground',
-              type: 'text',
-              label: 'Default Header Navbar Background Color',
-              defaultValue: '#022C22',
-            },
-            {
-              name: 'footerBackground',
-              type: 'text',
-              label: 'Default Footer Background Color',
-              defaultValue: '#03594E',
+              type: 'row',
+              fields: [
+                colorField({
+                  name: 'headerNavBackground',
+                  label: 'Default Header Navbar Background',
+                  defaultValue: '#022C22',
+                  admin: { width: '50%' },
+                }),
+                colorField({
+                  name: 'footerBackground',
+                  label: 'Default Footer Background',
+                  defaultValue: '#03594E',
+                  admin: { width: '50%' },
+                }),
+              ],
             },
           ],
         },
