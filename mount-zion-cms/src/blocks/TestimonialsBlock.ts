@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { colorField } from '../fields/colorField'
 
 export const TestimonialsBlock: Block = {
   slug: 'testimonials',
@@ -115,12 +116,11 @@ export const TestimonialsBlock: Block = {
         {
           label: 'Design & Media',
           fields: [
-            {
+            colorField({
               name: 'backgroundColor',
-              type: 'text',
-              label: 'Section Background Color (Hex / CSS)',
+              label: 'Section Background Color',
               defaultValue: '#F4F6F8',
-            },
+            }),
             {
               name: 'backgroundImage',
               type: 'upload',

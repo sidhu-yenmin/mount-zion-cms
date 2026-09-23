@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { createButtonField } from '../fields/buttonField'
+import { colorField } from '../fields/colorField'
 
 export const Header: GlobalConfig = {
   slug: 'header',
@@ -39,18 +40,16 @@ export const Header: GlobalConfig = {
                   label: 'Email Address',
                   defaultValue: 'info@mountzion.com',
                 },
-                {
+                colorField({
                   name: 'backgroundColor',
-                  type: 'text',
                   label: 'Top Bar Background Color',
                   defaultValue: '#EAB308',
-                },
-                {
+                }),
+                colorField({
                   name: 'textColor',
-                  type: 'text',
                   label: 'Top Bar Text Color',
                   defaultValue: '#0F172A',
-                },
+                }),
               ],
             },
             /* ctaButton is currently managed directly inside the Hero Banner block overlay on pages:
@@ -73,12 +72,11 @@ export const Header: GlobalConfig = {
               relationTo: 'media',
               label: 'School Logo',
             },
-            {
+            colorField({
               name: 'navBackgroundColor',
-              type: 'text',
               label: 'Main Navigation Bar Background Color (For Solid Header)',
               defaultValue: '#022C22',
-            },
+            }),
           ],
         },
       ],

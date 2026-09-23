@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { colorField } from '../fields/colorField'
 
 export const ToppersBlock: Block = {
   slug: 'toppers',
@@ -148,12 +149,11 @@ export const ToppersBlock: Block = {
         {
           label: 'Design & Media',
           fields: [
-            {
+            colorField({
               name: 'backgroundColor',
-              type: 'text',
-              label: 'Section Background Color (Hex / CSS)',
+              label: 'Section Background Color',
               defaultValue: '#044438',
-            },
+            }),
             {
               name: 'backgroundImage',
               type: 'upload',
