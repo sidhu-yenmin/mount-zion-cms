@@ -22,6 +22,12 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      graphics: {
+        Logo: '@/components/admin/AdminLogo#AdminLogo',
+        Icon: '@/components/admin/AdminLogo#AdminIcon',
+      },
+    },
   },
   collections: [Users, Media, Pages],
   globals: [Menu, Header, Footer, ThemeSettings],

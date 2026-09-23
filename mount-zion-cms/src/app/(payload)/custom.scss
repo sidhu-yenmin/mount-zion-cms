@@ -67,3 +67,181 @@ input[type="number"][data-has-clear-button="true"] {
 textarea[data-has-clear-button="true"] {
   padding-right: 38px !important;
 }
+
+/* ==========================================================================
+   THEME-DRIVEN ADMIN PANEL CUSTOM STYLING (LIGHT & DARK ADAPTIVE)
+   ========================================================================== */
+
+/* Overall App Background & Typography */
+html, body {
+  background-color: var(--brand-bg) !important;
+  color: var(--brand-text) !important;
+  font-family: var(--brand-font, 'Plus Jakarta Sans', sans-serif) !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Admin Sidebar / Navigation */
+.nav, aside.nav {
+  background-color: var(--brand-sidebar-bg) !important;
+  border-right: 1px solid var(--brand-border) !important;
+}
+
+.nav__header {
+  border-bottom: 1px solid var(--brand-border) !important;
+  padding: 16px 20px !important;
+}
+
+/* Nav Item Links */
+.nav__link {
+  border-radius: var(--brand-radius, 8px) !important;
+  margin: 2px 10px !important;
+  color: var(--brand-text) !important;
+  transition: all 0.15s ease-in-out !important;
+}
+
+.nav__link:hover {
+  background-color: var(--brand-surface-hover) !important;
+  color: var(--brand-text) !important;
+}
+
+.nav__link--active, .nav__link.active {
+  background: var(--brand-primary) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+.nav__link--active:hover, .nav__link.active:hover {
+  background: var(--brand-primary-hover) !important;
+  color: #ffffff !important;
+}
+
+/* Nav Group Titles */
+.nav__group-label,
+.nav-group__label,
+.nav__group-toggle {
+  color: var(--brand-text-muted) !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* Admin Header & App Bar */
+.app-header, header.app-header {
+  background-color: var(--brand-bg) !important;
+  border-bottom: 1px solid var(--brand-border) !important;
+}
+
+/* Primary Action Buttons */
+.btn--style-primary,
+button.btn--style-primary,
+a.btn--style-primary {
+  background-color: var(--brand-primary) !important;
+  border-color: var(--brand-primary) !important;
+  color: #ffffff !important;
+  border-radius: var(--brand-radius, 8px) !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn--style-primary:hover,
+button.btn--style-primary:hover,
+a.btn--style-primary:hover {
+  background-color: var(--brand-primary-hover) !important;
+  border-color: var(--brand-primary-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Secondary / Tertiary Buttons */
+.btn--style-secondary,
+button.btn--style-secondary {
+  border-radius: var(--brand-radius, 8px) !important;
+  background-color: var(--brand-surface) !important;
+  border: 1px solid var(--brand-border) !important;
+  color: var(--brand-text) !important;
+}
+
+.btn--style-secondary:hover,
+button.btn--style-secondary:hover {
+  background-color: var(--brand-surface-hover) !important;
+  border-color: var(--brand-primary) !important;
+}
+
+/* Form Inputs & Controls */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="url"],
+textarea,
+select {
+  background-color: var(--brand-surface) !important;
+  border: 1px solid var(--brand-border) !important;
+  border-radius: var(--brand-radius, 8px) !important;
+  color: var(--brand-text) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--brand-primary) !important;
+  box-shadow: 0 0 0 2px rgba(3, 89, 78, 0.2) !important;
+  outline: none !important;
+}
+
+/* Table Card & Headers */
+.table, .collection-list__table {
+  border-radius: var(--brand-radius, 8px) !important;
+  background-color: var(--brand-surface) !important;
+}
+
+th {
+  background-color: var(--brand-surface) !important;
+  color: var(--brand-text-muted) !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  border-bottom: 1px solid var(--brand-border) !important;
+}
+
+td {
+  border-bottom: 1px solid var(--brand-border) !important;
+  color: var(--brand-text) !important;
+}
+
+/* Header Breadcrumbs / StepNav Icon */
+.step-nav {
+  align-items: center !important;
+}
+
+.step-nav__home {
+  width: auto !important;
+  min-width: 26px !important;
+  height: 26px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+  flex-shrink: 0 !important;
+}
+
+.step-nav__home a,
+.step-nav__home span {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: visible !important;
+}
+
+.custom-logo-icon {
+  flex-shrink: 0 !important;
+}
+
+
