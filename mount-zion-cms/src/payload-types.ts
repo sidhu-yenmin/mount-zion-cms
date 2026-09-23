@@ -187,6 +187,15 @@ export interface Page {
             badge?: string | null;
             heading: string;
             backgroundImage: number | Media;
+            /**
+             * Optional additional background images to display as a rotating carousel in the hero banner
+             */
+            carouselImages?:
+              | {
+                  image: number | Media;
+                  id?: string | null;
+                }[]
+              | null;
             primaryButtonText?: string | null;
             primaryButtonUrl?: string | null;
             secondaryButtonText?: string | null;
@@ -486,6 +495,12 @@ export interface PagesSelect<T extends boolean = true> {
               badge?: T;
               heading?: T;
               backgroundImage?: T;
+              carouselImages?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
               primaryButtonText?: T;
               primaryButtonUrl?: T;
               secondaryButtonText?: T;

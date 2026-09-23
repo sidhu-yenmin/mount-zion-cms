@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
@@ -34,6 +34,28 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
   backgroundImage,
   bannerText = 'Learning • Innovation • Achievement',
 }) => {
+  // Scroll-triggered viewport presentation (triggers only after arriving to the screen)
+  const [isInView, setIsInView] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    if (!sectionRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        setIsInView(entry.isIntersecting)
+      },
+      {
+        threshold: 0.22,
+        rootMargin: '0px 0px -80px 0px',
+      }
+    )
+
+    observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
+
   // Resolve Image 1 (Classroom 591x298)
   const resolvedImg1 = imageOne || mainImage
   const img1Src =
@@ -62,19 +84,32 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
 
   return (
     <section
+      ref={sectionRef}
       className="relative w-full bg-[#044438] bg-cover bg-center overflow-hidden py-16 sm:py-20 lg:py-24"
       style={bgImgUrl ? { backgroundImage: `url('${bgImgUrl}')` } : { backgroundImage: "url('/images/academics-bg-color.png')" }}
     >
       <div className="relative z-10 w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* 1. Header Section */}
-        <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16">
+        {/* 1. Header Section (Slides Down into View after arriving) */}
+        <div
+          className={`text-center max-w-4xl mx-auto mb-12 sm:mb-16 transition-all duration-1000 ease-out ${
+            isInView ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-12'
+          }`}
+        >
           {/* Horizontal lines + Badge */}
           <div className="flex items-center justify-center gap-3.5 mb-4">
-            <span className="inline-block w-[38px] h-[2px] bg-white shrink-0" />
+            <span
+              className={`inline-block w-[38px] h-[2px] bg-white shrink-0 origin-right transition-transform duration-700 delay-200 ${
+                isInView ? 'scale-x-100' : 'scale-x-0'
+              }`}
+            />
             <span className="text-white font-bold text-[16px] sm:text-[18px] uppercase tracking-normal select-none">
               {badge}
             </span>
-            <span className="inline-block w-[38px] h-[2px] bg-white shrink-0" />
+            <span
+              className={`inline-block w-[38px] h-[2px] bg-white shrink-0 origin-left transition-transform duration-700 delay-200 ${
+                isInView ? 'scale-x-100' : 'scale-x-0'
+              }`}
+            />
           </div>
 
           {/* Main Heading */}
@@ -93,8 +128,12 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
 
         {/* 2. Content Two-Column Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-14 items-center">
-          {/* Left Column (Image 1 + Description + CTA Button) */}
-          <div className="lg:col-span-7 flex flex-col justify-between">
+          {/* Left Column (Image 1 + Description + CTA Button) - Slides DOWN from TOP */}
+          <div
+            className={`lg:col-span-7 flex flex-col justify-between transition-all duration-1000 ease-out delay-150 ${
+              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-24'
+            }`}
+          >
             {/* Academics Image 1 (591 x 298px on desktop, rounded 30px) */}
             <div className="relative w-full max-w-[591px] h-[240px] sm:h-[280px] lg:h-[298px] rounded-[30px] overflow-hidden shadow-2xl border border-white/10 group">
               <Image
@@ -117,16 +156,20 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
             <div>
               <Link
                 href={buttonUrl || '#academics'}
-                className="inline-flex items-center justify-center gap-3 min-h-[54px] sm:min-h-[58px] px-8 sm:px-10 rounded-full border border-[#919191] bg-white hover:bg-neutral-100 text-[#353535] font-medium text-[17px] sm:text-[18px] transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 cursor-pointer select-none"
+                className="group inline-flex items-center justify-center gap-3 min-h-[54px] sm:min-h-[58px] px-8 sm:px-10 rounded-full border border-[#919191] bg-white hover:bg-neutral-100 text-[#353535] font-medium text-[17px] sm:text-[18px] transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-95 cursor-pointer select-none"
               >
                 <span>{buttonText}</span>
-                <ArrowUpRight className="w-5 h-5 stroke-[2.2] text-[#353535]" />
+                <ArrowUpRight className="w-5 h-5 stroke-[2.2] text-[#353535] transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5" />
               </Link>
             </div>
           </div>
 
-          {/* Right Column (Image 2 + Overlapping Sunburst Blurry Banner) */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end">
+          {/* Right Column (Image 2 + Overlapping Sunburst Blurry Banner) - Slides UP from BOTTOM */}
+          <div
+            className={`lg:col-span-5 flex justify-center lg:justify-end transition-all duration-1000 ease-out delay-150 ${
+              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
+            }`}
+          >
             <div className="relative w-full max-w-[475px] group">
               {/* Academics Image 2 (475 x 528px on desktop, rounded 30px) */}
               <div className="relative w-full h-[400px] sm:h-[480px] lg:h-[528px] rounded-[30px] overflow-hidden shadow-2xl border border-white/10">
@@ -141,17 +184,19 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
                 />
               </div>
 
-              {/* Overlapping Blurry Banner (Learning • Innovation • Achievement) */}
-              <div className="absolute left-6 sm:-left-20 md:-left-24 lg:-left-[140px] bottom-6 sm:bottom-10 w-[260px] sm:w-[375px] max-w-[calc(100vw-3rem)] h-[58px] sm:h-[70px] rounded-r-[18.16px] rounded-l-none bg-gradient-to-r from-white/[0.14] via-white/[0.10] to-white/[0.04] backdrop-blur-[7px] border-l-[3.5px] border-l-[#F8C62F] shadow-2xl flex items-center pl-10 sm:pl-16 pr-3 sm:pr-4 z-20 pointer-events-none transition-transform duration-300 group-hover:scale-[1.02]">
-                {/* Sunburst Icon Centered on Left Yellow Border */}
+              {/* Overlapping Blurry Banner with continuous floating levitation */}
+              <div className="absolute left-6 sm:-left-20 md:-left-24 lg:-left-[140px] bottom-6 sm:bottom-10 w-[260px] sm:w-[375px] max-w-[calc(100vw-3rem)] h-[58px] sm:h-[70px] rounded-r-[18.16px] rounded-l-none bg-gradient-to-r from-white/[0.14] via-white/[0.10] to-white/[0.04] backdrop-blur-[7px] border-l-[3.5px] border-l-[#F8C62F] shadow-2xl flex items-center pl-10 sm:pl-16 pr-3 sm:pr-4 z-20 pointer-events-none transition-transform duration-300 group-hover:scale-[1.02] animate-banner-float">
+                {/* Sunburst Icon Centered on Left Yellow Border with continuous smooth rotation */}
                 <div className="absolute -left-[30px] sm:-left-[46px] top-0 bottom-0 my-auto w-[60px] sm:w-[92px] h-[60px] sm:h-[92px] flex items-center justify-center pointer-events-none">
-                  <Image
-                    src="/images/sun.png"
-                    alt="Sunburst icon"
-                    width={92}
-                    height={92}
-                    className="w-full h-full object-contain"
-                  />
+                  <div className="w-full h-full animate-sun-spin origin-center flex items-center justify-center">
+                    <Image
+                      src="/images/sun.png"
+                      alt="Sunburst icon"
+                      width={92}
+                      height={92}
+                      className="w-full h-full object-contain drop-shadow-md"
+                    />
+                  </div>
                 </div>
 
                 {/* Banner Text */}
@@ -166,3 +211,4 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
     </section>
   )
 }
+

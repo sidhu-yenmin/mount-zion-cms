@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight, X } from 'lucide-react'
+import { ArrowUpRight, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { SchoolLogo } from '../layout/SchoolLogo'
 import { DiscoverMoreBadge } from '../ui/DiscoverMoreBadge'
 import { StatsStrip } from '../sections/StatsStrip'
@@ -14,12 +14,21 @@ export type HeroBlockProps = Omit<
   'backgroundImage'
 > & {
   backgroundImage?: number | Media | string | null
+  carouselImages?: Array<{ image?: number | Media | string | null }> | null
 }
+
+const defaultHeroImages = [
+  '/images/hero-student.png',
+  '/images/hero-student1.jpg',
+  '/images/why-mount-zion.png',
+  '/images/facilities1.png',
+]
 
 export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
   badge = 'MOUNTZION',
   heading = 'Nurturing Minds. Building Character. Inspiring Future Leaders.',
   backgroundImage,
+  carouselImages,
   primaryButtonText = 'Explore',
   primaryButtonUrl = '#explore',
   secondaryButtonText = 'Admission',
@@ -29,15 +38,85 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
 }) => {
   const [videoModalOpen, setVideoModalOpen] = useState(false)
 
-  // 1. Resolve Background Image (CMS Media object or string path)
-  const bgImage =
-    typeof backgroundImage === 'object' && backgroundImage?.url
-      ? backgroundImage.url
-      : typeof backgroundImage === 'string' && backgroundImage
-        ? backgroundImage
-        : '/images/hero-student.png'
+  // 1. Resolve Background Images for the Carousel
+  const resolveImgSrc = (img: number | Media | string | null | undefined): string | null => {
+    if (!img) return null
+    if (typeof img === 'string' && img.trim()) return img
+    if (typeof img === 'object' && img?.url) return img.url
+    return null
+  }
 
-  // 2. Parse Heading into 3 lines for the Figma styled typography
+  const primaryBg = resolveImgSrc(backgroundImage)
+
+  const cmsImages = (carouselImages || [])
+    .map((item) => resolveImgSrc(item.image))
+    .filter((src): src is string => Boolean(src))
+
+  const slideImages =
+    cmsImages.length > 0
+      ? primaryBg
+        ? [primaryBg, ...cmsImages.filter((s) => s !== primaryBg)]
+        : cmsImages
+      : primaryBg
+        ? [primaryBg, ...defaultHeroImages.slice(1)]
+        : defaultHeroImages
+
+  // 2. Carousel Interaction State
+  const [activeSlide, setActiveSlide] = useState<number>(0)
+  const [isPaused, setIsPaused] = useState<boolean>(false)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchDelta, setTouchDelta] = useState<number>(0)
+  const [isDragging, setIsDragging] = useState<boolean>(false)
+
+  // Autoplay timer (5 seconds) with pause-on-hover / drag
+  useEffect(() => {
+    if (isPaused || slideImages.length <= 1) return
+
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev < slideImages.length - 1 ? prev + 1 : 0))
+    }, 5000)
+
+    return () => clearInterval(timer)
+  }, [isPaused, slideImages.length])
+
+  // Touch & mouse drag swipe gesture handlers
+  const handleTouchStart = (clientX: number) => {
+    if (slideImages.length <= 1) return
+    setTouchStart(clientX)
+    setTouchDelta(0)
+    setIsDragging(true)
+  }
+
+  const handleTouchMove = (clientX: number) => {
+    if (touchStart === null || slideImages.length <= 1) return
+    setTouchDelta(clientX - touchStart)
+  }
+
+  const handleTouchEnd = () => {
+    if (touchStart === null || slideImages.length <= 1) return
+    const threshold = 40
+    if (touchDelta < -threshold) {
+      // Swiped left -> Next slide
+      setActiveSlide((prev) => (prev < slideImages.length - 1 ? prev + 1 : 0))
+    } else if (touchDelta > threshold) {
+      // Swiped right -> Previous slide
+      setActiveSlide((prev) => (prev > 0 ? prev - 1 : slideImages.length - 1))
+    }
+    setTouchStart(null)
+    setTouchDelta(0)
+    setIsDragging(false)
+  }
+
+  // Keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') {
+      setActiveSlide((prev) => (prev > 0 ? prev - 1 : slideImages.length - 1))
+    } else if (e.key === 'ArrowRight') {
+      setActiveSlide((prev) => (prev < slideImages.length - 1 ? prev + 1 : 0))
+    }
+  }
+
+  // 3. Parse Heading into 3 lines for the styled typography
   const rawHeading = (heading || '').trim()
   let lines = rawHeading.includes('\n')
     ? rawHeading.split('\n').map((l) => l.trim()).filter(Boolean)
@@ -52,33 +131,64 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
   }
 
   return (
-    <section className="relative w-full bg-white">
-      {/* Hero Visual Area */}
-      <div className="relative min-h-[680px] sm:min-h-[740px] lg:min-h-[800px] w-full flex flex-col justify-between overflow-hidden bg-[#0c2e26]">
-        {/* 1. Background Image with Slow Ambient Ken Burns Effect */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <div className="relative w-full h-full animate-hero-zoom">
-            <Image
-              src={bgImage}
-              alt="Mount Zion International School student in classroom"
-              fill
-              priority
-              unoptimized
-              className="object-cover object-center sm:object-[66%_center] lg:object-[60%_center]"
-              sizes="100vw"
-            />
-          </div>
+    <section
+      className="relative w-full bg-white select-none outline-none"
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      aria-label="Hero Banner Carousel"
+    >
+      {/* Hero Visual Area with Touch/Mouse Swipe Support */}
+      <div
+        className="relative min-h-[680px] sm:min-h-[740px] lg:min-h-[820px] w-full flex flex-col justify-between overflow-hidden bg-[#0c2e26]"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => {
+          setIsPaused(false)
+          if (isDragging) handleTouchEnd()
+        }}
+        onTouchStart={(e) => handleTouchStart(e.touches[0].clientX)}
+        onTouchMove={(e) => handleTouchMove(e.touches[0].clientX)}
+        onTouchEnd={handleTouchEnd}
+        onMouseDown={(e) => handleTouchStart(e.clientX)}
+        onMouseMove={(e) => isDragging && handleTouchMove(e.clientX)}
+        onMouseUp={handleTouchEnd}
+      >
+        {/* 1. Cinematic Background Image Carousel with Ken Burns Zoom & Smooth Cross-fade */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          {slideImages.map((src, idx) => {
+            const isActive = activeSlide === idx
+            return (
+              <div
+                key={`${src}-${idx}`}
+                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                  isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                }`}
+                aria-hidden={!isActive}
+              >
+                <div className={`relative w-full h-full ${isActive ? 'animate-hero-zoom' : ''}`}>
+                  <Image
+                    src={src}
+                    alt={`Mount Zion campus hero banner ${idx + 1}`}
+                    fill
+                    priority={idx === 0}
+                    unoptimized
+                    className="object-cover object-center sm:object-[66%_center] lg:object-[60%_center]"
+                    sizes="100vw"
+                  />
+                </div>
+              </div>
+            )
+          })}
 
-          {/* Gradients & Vignette Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#041914]/95 via-[#06241d]/75 via-45% to-transparent sm:w-[82%] lg:w-[68%]" />
-          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/55 to-transparent pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#041914]/80 to-transparent pointer-events-none" />
-          
+          {/* Gradients & Vignette Overlays (Anchored above image slides for pristine contrast) */}
+          <div className="absolute inset-0 z-20 bg-gradient-to-r from-[#041914]/95 via-[#06241d]/75 via-45% to-transparent sm:w-[82%] lg:w-[68%]" />
+          <div className="absolute inset-x-0 top-0 h-40 z-20 bg-gradient-to-b from-black/55 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-32 z-20 bg-gradient-to-t from-[#041914]/80 to-transparent pointer-events-none" />
+
           {/* Ambient Breathing Light Orb */}
-          <div className="absolute top-1/3 right-1/4 w-[460px] h-[460px] bg-amber-400/15 rounded-full blur-[110px] pointer-events-none animate-hero-glow" />
+          <div className="absolute top-1/3 right-1/4 w-[460px] h-[460px] z-20 bg-amber-400/15 rounded-full blur-[110px] pointer-events-none animate-hero-glow" />
         </div>
 
-        {/* Overlay Navbar with Drop-in Animation */}
+        {/* 2. Overlay Navbar with Drop-in Animation */}
         <div className="relative z-20 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 pt-4 sm:pt-8 flex items-center justify-between gap-3 sm:gap-6 animate-hero-fade-down">
           <Link href="/" className="hover:opacity-95 transition-opacity shrink-0">
             <SchoolLogo />
@@ -95,7 +205,7 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
           </Link>
         </div>
 
-        {/* Center Hero Content */}
+        {/* 3. Center Hero Content */}
         <div className="relative z-20 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-14 my-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left Content Column */}
@@ -171,8 +281,66 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = ({
           </div>
         </div>
 
+        {/* 4. Bottom Hero Banner Carousel Navigation Controls (Centered) */}
+        {slideImages.length > 1 && (
+          <div className="relative z-20 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 flex items-center justify-center gap-3 sm:gap-4 mb-4 select-none">
+            <div className="flex items-center gap-2 bg-black/45 backdrop-blur-md px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/20 shadow-xl">
+              {/* Prev Button */}
+              <button
+                type="button"
+                onClick={() =>
+                  setActiveSlide((prev) => (prev > 0 ? prev - 1 : slideImages.length - 1))
+                }
+                aria-label="Previous hero banner image"
+                className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center text-white transition-all active:scale-95 cursor-pointer"
+              >
+                <ChevronLeft className="w-4 h-4 stroke-[2.5]" />
+              </button>
+
+              {/* Indicator Pills */}
+              <div className="flex items-center gap-1.5 px-1">
+                {slideImages.map((_, idx) => {
+                  const isActive = activeSlide === idx
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setActiveSlide(idx)}
+                      aria-label={`Go to hero slide ${idx + 1}`}
+                      className={`h-[6px] rounded-[15px] transition-all duration-500 cursor-pointer ${
+                        isActive
+                          ? 'w-[28px] sm:w-[36px] bg-[#f5a623] shadow-sm shadow-amber-400/50'
+                          : 'w-[10px] sm:w-[12px] bg-white/40 hover:bg-white/70'
+                      }`}
+                    />
+                  )
+                })}
+              </div>
+
+              {/* Next Button */}
+              <button
+                type="button"
+                onClick={() =>
+                  setActiveSlide((prev) => (prev < slideImages.length - 1 ? prev + 1 : 0))
+                }
+                aria-label="Next hero banner image"
+                className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center text-white transition-all active:scale-95 cursor-pointer"
+              >
+                <ChevronRight className="w-4 h-4 stroke-[2.5]" />
+              </button>
+            </div>
+
+            {/* Slide Counter */}
+            <div className="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-white/90 bg-black/35 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15 select-none">
+              <span className="text-[#f5a623]">0{activeSlide + 1}</span>
+              <span className="text-white/40">/</span>
+              <span>0{slideImages.length}</span>
+            </div>
+          </div>
+        )}
+
         {/* Bottom spacing for stats overlap */}
-        <div className="h-20 sm:h-24" />
+        <div className="h-12 sm:h-16" />
       </div>
 
       {/* Floating Stats Strip */}

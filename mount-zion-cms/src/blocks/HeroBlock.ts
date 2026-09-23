@@ -28,6 +28,22 @@ export const HeroBlock: Block = {
       required: true,
     },
     {
+      name: 'carouselImages',
+      type: 'array',
+      label: 'Hero Carousel Background Images',
+      admin: {
+        description: 'Optional additional background images to display as a rotating carousel in the hero banner',
+      },
+      fields: [
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+      ],
+    },
+    {
       type: 'row',
       fields: [
         {

@@ -99,6 +99,45 @@
   animation: heroFloat 5s ease-in-out infinite;
 }
 
+@keyframes heroRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: heroRotate 14s linear infinite;
+}
+
+@keyframes sunSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-sun-spin {
+  animation: sunSpin 24s linear infinite;
+}
+
+@keyframes bannerFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-banner-float {
+  animation: bannerFloat 5.5s ease-in-out infinite;
+}
+
 .animate-hero-fade-down {
   animation: heroFadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -112,6 +151,9 @@
   .animate-hero-glow,
   .animate-hero-zoom,
   .animate-hero-float,
+  .animate-spin-slow,
+  .animate-sun-spin,
+  .animate-banner-float,
   .animate-hero-fade-down,
   .animate-hero-fade-up {
     animation: none !important;
