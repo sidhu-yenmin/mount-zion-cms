@@ -53,6 +53,16 @@ export const Pages: CollectionConfig = {
       },
     },
     {
+      name: 'menuGroup',
+      type: 'relationship',
+      relationTo: 'menu-groups',
+      label: 'Custom Page Menu Group (Optional)',
+      admin: {
+        position: 'sidebar',
+        description: 'Optionally override default navigation with a specific Menu Group on this page.',
+      },
+    },
+    {
       name: 'backgroundColor',
       type: 'text',
       label: 'Page Background Color (Hex / CSS)',
