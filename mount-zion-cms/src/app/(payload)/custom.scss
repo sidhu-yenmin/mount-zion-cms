@@ -864,6 +864,8 @@ header.app-header .step-nav {
   line-height: 1 !important;
   vertical-align: middle !important;
   gap: 6px !important;
+  max-width: none !important;
+  overflow: visible !important;
 }
 
 /* Home / Logo Link */
@@ -935,7 +937,7 @@ header.app-header .step-nav {
   transform: none !important;
 }
 
-/* Breadcrumb Items & Labels (Users, Media, Dashboard, etc.) */
+/* Breadcrumb Items & Labels (Users, Media, Dashboard, Site & Theme Settings, etc.) */
 .step-nav__last,
 .step-nav a,
 .step-nav span.step-nav__last,
@@ -964,6 +966,11 @@ header.app-header .step-nav {
   align-items: center !important;
   justify-content: center !important;
   height: 32px !important;
+  max-width: none !important;
+  width: auto !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  white-space: nowrap !important;
   text-decoration: none !important;
   position: static !important;
   transform: none !important;
@@ -1295,7 +1302,7 @@ body.sneat-sidebar-collapsed .nav__link:has(.nav__link-indicator)::after,
   border: 1px solid rgba(226, 232, 240, 0.8) !important;
   border-radius: 10px !important;
   box-shadow: 0 2px 10px rgba(165, 163, 174, 0.14) !important;
-  padding: 8px 18px !important;
+  padding: 8px 18px 8px 24px !important;
   min-height: 56px !important;
   display: flex !important;
   align-items: center !important;
@@ -1303,6 +1310,16 @@ body.sneat-sidebar-collapsed .nav__link:has(.nav__link-indicator)::after,
   box-sizing: border-box !important;
   z-index: 30 !important;
   transition: all 0.25s ease !important;
+}
+
+.app-header.gutter--left,
+header.app-header.gutter--left,
+.app-header__content,
+.app-header__wrapper,
+.app-header__controls-wrapper,
+.app-header__step-nav-wrapper {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
 }
 
 html[data-theme='dark'] .app-header,
@@ -1326,55 +1343,137 @@ html[data-theme='dark'] header.app-header {
   padding-bottom: 40px !important;
 }
 
-/* Collection List, Document edit, Globals, and other views alignment with Header Card */
+/* Section Views, Collection List, Document edit, Globals alignment with Floating Header Card */
 .collection-list,
 .collection-list__wrap,
-.collection-edit,
-.global-edit,
-.document-edit,
-.document-fields,
+.folder-list,
 .account,
-.folder-list {
+.doc-header,
+.document-header,
+.doc-controls,
+.document-fields {
   padding-left: 28px !important;
   padding-right: 28px !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
 }
 
-/* Reset default gutter padding to prevent double margins */
+/* Ensure wrapper containers do not add nested double padding */
+.collection-edit,
+.global-edit,
+[class*="global-edit"],
+.document-edit,
+.render-globals {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Reset default gutter padding specifically on collection list wrap and document fields to prevent double margins and ensure even alignment below header */
 .collection-list__wrap.gutter--left,
 .collection-list__wrap.gutter--right,
-.gutter--left,
-.gutter--right {
+.document-fields .gutter--left,
+.document-fields .gutter--right,
+.document-fields__edit,
+.document-fields__edit.gutter--left,
+.document-fields__edit.gutter--right {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
 
-/* Proper Section Heading Spacing */
+/* Proper Section Heading & Doc Header Spacing */
 .collection-list__header,
 .list-header,
-header.list-header,
-.doc-header,
-.document-header {
+header.list-header {
   margin-top: 4px !important;
-  margin-bottom: 22px !important;
-  padding: 0 !important;
+  margin-bottom: 18px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
   gap: 16px !important;
 }
 
+.doc-header,
+.document-header {
+  margin-top: 4px !important;
+  margin-bottom: 18px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 16px !important;
+  flex-wrap: wrap !important;
+}
+
+.doc-header__header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 16px !important;
+  flex-wrap: wrap !important;
+}
+
 .collection-list__header h1,
 .list-header__title,
 h1.collection-list__title,
-.doc-header h1 {
+.doc-header h1,
+.doc-header__title,
+h1.doc-header__title {
   font-size: 26px !important;
   font-weight: 750 !important;
   color: var(--brand-text, #1e293b) !important;
   margin: 0 !important;
   letter-spacing: -0.02em !important;
   line-height: 1.2 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+/* Document Header Controls & Tabs (Edit, Versions, API) sitting inline next to heading */
+.doc-header__controls {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  margin-left: 0 !important;
+}
+
+.doc-tab-nav,
+.doc-tabs,
+.doc-tabs__tabs {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.doc-tab,
+.doc-tabs__tab {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+}
+
+/* Doc Controls Bar (Status, Save Draft, Publish Changes) */
+.doc-controls {
+  margin-bottom: 20px !important;
+}
+
+.doc-controls__wrapper {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /* Header Controls & Search */
@@ -1702,6 +1801,19 @@ html[data-theme='dark'] .sneat-search-kbd:hover {
 /* ==========================================================================
    MOUNT ZION SCHOOL CMS EXECUTIVE DASHBOARD (ALIGNED WITH HEADER)
    ========================================================================== */
+.dashboard,
+.dashboard.gutter--left,
+.dashboard.gutter--right,
+.dashboard__wrap,
+.render-dashboard,
+.template-default__content:has(.school-dashboard-container),
+.template-default__content:has(.dashboard) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
 .school-dashboard-container {
   padding: 20px 28px 10px 28px !important;
   width: 100% !important;
