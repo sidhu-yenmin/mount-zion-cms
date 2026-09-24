@@ -251,7 +251,8 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
 
   return (
     <section
-      className="relative w-full bg-[#f4f6f8] pt-[70px] pb-[90px] overflow-hidden select-none"
+      id="testimonials"
+      className="relative w-full bg-[#f4f6f8] pt-[70px] pb-[90px] overflow-hidden select-none scroll-mt-16"
       onKeyDown={handleKeyDown}
       tabIndex={0}
       aria-roledescription="carousel"

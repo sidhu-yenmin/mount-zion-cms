@@ -56,7 +56,16 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         const pageSlug = typeof item.page === 'object' ? item.page.slug : ''
         return pageSlug === 'home' ? '/' : `/${pageSlug}`
       }
-      return item.customUrl || '/'
+      if (item.customUrl && typeof item.customUrl === 'string' && item.customUrl.trim()) {
+        return item.customUrl.trim()
+      }
+      if (item.url && typeof item.url === 'string' && item.url.trim()) {
+        return item.url.trim()
+      }
+      if (item.link && typeof item.link === 'string' && item.link.trim()) {
+        return item.link.trim()
+      }
+      return '/'
     }
 
     let navItems: any[] = []
@@ -68,6 +77,17 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         children: item.submenuItems?.map((sub: any) => ({
           label: sub.label,
           url: resolveItemUrl(sub),
+        })),
+      }))
+    } else if ((header as any)?.navItems && (header as any).navItems.length > 0) {
+      navItems = (header as any).navItems.map((item: any) => ({
+        label: item.label,
+        url: item.link || item.url || resolveItemUrl(item),
+        isActive: item.isActive,
+        showExpandIcon: item.showExpandIcon,
+        children: (item.subItems || item.children)?.map((sub: any) => ({
+          label: sub.label,
+          url: sub.link || sub.url || resolveItemUrl(sub),
         })),
       }))
     }
@@ -156,6 +176,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=K2D:wght@700;800&family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&family=Outfit:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"
+          rel="stylesheet"
+        />
         {googleFontsUrl && <link href={googleFontsUrl} rel="stylesheet" />}
         <style dangerouslySetInnerHTML={{ __html: dynamicStyles }} />
       </head>

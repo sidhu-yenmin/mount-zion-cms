@@ -149,7 +149,8 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = (props) => {
 
   return (
     <section
-      className="relative w-full bg-white select-none outline-none"
+      id="hero"
+      className="relative w-full bg-white select-none outline-none scroll-mt-16"
       onKeyDown={handleKeyDown}
       tabIndex={0}
       aria-label="Hero Banner Carousel"

@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { resolveLinkUrl } from '@/utils/resolveLink'
 import type { Header as HeaderType } from '@/payload-types'
 
@@ -51,7 +52,7 @@ export const HeaderComponent: React.FC<{ header?: HeaderType | null }> = ({ head
         borderBottom: '1px solid rgba(255,255,255,0.1)',
       }}>
         {/* Logo or School Title */}
-        <a href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#fff' }}>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#fff' }}>
           {logoUrl ? (
             <div style={{ position: 'relative', height: '48px', width: '220px' }}>
               <Image
@@ -67,38 +68,48 @@ export const HeaderComponent: React.FC<{ header?: HeaderType | null }> = ({ head
               🏫 MOUNT ZION
             </div>
           )}
-        </a>
+        </Link>
 
         {/* Nav Links */}
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
           {(header as any).navItems && (header as any).navItems.length > 0 ? (
-            (header as any).navItems.map((item: any, idx: number) => (
-              <a
-                key={idx}
-                href={item.link || item.url || '#'}
-                style={{
-                  color: '#ffffff',
-                  textDecoration: 'none',
-                  fontWeight: 500,
-                  fontSize: '0.95rem',
-                }}
-              >
-                {item.label}
-              </a>
-            ))
+            (header as any).navItems.map((item: any, idx: number) => {
+              const url = item.link || item.url || '#'
+              return (
+                <Link
+                  key={idx}
+                  href={url}
+                  onClick={(e) => {
+                    if (url === '#') e.preventDefault()
+                  }}
+                  style={{
+                    color: '#ffffff',
+                    textDecoration: 'none',
+                    fontWeight: 500,
+                    fontSize: '0.95rem',
+                  }}
+                >
+                  {item.label}
+                </Link>
+              )
+            })
           ) : (
             <>
-              <a href="/" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem' }}>Home</a>
-              <a href="/about" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem' }}>Our School</a>
-              <a href="/academics" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem' }}>Education</a>
-              <a href="/admissions" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem' }}>Admissions</a>
-              <a href="/contact" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem' }}>Contact</a>
+              <Link href="/" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem' }}>Home</Link>
+              <Link href="/about" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem' }}>Our School</Link>
+              <Link href="/academics" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem' }}>Education</Link>
+              <Link href="/admissions" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem' }}>Admissions</Link>
+              <Link href="/contact" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem' }}>Contact</Link>
             </>
           )}
 
           {(((header as any)?.ctaButton)?.text || ((header as any)?.ctaButton)?.label) && (
-            <a
+            <Link
               href={resolveLinkUrl((header as any)?.ctaButton, '#')}
+              onClick={(e) => {
+                const url = resolveLinkUrl((header as any)?.ctaButton, '#')
+                if (url === '#') e.preventDefault()
+              }}
               target={((header as any)?.ctaButton)?.openInNewTab ? '_blank' : undefined}
               rel={((header as any)?.ctaButton)?.openInNewTab ? 'noopener noreferrer' : undefined}
               style={{
@@ -112,7 +123,7 @@ export const HeaderComponent: React.FC<{ header?: HeaderType | null }> = ({ head
               }}
             >
               {(((header as any)?.ctaButton)?.text || ((header as any)?.ctaButton)?.label)} ↗
-            </a>
+            </Link>
           )}
         </div>
       </nav>

@@ -85,7 +85,8 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = ({
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[#044438] bg-cover bg-center overflow-hidden py-16 sm:py-20 lg:py-24"
+      id="programs"
+      className="relative w-full bg-[#044438] bg-cover bg-center overflow-hidden py-16 sm:py-20 lg:py-24 scroll-mt-16"
       style={bgImgUrl ? { backgroundImage: `url('${bgImgUrl}')` } : { backgroundImage: "url('/images/academics-bg-color.png')" }}
     >
       <div className="relative z-10 w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">

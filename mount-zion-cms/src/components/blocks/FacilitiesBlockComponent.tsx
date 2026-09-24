@@ -223,7 +223,8 @@ export const FacilitiesBlockComponent: React.FC<Partial<FacilitiesProps>> = ({
   return (
     <div
       ref={containerRef}
-      className="relative w-full"
+      id="facilities"
+      className="relative w-full scroll-mt-16"
       style={{ height: containerHeight }}
     >
       <section

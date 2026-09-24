@@ -157,7 +157,8 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = (props) =>
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-white py-14 sm:py-20 lg:py-24 overflow-hidden"
+      id="about-us"
+      className="relative w-full bg-white py-14 sm:py-20 lg:py-24 overflow-hidden scroll-mt-16"
     >
       <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 xl:gap-14">

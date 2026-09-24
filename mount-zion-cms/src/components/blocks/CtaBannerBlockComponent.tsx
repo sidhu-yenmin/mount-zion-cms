@@ -48,7 +48,7 @@ export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = (props
   const bannerBgColor = backgroundColor || '#03594E'
 
   return (
-    <section className="relative w-full overflow-visible pt-16 sm:pt-20 lg:pt-[84px]">
+    <section id="admissions" className="relative w-full overflow-visible pt-16 sm:pt-20 lg:pt-[84px] scroll-mt-16">
       {/* Background Split: Top half matches light page background, bottom half matches banner background color */}
       {/* 84px (top padding) + 186px (half banner) = 270px */}
       <div className="absolute inset-x-0 top-0 h-[250px] sm:h-[266px] lg:h-[270px] bg-[#f4f6f8] pointer-events-none" />

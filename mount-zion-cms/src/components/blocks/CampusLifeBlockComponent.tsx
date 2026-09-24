@@ -145,7 +145,8 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[#f4f6f8] pt-[60px] pb-[80px] overflow-hidden"
+      id="campus-life"
+      className="relative w-full bg-[#f4f6f8] pt-[60px] pb-[80px] overflow-hidden scroll-mt-16"
     >
       <div className="w-full max-w-[1118px] mx-auto px-4 xl:px-0">
         {/* 1. Header Section (Slides Down smoothly on arrival) */}

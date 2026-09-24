@@ -399,7 +399,8 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
   return (
     <div
       ref={containerRef}
-      className="relative w-full"
+      id="toppers"
+      className="relative w-full scroll-mt-16"
       style={{ height: containerHeight }}
     >
       <section
