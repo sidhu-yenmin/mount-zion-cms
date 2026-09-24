@@ -515,8 +515,10 @@ html[data-theme='dark'] .sneat-collapse-toggle {
 }
 
 /* 7. Theme & Site Settings Icon */
-[id*="theme"]::before,
-[id*="setting"]::before,
+#nav-global-theme::before,
+#nav-global-setting::before,
+.nav__link[id*="theme"]::before,
+.nav__link[id*="setting"]::before,
 .nav__link[href*="theme"]::before,
 .nav__link[href*="setting"]::before {
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z'/%3E%3C/svg%3E") !important;
@@ -771,7 +773,7 @@ button.btn--style-secondary:hover {
 }
 
 /* Form Inputs & Controls */
-input[type="text"]:not(.sneat-search-input),
+input[type="text"]:not(.sneat-search-input):not([class*="rs__"]):not([class*="react-select"]):not([id*="react-select"]),
 input[type="email"],
 input[type="password"],
 input[type="number"],
@@ -785,12 +787,37 @@ select {
   transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-input:focus,
+input:focus:not([class*="rs__"]):not([class*="react-select"]):not([id*="react-select"]),
 textarea:focus,
 select:focus {
   border-color: var(--brand-primary) !important;
   box-shadow: 0 0 0 2px rgba(3, 89, 78, 0.2) !important;
   outline: none !important;
+}
+
+/* React Select / Relationship Dropdown Internal Input Reset */
+.rs__input-container,
+.rs__input,
+.rs__value-container {
+  background: transparent !important;
+}
+
+.rs__input-container input,
+.rs__input input,
+.rs__value-container input,
+input[class*="rs__"],
+input[id*="react-select"],
+.react-select input,
+[class*="react-select"] input {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  outline: none !important;
+  display: inline-block !important;
 }
 
 /* Table Card & Headers */

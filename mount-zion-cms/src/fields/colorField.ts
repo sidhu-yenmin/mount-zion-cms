@@ -9,6 +9,8 @@ export interface ColorFieldOptions {
     width?: string
     description?: string
     readOnly?: boolean
+    position?: 'sidebar'
+    [key: string]: any
   }
 }
 
