@@ -2,40 +2,42 @@ import { getPayload } from 'payload'
 import React from 'react'
 import config from '@/payload.config'
 import { notFound } from 'next/navigation'
-import { RenderBlocks } from '@/components/RenderBlocks'
+import { LivePreviewPage } from '@/components/LivePreviewPage'
 import type { Page } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 interface PageProps {
   params: Promise<{
     slug: string
   }>
+  searchParams?: Promise<{
+    preview?: string
+  }>
 }
 
-export default async function DynamicPage({ params }: PageProps) {
+export default async function DynamicPage({ params, searchParams }: PageProps) {
   const { slug } = await params
+  const resolvedSearchParams = searchParams ? await searchParams : {}
+  const isPreview = resolvedSearchParams?.preview === 'true'
+
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
-  // Fetch ONLY published Page by Slug (ignore drafts)
+  const whereClause: any = isPreview
+    ? { slug: { equals: slug } }
+    : {
+        and: [
+          { slug: { equals: slug } },
+          { _status: { equals: 'published' } },
+        ],
+      }
+
   const pagesResult = await payload.find({
     collection: 'pages',
-    where: {
-      and: [
-        {
-          slug: {
-            equals: slug,
-          },
-        },
-        {
-          _status: {
-            equals: 'published',
-          },
-        },
-      ],
-    },
-    draft: false,
+    where: whereClause,
+    draft: isPreview,
     limit: 1,
     depth: 2,
   })
@@ -46,24 +48,5 @@ export default async function DynamicPage({ params }: PageProps) {
     return notFound()
   }
 
-  const pageBgColor = (page as any)?.backgroundColor || '#FFFFFF'
-  const bgMedia = (page as any)?.backgroundImage
-  const pageBgImg =
-    typeof bgMedia === 'object' && bgMedia?.url
-      ? bgMedia.url
-      : typeof bgMedia === 'string' && bgMedia
-        ? bgMedia
-        : null
-
-  return (
-    <div
-      className="w-full transition-colors duration-300 bg-cover bg-center"
-      style={{
-        backgroundColor: pageBgColor,
-        backgroundImage: pageBgImg ? `url(${pageBgImg})` : undefined,
-      }}
-    >
-      <RenderBlocks blocks={page.layout} />
-    </div>
-  )
+  return <LivePreviewPage initialPage={page} />
 }

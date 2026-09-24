@@ -156,48 +156,38 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer, footer
 
       {/* 2. Main Footer */}
       <footer
-        className="w-full text-white pt-[50px] pb-0 transition-colors duration-300"
+        className="w-full text-white pt-[50px] pb-0 transition-colors duration-300 overflow-hidden"
         style={{ backgroundColor: footerBgColor }}
       >
-        <div className="w-full max-w-[1120px] mx-auto px-4 xl:px-0">
-          <div className="flex flex-col lg:flex-row justify-between items-start gap-10 lg:gap-8 pb-12 lg:pb-14">
+        <div className="w-full max-w-[1120px] mx-auto px-4 sm:px-6 xl:px-0">
+          <div className="flex flex-col md:flex-row flex-wrap lg:flex-nowrap justify-between items-start gap-10 lg:gap-8 pb-12 lg:pb-14">
             {/* Left Column: School Logo, Brand Name, Tagline & Social Icons */}
-            <div className="w-full lg:w-[330px] flex flex-col items-start shrink-0">
-              <Link href="/" className="flex items-center gap-3.5 group">
+            <div className="w-full md:w-[300px] lg:w-[320px] flex flex-col items-start shrink-0">
+              <Link href="/" className="flex items-center gap-3.5 group max-w-full">
                 {logoUrl && (
-                  <div className="relative max-w-[280px] h-[64px] shrink-0">
+                  <div className="relative max-w-full h-[64px]">
                     <Image
                       src={logoUrl}
                       alt="Mount Zion International School"
                       width={260}
                       height={64}
                       unoptimized
-                      className="h-[64px] w-auto object-contain"
+                      className="h-[64px] w-auto max-w-full object-contain"
                     />
                   </div>
                 )}
-                {/* [OPTION A: STATIC FALLBACK SCHOOL NAME TEXT - COMMENTED OUT AS LOGO IMAGE ALREADY CONTAINS SCHOOL NAME]
-                <div className="flex flex-col justify-center">
-                  <h3 className="font-['K2D',sans-serif] font-extrabold text-[34.2px] leading-[1.0] text-white tracking-tight">
-                    Mount Zion
-                  </h3>
-                  <p className="font-['Inter',sans-serif] font-medium text-[13.31px] leading-[1.4] text-white tracking-normal mt-1">
-                    International School - CBSE
-                  </p>
-                </div>
-                */}
               </Link>
 
               {/* Tagline */}
               {description && (
-                <p className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[20px] text-white/90 whitespace-pre-line mt-5">
+                <p className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[20px] text-white/90 whitespace-pre-line mt-5 max-w-full">
                   {description}
                 </p>
               )}
 
               {/* Social Icons */}
               {cmsSocialLinks.length > 0 && (
-                <div className="flex items-center gap-4 mt-6">
+                <div className="flex flex-wrap items-center gap-4 mt-6">
                   {cmsSocialLinks.map((social, idx) => (
                     <a
                       key={`${social.name}-${idx}`}
@@ -225,9 +215,9 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer, footer
 
             {/* Middle Column: Quick Links & Menu Groups */}
             {footerMenus && footerMenus.length > 0 ? (
-              <div className="flex flex-wrap lg:flex-nowrap gap-10 lg:gap-12 shrink-0">
+              <div className="w-full md:w-auto flex flex-wrap gap-8 sm:gap-10 lg:gap-12">
                 {footerMenus.map((col, cIdx) => (
-                  <div key={`${col.title}-${cIdx}`} className="flex flex-col items-start min-w-[120px]">
+                  <div key={`${col.title}-${cIdx}`} className="flex flex-col items-start min-w-[120px] max-w-full">
                     <h4 className="font-['Roboto',sans-serif] font-bold text-[20px] leading-[18px] text-white mb-6">
                       {col.title}
                     </h4>
@@ -243,7 +233,7 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer, footer
                           }}
                           target={link.openInNewTab ? '_blank' : undefined}
                           rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
-                          className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[20.59px] text-white/80 hover:text-white transition-colors duration-200"
+                          className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[20.59px] text-white/80 hover:text-white transition-colors duration-200 break-words"
                         >
                           {link.label}
                         </Link>

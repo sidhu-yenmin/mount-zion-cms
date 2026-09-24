@@ -13,6 +13,15 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
+    preview: (doc) => {
+      const slug = typeof doc?.slug === 'string' ? doc.slug : ''
+      return slug === 'home' ? '/?preview=true' : `/${slug}?preview=true`
+    },
+    components: {
+      edit: {
+        PreviewButton: '/components/admin/CustomPreviewButton#CustomPreviewButton',
+      },
+    },
   },
   access: {
     read: () => true,
