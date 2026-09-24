@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     pages: Page;
+    'menu-groups': MenuGroup;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    'menu-groups': MenuGroupsSelect<false> | MenuGroupsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -90,13 +92,11 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
-    menu: Menu;
     header: Header;
     footer: Footer;
     theme: Theme;
   };
   globalsSelect: {
-    menu: MenuSelect<false> | MenuSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     theme: ThemeSelect<false> | ThemeSelect<true>;
@@ -186,6 +186,10 @@ export interface Page {
   slug: string;
   headerVariant?: ('transparent' | 'solid-green' | 'solid-white' | 'hidden') | null;
   /**
+   * Optionally override default navigation with a specific Menu Group on this page.
+   */
+  menuGroup?: (number | null) | MenuGroup;
+  /**
    * e.g. #FFFFFF, #F8FAFC, #03594E
    */
   backgroundColor?: string | null;
@@ -197,15 +201,6 @@ export interface Page {
              * Check to temporarily hide this section from the live page without deleting it
              */
             hideSection?: boolean | null;
-            /**
-             * Optional additional background images to display as a rotating carousel in the hero banner
-             */
-            carouselImages?:
-              | {
-                  image: number | Media;
-                  id?: string | null;
-                }[]
-              | null;
             headerCtaButton?: {
               text?: string | null;
               linkType?: ('page' | 'custom') | null;
@@ -243,6 +238,15 @@ export interface Page {
               | null;
             backgroundColor?: string | null;
             backgroundImage: number | Media;
+            /**
+             * Add more background images here to rotate as a carousel in the hero banner (Optional).
+             */
+            carouselImages?:
+              | {
+                  image: number | Media;
+                  id?: string | null;
+                }[]
+              | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero';
@@ -461,6 +465,64 @@ export interface Page {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Manage menu groups (e.g. Header, Footer, Sidebar, Admissions) containing multiple menus and links.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu-groups".
+ */
+export interface MenuGroup {
+  id: number;
+  /**
+   * e.g. "Header", "Footer", "Admissions Sidebar", "Student Portal"
+   */
+  title: string;
+  /**
+   * Unique key e.g. "header", "footer", "admissions", "sidebar"
+   */
+  slug: string;
+  /**
+   * Brief note on where this menu group is used.
+   */
+  description?: string | null;
+  menus?:
+    | {
+        /**
+         * e.g. "Main Navigation", "Quick Links", "Explore", "Legal"
+         */
+        title: string;
+        /**
+         * Optional identifier like "col-1", "col-2", "main-nav"
+         */
+        menuKey?: string | null;
+        items?:
+          | {
+              label: string;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+              hasSubmenu?: boolean | null;
+              submenuItems?:
+                | {
+                    label: string;
+                    linkType?: ('page' | 'custom') | null;
+                    page?: (number | null) | Page;
+                    customUrl?: string | null;
+                    openInNewTab?: boolean | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -495,6 +557,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'menu-groups';
+        value: number | MenuGroup;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -586,6 +652,7 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   headerVariant?: T;
+  menuGroup?: T;
   backgroundColor?: T;
   backgroundImage?: T;
   layout?:
@@ -595,12 +662,6 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               hideSection?: T;
-              carouselImages?:
-                | T
-                | {
-                    image?: T;
-                    id?: T;
-                  };
               headerCtaButton?:
                 | T
                 | {
@@ -641,6 +702,12 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               backgroundColor?: T;
               backgroundImage?: T;
+              carouselImages?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -856,6 +923,46 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu-groups_select".
+ */
+export interface MenuGroupsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  menus?:
+    | T
+    | {
+        title?: T;
+        menuKey?: T;
+        items?:
+          | T
+          | {
+              label?: T;
+              linkType?: T;
+              page?: T;
+              customUrl?: T;
+              openInNewTab?: T;
+              hasSubmenu?: T;
+              submenuItems?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -896,41 +1003,14 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "menu".
- */
-export interface Menu {
-  id: number;
-  menuItems?:
-    | {
-        label: string;
-        linkType?: ('page' | 'custom') | null;
-        page?: (number | null) | Page;
-        customUrl?: string | null;
-        openInNewTab?: boolean | null;
-        hasSubmenu?: boolean | null;
-        submenuItems?:
-          | {
-              label: string;
-              linkType?: ('page' | 'custom') | null;
-              page?: (number | null) | Page;
-              customUrl?: string | null;
-              openInNewTab?: boolean | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  _status?: ('draft' | 'published') | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
  */
 export interface Header {
   id: number;
+  /**
+   * Select the Menu Group to display in the header navbar (defaults to "Header" group if empty).
+   */
+  menuGroup?: (number | null) | MenuGroup;
   topBar?: {
     showTopBar?: boolean | null;
     phone?: string | null;
@@ -950,6 +1030,10 @@ export interface Header {
  */
 export interface Footer {
   id: number;
+  /**
+   * Select the Menu Group to display in the footer (defaults to "Footer" group if empty). Menus inside this group will render as footer columns.
+   */
+  menuGroup?: (number | null) | MenuGroup;
   description?: string | null;
   contactInfo?: {
     phone?: string | null;
@@ -959,16 +1043,6 @@ export interface Footer {
     address?: string | null;
     addressIcon?: (number | null) | Media;
   };
-  quickLinks?:
-    | {
-        linkType?: ('page' | 'custom') | null;
-        page?: (number | null) | Page;
-        customUrl?: string | null;
-        label?: string | null;
-        openInNewTab?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
   socialLinks?:
     | {
         platform: 'facebook' | 'instagram' | 'youtube' | 'twitter' | 'linkedin' | 'other';
@@ -1094,40 +1168,10 @@ export interface Theme {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "menu_select".
- */
-export interface MenuSelect<T extends boolean = true> {
-  menuItems?:
-    | T
-    | {
-        label?: T;
-        linkType?: T;
-        page?: T;
-        customUrl?: T;
-        openInNewTab?: T;
-        hasSubmenu?: T;
-        submenuItems?:
-          | T
-          | {
-              label?: T;
-              linkType?: T;
-              page?: T;
-              customUrl?: T;
-              openInNewTab?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  _status?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  menuGroup?: T;
   topBar?:
     | T
     | {
@@ -1149,6 +1193,7 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  menuGroup?: T;
   description?: T;
   contactInfo?:
     | T
@@ -1159,16 +1204,6 @@ export interface FooterSelect<T extends boolean = true> {
         emailIcon?: T;
         address?: T;
         addressIcon?: T;
-      };
-  quickLinks?:
-    | T
-    | {
-        linkType?: T;
-        page?: T;
-        customUrl?: T;
-        label?: T;
-        openInNewTab?: T;
-        id?: T;
       };
   socialLinks?:
     | T

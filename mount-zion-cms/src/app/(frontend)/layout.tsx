@@ -18,6 +18,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   let headerCmsData: (HeaderData & { showTopBar?: boolean; logo?: any }) | undefined = undefined
   let footerCmsData: FooterType | null = null
+  let footerMenuColumns: any[] = []
   let themeData: any = null
 
   try {
@@ -34,35 +35,55 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       // Theme global not initialized yet
     }
 
-    let menuData: any = null
-    try {
-      menuData = await payload.findGlobal({
-        slug: 'menu',
-        depth: 2,
-        draft: false,
-      })
-    } catch {
-      // Menu global not initialized yet
-    }
+    let headerMenuGroup: any = null
+    let footerMenuGroup: any = null
 
+    // Fetch Header Global
     const header = (await payload.findGlobal({
       slug: 'header',
       depth: 2,
       draft: false,
-    })) as HeaderType
+    })) as any
+
+    // Resolve Header Menu Group
+    try {
+      if (header?.menuGroup) {
+        if (typeof header.menuGroup === 'object') {
+          headerMenuGroup = header.menuGroup
+        } else {
+          headerMenuGroup = await payload.findByID({
+            collection: 'menu-groups',
+            id: header.menuGroup,
+            depth: 2,
+          })
+        }
+      } else {
+        const headerGroupRes = await payload.find({
+          collection: 'menu-groups',
+          where: { slug: { equals: 'header' } },
+          depth: 2,
+          limit: 1,
+        })
+        if (headerGroupRes.docs.length > 0) {
+          headerMenuGroup = headerGroupRes.docs[0]
+        }
+      }
+    } catch (e) {
+      console.log('Error resolving header menu group:', e)
+    }
 
     const resolveItemUrl = (item: any): string => {
-      if (item.linkType === 'page' && item.page) {
+      if (item?.linkType === 'page' && item.page) {
         const pageSlug = typeof item.page === 'object' ? item.page.slug : ''
         return pageSlug === 'home' ? '/' : `/${pageSlug}`
       }
-      if (item.customUrl && typeof item.customUrl === 'string' && item.customUrl.trim()) {
+      if (item?.customUrl && typeof item.customUrl === 'string' && item.customUrl.trim()) {
         return item.customUrl.trim()
       }
-      if (item.url && typeof item.url === 'string' && item.url.trim()) {
+      if (item?.url && typeof item.url === 'string' && item.url.trim()) {
         return item.url.trim()
       }
-      if (item.link && typeof item.link === 'string' && item.link.trim()) {
+      if (item?.link && typeof item.link === 'string' && item.link.trim()) {
         return item.link.trim()
       }
       return '/'
@@ -70,15 +91,22 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
     let navItems: any[] = []
 
-    if (menuData?.menuItems && menuData.menuItems.length > 0) {
-      navItems = menuData.menuItems.map((item: any) => ({
-        label: item.label,
-        url: resolveItemUrl(item),
-        children: item.submenuItems?.map((sub: any) => ({
-          label: sub.label,
-          url: resolveItemUrl(sub),
-        })),
-      }))
+    if (headerMenuGroup?.menus && headerMenuGroup.menus.length > 0) {
+      // Pick first menu or combine menu items
+      const mainNavMenu =
+        headerMenuGroup.menus.find((m: any) => m.menuKey === 'main-nav') ||
+        headerMenuGroup.menus[0]
+
+      if (mainNavMenu?.items && mainNavMenu.items.length > 0) {
+        navItems = mainNavMenu.items.map((item: any) => ({
+          label: item.label,
+          url: resolveItemUrl(item),
+          children: item.submenuItems?.map((sub: any) => ({
+            label: sub.label,
+            url: resolveItemUrl(sub),
+          })),
+        }))
+      }
     } else if ((header as any)?.navItems && (header as any).navItems.length > 0) {
       navItems = (header as any).navItems.map((item: any) => ({
         label: item.label,
@@ -106,11 +134,51 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       }
     }
 
+    // Fetch Footer Global
     footerCmsData = (await payload.findGlobal({
       slug: 'footer',
       depth: 2,
       draft: false,
     })) as FooterType
+
+    // Resolve Footer Menu Group
+    try {
+      if ((footerCmsData as any)?.menuGroup) {
+        if (typeof (footerCmsData as any).menuGroup === 'object') {
+          footerMenuGroup = (footerCmsData as any).menuGroup
+        } else {
+          footerMenuGroup = await payload.findByID({
+            collection: 'menu-groups',
+            id: (footerCmsData as any).menuGroup,
+            depth: 2,
+          })
+        }
+      } else {
+        const footerGroupRes = await payload.find({
+          collection: 'menu-groups',
+          where: { slug: { equals: 'footer' } },
+          depth: 2,
+          limit: 1,
+        })
+        if (footerGroupRes.docs.length > 0) {
+          footerMenuGroup = footerGroupRes.docs[0]
+        }
+      }
+    } catch (e) {
+      console.log('Error resolving footer menu group:', e)
+    }
+
+    if (footerMenuGroup?.menus && footerMenuGroup.menus.length > 0) {
+      footerMenuColumns = footerMenuGroup.menus.map((m: any) => ({
+        title: m.title || 'Quick links',
+        items:
+          m.items?.map((item: any) => ({
+            label: item.label,
+            url: resolveItemUrl(item),
+            openInNewTab: Boolean(item.openInNewTab),
+          })) || [],
+      }))
+    }
 
     if (footerCmsData && !footerCmsData.logo && themeData?.footerLogo) {
       footerCmsData.logo = themeData.footerLogo
@@ -195,7 +263,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <TopHeader data={headerCmsData} />
         <main className="flex-1 w-full">{children}</main>
         {/* Dynamic CMS Footer */}
-        <FooterComponent footer={footerCmsData} />
+        <FooterComponent footer={footerCmsData} footerMenus={footerMenuColumns} />
       </body>
     </html>
   )

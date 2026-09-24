@@ -18,6 +18,15 @@ export const Footer: GlobalConfig = {
           label: 'Content',
           fields: [
             {
+              name: 'menuGroup',
+              type: 'relationship',
+              relationTo: 'menu-groups',
+              label: 'Footer Menu Group',
+              admin: {
+                description: 'Select the Menu Group to display in the footer (defaults to "Footer" group if empty). Menus inside this group will render as footer columns.',
+              },
+            },
+            {
               name: 'description',
               type: 'textarea',
               label: 'School Short Bio / Tagline',
@@ -84,65 +93,6 @@ export const Footer: GlobalConfig = {
                       admin: { width: '40%' },
                     },
                   ],
-                },
-              ],
-            },
-            {
-              name: 'quickLinks',
-              type: 'array',
-              label: 'Quick Links',
-              defaultValue: [
-                { linkType: 'custom', customUrl: '/', label: 'Home' },
-                { linkType: 'custom', customUrl: '#about', label: 'About' },
-                { linkType: 'custom', customUrl: '#academic', label: 'Academic' },
-                { linkType: 'custom', customUrl: '#admission', label: 'Admission' },
-                { linkType: 'custom', customUrl: '#resources', label: 'Resources' },
-                { linkType: 'custom', customUrl: '#portal', label: 'Student Portal' },
-                { linkType: 'custom', customUrl: '#campus-life', label: 'Campus Life' },
-                { linkType: 'custom', customUrl: '#achievements', label: 'Achievements' },
-                { linkType: 'custom', customUrl: '/gallery', label: 'Gallery' },
-                { linkType: 'custom', customUrl: '/news', label: 'News & Events' },
-                { linkType: 'custom', customUrl: '#contact', label: 'Contact Us' },
-              ],
-              fields: [
-                {
-                  name: 'linkType',
-                  type: 'radio',
-                  label: 'Link Type',
-                  defaultValue: 'page',
-                  options: [
-                    { label: 'Link to CMS Page', value: 'page' },
-                    { label: 'Custom URL / Anchor (e.g. #about, https://...)', value: 'custom' },
-                  ],
-                },
-                {
-                  name: 'page',
-                  type: 'relationship',
-                  relationTo: 'pages',
-                  label: 'Select CMS Page',
-                  admin: {
-                    condition: (_, siblingData) => siblingData?.linkType === 'page',
-                  },
-                },
-                {
-                  name: 'customUrl',
-                  type: 'text',
-                  label: 'Custom URL / Path',
-                  defaultValue: '/',
-                  admin: {
-                    condition: (_, siblingData) => siblingData?.linkType === 'custom',
-                  },
-                },
-                {
-                  name: 'label',
-                  type: 'text',
-                  label: 'Custom Link Label (Optional - auto-uses Page Title if left blank)',
-                },
-                {
-                  name: 'openInNewTab',
-                  type: 'checkbox',
-                  label: 'Open in new tab?',
-                  defaultValue: false,
                 },
               ],
             },

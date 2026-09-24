@@ -6,8 +6,18 @@ import Link from 'next/link'
 import { CtaBannerBlockComponent } from '@/components/blocks/CtaBannerBlockComponent'
 import type { Footer as FooterType, Media } from '@/payload-types'
 
+export interface FooterMenuColumn {
+  title: string
+  items: Array<{
+    label: string
+    url: string
+    openInNewTab?: boolean
+  }>
+}
+
 export interface FooterComponentProps {
   footer?: FooterType | null
+  footerMenus?: FooterMenuColumn[]
 }
 
 /* =========================================================================
@@ -56,7 +66,7 @@ const platformIconMap: Record<string, string> = {
   instagram: '/images/instagram.png',
 }
 
-export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
+export const FooterComponent: React.FC<FooterComponentProps> = ({ footer, footerMenus }) => {
   const resolveMediaUrl = (
     media: any,
   ): string | null => {
@@ -102,7 +112,8 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
   }
 
   // CMS Quick links (split evenly into 2 columns if provided)
-  const cmsQuickLinks = (footer?.quickLinks || []).map((link: any) => ({
+  const rawQuickLinks = ((footer as any)?.quickLinks || []) as any[]
+  const cmsQuickLinks = rawQuickLinks.map((link: any) => ({
     label: resolveLinkLabel(link),
     url: resolveLinkUrl(link),
     openInNewTab: Boolean(link?.openInNewTab),
@@ -212,37 +223,16 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
               )}
             </div>
 
-            {/* Middle Column: Quick Links (from CMS) */}
-            {cmsQuickLinks.length > 0 && (
-              <div className="w-full lg:w-[250px] flex flex-col items-start shrink-0">
-                <h4 className="font-['Roboto',sans-serif] font-bold text-[20px] leading-[18px] text-white mb-6">
-                  Quick links
-                </h4>
-                <div className="flex gap-10 w-full">
-                  {/* Column 1 */}
-                  <div className="flex flex-col gap-2.5">
-                    {col1Links.map((link, idx) => (
-                      <Link
-                        key={`${link.label}-${idx}`}
-                        href={link.url || '#'}
-                        onClick={(e) => {
-                          if (!link.url || link.url === '#') {
-                            e.preventDefault()
-                          }
-                        }}
-                        target={link.openInNewTab ? '_blank' : undefined}
-                        rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
-                        className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[20.59px] text-white/80 hover:text-white transition-colors duration-200"
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
-
-                  {/* Column 2 */}
-                  {col2Links.length > 0 && (
+            {/* Middle Column: Quick Links & Menu Groups */}
+            {footerMenus && footerMenus.length > 0 ? (
+              <div className="flex flex-wrap lg:flex-nowrap gap-10 lg:gap-12 shrink-0">
+                {footerMenus.map((col, cIdx) => (
+                  <div key={`${col.title}-${cIdx}`} className="flex flex-col items-start min-w-[120px]">
+                    <h4 className="font-['Roboto',sans-serif] font-bold text-[20px] leading-[18px] text-white mb-6">
+                      {col.title}
+                    </h4>
                     <div className="flex flex-col gap-2.5">
-                      {col2Links.map((link, idx) => (
+                      {col.items.map((link, idx) => (
                         <Link
                           key={`${link.label}-${idx}`}
                           href={link.url || '#'}
@@ -259,9 +249,50 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
                         </Link>
                       ))}
                     </div>
-                  )}
-                </div>
+                  </div>
+                ))}
               </div>
+            ) : (
+              cmsQuickLinks.length > 0 && (
+                <div className="w-full lg:w-[250px] flex flex-col items-start shrink-0">
+                  <h4 className="font-['Roboto',sans-serif] font-bold text-[20px] leading-[18px] text-white mb-6">
+                    Quick links
+                  </h4>
+                  <div className="flex gap-10 w-full">
+                    {/* Column 1 */}
+                    <div className="flex flex-col gap-2.5">
+                      {col1Links.map((link, idx) => (
+                        <Link
+                          key={`${link.label}-${idx}`}
+                          href={link.url}
+                          target={link.openInNewTab ? '_blank' : undefined}
+                          rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
+                          className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[20.59px] text-white/80 hover:text-white transition-colors duration-200"
+                        >
+                          {link.label}
+                        </Link>
+                      ))}
+                    </div>
+
+                    {/* Column 2 */}
+                    {col2Links.length > 0 && (
+                      <div className="flex flex-col gap-2.5">
+                        {col2Links.map((link, idx) => (
+                          <Link
+                            key={`${link.label}-${idx}`}
+                            href={link.url}
+                            target={link.openInNewTab ? '_blank' : undefined}
+                            rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
+                            className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[20.59px] text-white/80 hover:text-white transition-colors duration-200"
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )
             )}
 
             {/* Right Column: Contact Us, Mail Us, Address (from CMS) */}

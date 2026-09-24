@@ -19,22 +19,6 @@ export const HeroBlock: Block = {
       },
     },
     {
-      name: 'carouselImages',
-      type: 'array',
-      label: 'Hero Carousel Background Images',
-      admin: {
-        description: 'Optional additional background images to display as a rotating carousel in the hero banner',
-      },
-      fields: [
-        {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
-          required: true,
-        },
-      ],
-    },
-    {
       type: 'tabs',
       tabs: [
         {
@@ -134,8 +118,29 @@ export const HeroBlock: Block = {
               name: 'backgroundImage',
               type: 'upload',
               relationTo: 'media',
-              label: 'Hero Background / Student Banner Image',
+              label: 'Hero Main / Primary Background Image',
               required: true,
+            },
+            {
+              name: 'carouselImages',
+              type: 'array',
+              label: 'Hero Carousel Slide Images (Optional)',
+              labels: {
+                singular: 'Slide Image',
+                plural: 'Slide Images',
+              },
+              admin: {
+                description: 'Add more background images here to rotate as a carousel in the hero banner (Optional).',
+              },
+              fields: [
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: true,
+                  label: 'Slide Image',
+                },
+              ],
             },
           ],
         },

@@ -23,13 +23,6 @@ export type HeroBlockProps = Omit<
   backgroundColor?: string | null
 }
 
-const defaultHeroImages = [
-  '/images/hero-student.png',
-  '/images/hero-student1.jpg',
-  '/images/why-mount-zion.png',
-  '/images/facilities1.png',
-]
-
 export const HeroBlockComponent: React.FC<HeroBlockProps> = (props) => {
   const {
     badge = 'MOUNTZION',
@@ -55,7 +48,7 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = (props) => {
   const [videoModalOpen, setVideoModalOpen] = useState(false)
   const heroBgColor = backgroundColor || '#0c2e26'
 
-  // 1. Resolve Background Images for the Carousel
+  // 1. Resolve Background Images for the Carousel (Strict CMS Data Binding - No Auto Fallback Slides)
   const resolveImgSrc = (img: number | Media | string | null | undefined): string | null => {
     if (!img) return null
     if (typeof img === 'string' && img.trim()) return img
@@ -69,14 +62,23 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = (props) => {
     .map((item) => resolveImgSrc(item.image))
     .filter((src): src is string => Boolean(src))
 
-  const slideImages =
-    cmsImages.length > 0
-      ? primaryBg
-        ? [primaryBg, ...cmsImages.filter((s) => s !== primaryBg)]
-        : cmsImages
-      : primaryBg
-        ? [primaryBg, ...defaultHeroImages.slice(1)]
-        : defaultHeroImages
+  // Build exact slides from CMS without injecting unwanted fallback carousel slides
+  const slideImages: string[] = []
+  if (primaryBg) {
+    slideImages.push(primaryBg)
+  }
+  if (cmsImages.length > 0) {
+    cmsImages.forEach((img) => {
+      if (!slideImages.includes(img)) {
+        slideImages.push(img)
+      }
+    })
+  }
+
+  // If no image is configured at all in CMS, fallback to single default hero image
+  if (slideImages.length === 0) {
+    slideImages.push('/images/hero-student.png')
+  }
 
   // 2. Carousel Interaction State
   const [activeSlide, setActiveSlide] = useState<number>(0)

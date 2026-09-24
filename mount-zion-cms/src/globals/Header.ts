@@ -18,6 +18,15 @@ export const Header: GlobalConfig = {
           label: 'Content',
           fields: [
             {
+              name: 'menuGroup',
+              type: 'relationship',
+              relationTo: 'menu-groups',
+              label: 'Main Navigation Menu Group',
+              admin: {
+                description: 'Select the Menu Group to display in the header navbar (defaults to "Header" group if empty).',
+              },
+            },
+            {
               name: 'topBar',
               type: 'group',
               label: 'Top Contact Bar',
