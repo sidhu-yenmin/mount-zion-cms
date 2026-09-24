@@ -143,7 +143,8 @@ export const TestimonialsBlockComponent: React.FC<Partial<TestimonialsProps>> = 
 
   return (
     <section
-      className="relative w-full pt-[70px] pb-[90px] overflow-hidden transition-colors duration-300 bg-cover bg-center"
+      id="testimonials"
+      className="relative w-full pt-[70px] pb-[90px] overflow-hidden transition-colors duration-300 bg-cover bg-center scroll-mt-16"
       style={{
         backgroundColor: sectionBgColor,
         backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,

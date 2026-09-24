@@ -23,6 +23,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     components: {
+      beforeNavLinks: ['@/components/admin/AdminSidebarHeader#AdminSidebarHeader'],
       graphics: {
         Logo: '@/components/admin/AdminLogo#AdminLogo',
         Icon: '@/components/admin/AdminLogo#AdminIcon',

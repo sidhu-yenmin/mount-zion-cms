@@ -6,7 +6,11 @@ import Image from 'next/image'
 export function DiscoverMoreBadge({ onClick }: { onClick?: () => void }) {
   return (
     <button
-      onClick={onClick}
+      type="button"
+      onClick={(e) => {
+        e.preventDefault()
+        onClick?.()
+      }}
       aria-label="Discover More Video"
       className="group relative w-36 h-36 sm:w-40 sm:h-40 lg:w-44 lg:h-44 flex items-center justify-center cursor-pointer transition-transform duration-300 hover:scale-105 active:scale-95 select-none"
     >
@@ -20,6 +24,7 @@ export function DiscoverMoreBadge({ onClick }: { onClick?: () => void }) {
         width={293}
         height={293}
         priority
+        loading="eager"
         unoptimized
         className="relative z-10 w-full h-full object-contain drop-shadow-md"
       />

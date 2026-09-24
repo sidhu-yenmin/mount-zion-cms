@@ -75,7 +75,7 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = (props: HeroBlockPro
   }
 
   return (
-    <section className="relative w-full bg-white">
+    <section id="hero" className="relative w-full bg-white scroll-mt-16">
       {/* Hero Visual Area */}
       <div
         className="relative min-h-[680px] sm:min-h-[740px] lg:min-h-[800px] w-full flex flex-col justify-between overflow-hidden transition-colors duration-300"
@@ -109,7 +109,12 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = (props: HeroBlockPro
           </Link>
 
           <Link
-            href={resolvedHeaderCtaUrl}
+            href={resolvedHeaderCtaUrl || '#'}
+            onClick={(e) => {
+              if (!resolvedHeaderCtaUrl || resolvedHeaderCtaUrl === '#') {
+                e.preventDefault()
+              }
+            }}
             target={headerCtaOpenInNewTab ? '_blank' : undefined}
             rel={headerCtaOpenInNewTab ? 'noopener noreferrer' : undefined}
             className="inline-flex items-center gap-1.5 bg-white hover:bg-neutral-100 text-neutral-900 font-bold text-xs sm:text-sm px-6 py-2.5 sm:py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 cursor-pointer"
@@ -151,7 +156,12 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = (props: HeroBlockPro
               <div className="flex flex-wrap items-center gap-4">
                 {resolvedPrimaryText && (
                   <Link
-                    href={resolvedPrimaryUrl}
+                    href={resolvedPrimaryUrl || '#'}
+                    onClick={(e) => {
+                      if (!resolvedPrimaryUrl || resolvedPrimaryUrl === '#') {
+                        e.preventDefault()
+                      }
+                    }}
                     target={primaryOpenInNewTab ? '_blank' : undefined}
                     rel={primaryOpenInNewTab ? 'noopener noreferrer' : undefined}
                     className="inline-flex items-center gap-2 bg-[#f5a623] hover:bg-[#e29517] text-[#111] font-bold text-sm sm:text-base px-7 sm:px-8 py-3 sm:py-3.5 rounded-full transition-all duration-200 shadow-lg hover:shadow-amber-500/30 active:scale-95"
@@ -163,7 +173,12 @@ export const HeroBlockComponent: React.FC<HeroBlockProps> = (props: HeroBlockPro
 
                 {resolvedSecondaryText && (
                   <Link
-                    href={resolvedSecondaryUrl}
+                    href={resolvedSecondaryUrl || '#'}
+                    onClick={(e) => {
+                      if (!resolvedSecondaryUrl || resolvedSecondaryUrl === '#') {
+                        e.preventDefault()
+                      }
+                    }}
                     target={secondaryOpenInNewTab ? '_blank' : undefined}
                     rel={secondaryOpenInNewTab ? 'noopener noreferrer' : undefined}
                     className="inline-flex items-center gap-2 border border-white/80 hover:border-white text-white hover:bg-white/10 font-semibold text-sm sm:text-base px-7 sm:px-8 py-3 sm:py-3.5 rounded-full transition-all duration-200 backdrop-blur-xs active:scale-95"

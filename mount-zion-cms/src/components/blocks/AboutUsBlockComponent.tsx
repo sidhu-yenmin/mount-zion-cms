@@ -86,7 +86,8 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = (props) =>
 
   return (
     <section
-      className="relative w-full py-14 sm:py-20 lg:py-24 overflow-hidden transition-colors duration-300 bg-cover bg-center"
+      id="about"
+      className="relative w-full py-14 sm:py-20 lg:py-24 overflow-hidden transition-colors duration-300 bg-cover bg-center scroll-mt-16"
       style={{
         backgroundColor: sectionBgColor,
         backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,
@@ -144,7 +145,12 @@ export const AboutUsBlockComponent: React.FC<Partial<AboutUsProps>> = (props) =>
               {/* Know More Button */}
               <div>
                 <Link
-                  href={resolvedButtonUrl}
+                  href={resolvedButtonUrl || '#'}
+                  onClick={(e) => {
+                    if (!resolvedButtonUrl || resolvedButtonUrl === '#') {
+                      e.preventDefault()
+                    }
+                  }}
                   target={openInNewTab ? '_blank' : undefined}
                   rel={openInNewTab ? 'noopener noreferrer' : undefined}
                   className="inline-flex items-center justify-center gap-3 min-h-[52px] sm:min-h-[58px] px-8 sm:px-10 rounded-full border border-[#919191] bg-[#FFFFFF] hover:bg-neutral-50 text-[#353535] font-medium text-[18px] sm:text-[20px] transition-all duration-200 shadow-xs hover:shadow-md active:scale-95 cursor-pointer"

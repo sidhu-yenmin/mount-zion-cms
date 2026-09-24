@@ -8,7 +8,7 @@ import React from 'react'
 
 import { importMap } from './admin/importMap.js'
 import './custom.scss'
-import { AdminInputClearHelper } from '@/components/admin/AdminInputClearHelper'
+import { AdminAutoLogin } from '@/components/admin/AdminAutoLogin'
 import { GlobalTheme } from '@/components/theme/GlobalTheme'
 
 type Args = {
@@ -27,7 +27,7 @@ const serverFunction: ServerFunctionClient = async function (args) {
 const Layout = ({ children }: Args) => (
   <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
     <GlobalTheme />
-    <AdminInputClearHelper />
+    <AdminAutoLogin />
     {children}
   </RootLayout>
 )

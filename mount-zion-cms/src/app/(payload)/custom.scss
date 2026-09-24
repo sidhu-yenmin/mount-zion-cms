@@ -80,51 +80,651 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Admin Sidebar / Navigation */
-.nav, aside.nav {
-  background-color: var(--brand-sidebar-bg) !important;
-  border-right: 1px solid var(--brand-border) !important;
+/* ==========================================================================
+   SNEAT SIDEBAR & ADMIN NAVIGATION STYLES
+   ========================================================================== */
+
+/* Sneat Font Import */
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap');
+
+/* Force layout grid to ALWAYS maintain sidebar column (260px or 72px) */
+.template-default,
+.template-default--nav-open,
+.template-default:not(.template-default--nav-open) {
+  display: grid !important;
+  grid-template-columns: 260px minmax(0, 1fr) !important;
+  --nav-width: 260px !important;
+  transition: grid-template-columns 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
+body.sneat-sidebar-collapsed .template-default,
+body.sneat-sidebar-collapsed .template-default--nav-open,
+body.sneat-sidebar-collapsed .template-default:not(.template-default--nav-open) {
+  grid-template-columns: 72px minmax(0, 1fr) !important;
+  --nav-width: 72px !important;
+}
+
+/* Admin Sidebar Container: Always visible, 260px or 72px, never 0px */
+.nav,
+aside.nav,
+.nav:not(.nav--nav-open),
+aside.nav:not(.nav--nav-open) {
+  --nav-padding-block-start: 0px !important;
+  --nav-padding-inline-start: 0px !important;
+  --nav-padding-inline-end: 0px !important;
+  background-color: var(--brand-sidebar-bg, #ffffff) !important;
+  border-right: 1px solid var(--brand-border, #e7e7e8) !important;
+  box-shadow: 0 0.125rem 0.25rem rgba(165, 163, 174, 0.15) !important;
+  position: sticky !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 100vh !important;
+  width: 260px !important;
+  min-width: 260px !important;
+  max-width: 260px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  pointer-events: auto !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+  z-index: 40 !important;
+  font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Neutralize inert attribute if Payload applies it to aside */
+aside.nav[inert],
+.nav[inert] {
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Hide any stray duplicates in app-header */
+.app-header .sneat-sidebar-brand-header,
+.app-header .sneat-collapse-toggle {
+  display: none !important;
+}
+
+.nav__scroll {
+  padding-top: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+}
+
+.nav__wrap {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+}
+
+.nav__scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.nav__scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   SNEAT SIDEBAR BRAND HEADER (TOP OF SIDEBAR)
+   ========================================================================== */
+.sneat-sidebar-brand-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  position: sticky !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 260px !important;
+  min-width: 260px !important;
+  max-width: 260px !important;
+  height: 64px !important;
+  min-height: 64px !important;
+  padding: 0 16px !important;
+  box-sizing: border-box !important;
+  margin: 0 -12px 6px -12px !important;
+  background: var(--brand-sidebar-bg, #ffffff) !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.7) !important;
+  z-index: 40 !important;
+}
+
+body.sneat-sidebar-collapsed .sneat-sidebar-brand-header,
+.nav.nav--collapsed .sneat-sidebar-brand-header {
+  width: 72px !important;
+  min-width: 72px !important;
+  max-width: 72px !important;
+  height: 64px !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  margin: 0 auto 6px auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 40 !important;
+}
+
+.sneat-brand-link {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  text-decoration: none !important;
+  color: inherit !important;
+  cursor: pointer !important;
+}
+
+/* Mount Zion School Logo Badge (Logo 1.png Crest) */
+.sneat-school-logo-badge {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, #03594E, #013831) !important;
+  border: 1.5px solid rgba(234, 179, 8, 0.45) !important;
+  border-radius: 9px !important;
+  padding: 4px !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  box-shadow: 0 3px 10px rgba(3, 89, 78, 0.3) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  flex-shrink: 0 !important;
+}
+
+.sneat-school-logo-badge:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(3, 89, 78, 0.4) !important;
+}
+
+.sneat-school-logo-img {
+  height: 30px !important;
+  width: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+.sneat-brand-emblem {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  border-radius: 9px !important;
+  box-shadow: 0 3px 8px rgba(3, 89, 78, 0.35) !important;
+  border: 1px solid rgba(234, 179, 8, 0.4) !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.2s ease !important;
+}
+
+.sneat-brand-link:hover .sneat-brand-emblem {
+  transform: scale(1.05);
+}
+
+.sneat-brand-text {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.sneat-brand-title {
+  font-size: 18.5px !important;
+  font-weight: 750 !important;
+  color: var(--brand-text, #0f172a) !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.02em !important;
+  font-family: var(--brand-font, 'Plus Jakarta Sans', sans-serif) !important;
+  white-space: nowrap !important;
+}
+
+.sneat-brand-subtitle {
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  color: var(--brand-primary, #03594E) !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  margin-top: 3px !important;
+  font-family: var(--brand-font, 'Plus Jakarta Sans', sans-serif) !important;
+  white-space: nowrap !important;
+}
+
+/* Floating Circular Collapse Toggle Button on the Right Edge (Half inside, half outside - Sneat Style) */
+.sneat-collapse-toggle {
+  position: fixed !important;
+  top: 32px !important;
+  left: 260px !important;
+  transform: translate(-50%, -50%) !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 50% !important;
+  background-color: var(--brand-primary, #03594E) !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 0.125rem 0.35rem rgba(0, 0, 0, 0.2) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 99999 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  outline: none !important;
+  transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.sneat-collapse-toggle:hover {
+  background-color: var(--brand-primary-hover, #02433B) !important;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.28) !important;
+  transform: translate(-50%, -50%) scale(1.1) !important;
+}
+
+.sneat-collapse-toggle:active {
+  transform: translate(-50%, -50%) scale(0.95) !important;
+}
+
+body.sneat-sidebar-collapsed .sneat-collapse-toggle,
+.nav.nav--collapsed .sneat-collapse-toggle {
+  left: 72px !important;
+  transform: translate(-50%, -50%) rotate(180deg) !important;
+}
+
+body.sneat-sidebar-collapsed .sneat-collapse-toggle:hover,
+.nav.nav--collapsed .sneat-collapse-toggle:hover {
+  transform: translate(-50%, -50%) rotate(180deg) scale(1.1) !important;
+}
+
+html[data-theme='dark'] .sneat-sidebar-brand-header {
+  background: #2b2c40 !important;
+  border-bottom-color: #363852 !important;
+}
+
+html[data-theme='dark'] .sneat-brand-title {
+  color: #f1f5f9 !important;
+}
+
+html[data-theme='dark'] .sneat-brand-subtitle {
+  color: #2dd4bf !important;
+}
+
+html[data-theme='dark'] .sneat-collapse-toggle {
+  border-color: #2b2c40 !important;
+}
+
+/* Hide Payload's default redundant header */
 .nav__header {
-  border-bottom: 1px solid var(--brand-border) !important;
-  padding: 16px 20px !important;
+  display: none !important;
 }
 
-/* Nav Item Links */
+/* Sneat Nav Menu Wrapping */
+.nav__wrap {
+  padding: 8px 12px 24px 12px !important;
+  position: relative !important;
+}
+
+/* Section Group Headers (e.g. APPS & PAGES) */
+.nav-group {
+  margin-top: 16px !important;
+  margin-bottom: 4px !important;
+}
+
+.nav-group__toggle {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 8px 12px !important;
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+.nav-group__label,
+.nav__group-label {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.9px !important;
+  color: #8c9ba5 !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.nav-group__label::after,
+.nav__group-label::after {
+  content: '' !important;
+  flex: 1 !important;
+  height: 1px !important;
+  background: rgba(140, 155, 165, 0.25) !important;
+  margin-left: 12px !important;
+}
+
+.nav-group__indicator svg {
+  color: #8c9ba5 !important;
+  width: 14px !important;
+  height: 14px !important;
+  transition: transform 0.2s ease !important;
+}
+
+/* Menu Navigation Links - Refined & Bigger Fonts */
 .nav__link {
-  border-radius: var(--brand-radius, 8px) !important;
-  margin: 2px 10px !important;
-  color: var(--brand-text) !important;
-  transition: all 0.15s ease-in-out !important;
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+  padding: 10.5px 14px !important;
+  margin: 4px 0 !important;
+  border-radius: 8px !important;
+  color: #475569 !important;
+  font-size: 15.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.45 !important;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
 }
 
 .nav__link:hover {
-  background-color: var(--brand-surface-hover) !important;
-  color: var(--brand-text) !important;
+  background-color: rgba(3, 89, 78, 0.05) !important;
+  color: #1e293b !important;
 }
 
-.nav__link--active, .nav__link.active {
-  background: var(--brand-primary) !important;
+/* ==========================================================================
+   PERMANENT OUTLINE ICONS (Pure CSS Mask - Never Disappears On Nav/Click)
+   ========================================================================== */
+.nav__link::before {
+  content: '' !important;
+  display: inline-block !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  margin-right: 12px !important;
+  background-color: #64748b !important;
+  -webkit-mask-size: contain !important;
+  mask-size: contain !important;
+  -webkit-mask-repeat: no-repeat !important;
+  mask-repeat: no-repeat !important;
+  -webkit-mask-position: center !important;
+  mask-position: center !important;
+  flex-shrink: 0 !important;
+  transition: background-color 0.15s ease, transform 0.15s ease !important;
+}
+
+/* Hover icon color */
+.nav__link:hover::before {
+  background-color: var(--brand-primary, #03594E) !important;
+  transform: scale(1.08) !important;
+}
+
+/* 1. Users Icon */
+#nav-users::before,
+.nav__link[href*="users"]::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E") !important;
+}
+
+/* 2. Media Icon */
+#nav-media::before,
+.nav__link[href*="media"]::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='18' height='18' x='3' y='3' rx='2' ry='2'/%3E%3Ccircle cx='9' cy='9' r='2'/%3E%3Cpath d='m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='18' height='18' x='3' y='3' rx='2' ry='2'/%3E%3Ccircle cx='9' cy='9' r='2'/%3E%3Cpath d='m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21'/%3E%3C/svg%3E") !important;
+}
+
+/* 3. Pages Icon */
+#nav-pages::before,
+.nav__link[href*="pages"]::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3C/svg%3E") !important;
+}
+
+/* 4. Menu Icon */
+#nav-global-menu::before,
+.nav__link[href*="menu"]::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='4' x2='20' y1='12' y2='12'/%3E%3Cline x1='4' x2='20' y1='6' y2='6'/%3E%3Cline x1='4' x2='20' y1='18' y2='18'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='4' x2='20' y1='12' y2='12'/%3E%3Cline x1='4' x2='20' y1='6' y2='6'/%3E%3Cline x1='4' x2='20' y1='18' y2='18'/%3E%3C/svg%3E") !important;
+}
+
+/* 5. Header Icon */
+#nav-global-header::before,
+.nav__link[href*="header"]::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='18' height='18' x='3' y='3' rx='2'/%3E%3Cline x1='3' y1='9' x2='21' y2='9'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='18' height='18' x='3' y='3' rx='2'/%3E%3Cline x1='3' y1='9' x2='21' y2='9'/%3E%3C/svg%3E") !important;
+}
+
+/* 6. Footer Icon */
+#nav-global-footer::before,
+.nav__link[href*="footer"]::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='18' height='18' x='3' y='3' rx='2'/%3E%3Cline x1='3' y1='15' x2='21' y2='15'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='18' height='18' x='3' y='3' rx='2'/%3E%3Cline x1='3' y1='15' x2='21' y2='15'/%3E%3C/svg%3E") !important;
+}
+
+/* 7. Theme & Site Settings Icon */
+[id*="theme"]::before,
+[id*="setting"]::before,
+.nav__link[href*="theme"]::before,
+.nav__link[href*="setting"]::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z'/%3E%3C/svg%3E") !important;
+}
+
+/* Link Text */
+.nav__link-label {
+  flex: 1 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: 15.5px !important;
+  font-weight: inherit !important;
+  color: inherit !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Notification Count Badge (Vibrant Red Pill) */
+.sneat-badge {
+  background-color: #ff3e1d !important;
   color: #ffffff !important;
+  font-size: 12px !important;
+  font-weight: 750 !important;
+  line-height: 1 !important;
+  border-radius: 50% !important;
+  width: 20px !important;
+  height: 20px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: auto !important;
+  margin-right: 8px !important;
+  box-shadow: 0 2px 5px rgba(255, 62, 29, 0.4) !important;
+  flex-shrink: 0 !important;
+}
+
+/* Right Arrow Chevron (>) */
+.sneat-link-chevron {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: auto !important;
+  color: #94a3b8 !important;
+  opacity: 0.8 !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.15s ease, opacity 0.15s ease !important;
+}
+
+.nav__link:hover .sneat-link-chevron {
+  opacity: 1 !important;
+  transform: translateX(2px) !important;
+}
+
+/* ==========================================================================
+   ACTIVE NAVIGATION ITEM (Vibrant Emerald Pill & Clear Distinction)
+   Payload 3 renders active links as div.nav__link with .nav__link-indicator
+   ========================================================================== */
+div.nav__link,
+.nav__link:has(.nav__link-indicator),
+.nav__link.sneat-active,
+.nav__link.active,
+.nav__link--active {
+  background: var(--brand-active-bg, rgba(3, 89, 78, 0.12)) !important;
+  color: var(--brand-active-color, #03594E) !important;
   font-weight: 600 !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
 }
 
-.nav__link--active:hover, .nav__link.active:hover {
-  background: var(--brand-primary-hover) !important;
-  color: #ffffff !important;
+div.nav__link:hover,
+.nav__link:has(.nav__link-indicator):hover,
+.nav__link.sneat-active:hover,
+.nav__link.active:hover,
+.nav__link--active:hover {
+  background: var(--brand-active-hover-bg, rgba(3, 89, 78, 0.18)) !important;
 }
 
-/* Nav Group Titles */
-.nav__group-label,
-.nav-group__label,
-.nav__group-toggle {
-  color: var(--brand-text-muted) !important;
-  font-weight: 700 !important;
-  font-size: 11px !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
+/* Active Icon Color */
+div.nav__link::before,
+.nav__link:has(.nav__link-indicator)::before,
+.nav__link.sneat-active::before,
+.nav__link.active::before,
+.nav__link--active::before {
+  background-color: var(--brand-active-color, #03594E) !important;
+  transform: scale(1.05) !important;
+}
+
+/* Active Label Color */
+div.nav__link .nav__link-label,
+.nav__link:has(.nav__link-indicator) .nav__link-label,
+.nav__link.sneat-active .nav__link-label,
+.nav__link.active .nav__link-label,
+.nav__link--active .nav__link-label {
+  color: var(--brand-active-color, #03594E) !important;
+  font-weight: 600 !important;
+}
+
+/* ACTIVE RIGHT ACCENT BAR (Replaces left black indicator pipe) */
+.nav__link-indicator,
+div.nav__link::after,
+.nav__link:has(.nav__link-indicator)::after,
+.nav__link.sneat-active::after,
+.nav__link.active::after,
+.nav__link--active::after {
+  content: '' !important;
+  position: absolute !important;
+  right: -12px !important;
+  left: auto !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 4px !important;
+  height: 100% !important;
+  background: var(--brand-primary, #03594E) !important;
+  border-radius: 4px 0 0 4px !important;
+  box-shadow: 0 0 8px rgba(3, 89, 78, 0.5) !important;
+  display: block !important;
+}
+
+/* Hide Payload's ugly default black left indicator */
+.nav__link-indicator {
+  left: auto !important;
+}
+
+/* Hide redundant Payload default top-left toggler */
+.template-default__nav-toggler-wrapper,
+.template-default__nav-toggler-container,
+.template-default__nav-toggler,
+#nav-toggler {
+  display: none !important;
+}
+
+/* Nav Bottom Controls (Logout & Preferences) */
+.nav__controls {
+  padding: 16px 14px !important;
+  border-top: 1px solid var(--brand-border, #e2e8f0) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  background: var(--brand-sidebar-bg, #ffffff) !important;
+}
+
+.nav__controls button,
+.nav__controls a {
+  border-radius: 6px !important;
+  color: #475569 !important;
+  transition: all 0.15s ease !important;
+}
+
+.nav__controls button:hover,
+.nav__controls a:hover {
+  background-color: rgba(3, 89, 78, 0.07) !important;
+  color: var(--brand-primary, #03594E) !important;
+}
+
+/* ==========================================================================
+   DARK MODE SNEAT STYLES
+   ========================================================================== */
+html[data-theme='dark'] .nav,
+html[data-theme='dark'] aside.nav {
+  background-color: #2b2c40 !important;
+  border-right-color: #363852 !important;
+  box-shadow: 0 0.125rem 0.25rem rgba(15, 20, 34, 0.4) !important;
+}
+
+html[data-theme='dark'] .sneat-collapse-toggle {
+  border-color: #2b2c40 !important;
+  background-color: #696cff !important;
+}
+
+html[data-theme='dark'] .nav-group__label,
+html[data-theme='dark'] .nav__group-label {
+  color: #7983bb !important;
+}
+
+html[data-theme='dark'] .nav-group__label::after,
+html[data-theme='dark'] .nav__group-label::after {
+  background: rgba(121, 131, 187, 0.25) !important;
+}
+
+html[data-theme='dark'] .nav__link {
+  color: #cbcbe2 !important;
+}
+
+html[data-theme='dark'] .nav__link:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #cbcbe2 !important;
+}
+
+html[data-theme='dark'] .nav__link--active,
+html[data-theme='dark'] .nav__link.active {
+  background-color: rgba(105, 108, 255, 0.16) !important;
+  color: #787bff !important;
+}
+
+html[data-theme='dark'] .nav__link--active .sneat-link-icon,
+html[data-theme='dark'] .nav__link.active .sneat-link-icon {
+  color: #787bff !important;
+  stroke: #787bff !important;
+}
+
+html[data-theme='dark'] .nav__controls {
+  background-color: #2b2c40 !important;
+  border-top-color: #363852 !important;
+}
+
+html[data-theme='dark'] .nav__controls button,
+html[data-theme='dark'] .nav__controls a {
+  color: #cbcbe2 !important;
 }
 
 /* Admin Header & App Bar */
@@ -242,6 +842,219 @@ td {
 
 .custom-logo-icon {
   flex-shrink: 0 !important;
+}
+
+/* ==========================================================================
+   SNEAT COLLAPSED MINI-SIDEBAR (RAIL MODE - 2ND SCREENSHOT AESTHETIC)
+   ========================================================================== */
+
+/* 1. Grid & Container Sizing */
+body.sneat-sidebar-collapsed {
+  --nav-width: 72px !important;
+}
+
+body.sneat-sidebar-collapsed .template-default,
+body.sneat-sidebar-collapsed .template-default--nav-open {
+  grid-template-columns: 72px minmax(0, 1fr) !important;
+  transition: grid-template-columns 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Ensure sidebar stays visible and smoothly collapses to 72px */
+.nav,
+aside.nav {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+body.sneat-sidebar-collapsed .nav,
+body.sneat-sidebar-collapsed aside.nav,
+.nav.nav--collapsed,
+aside.nav.nav--collapsed {
+  width: 72px !important;
+  min-width: 72px !important;
+  max-width: 72px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+}
+
+/* 2. Brand Header in Collapsed Mode */
+body.sneat-sidebar-collapsed .sneat-sidebar-brand-header,
+.nav.nav--collapsed .sneat-sidebar-brand-header {
+  width: 72px !important;
+  min-width: 72px !important;
+  max-width: 72px !important;
+  height: 64px !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  margin: 0 auto 6px auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 40 !important;
+}
+
+body.sneat-sidebar-collapsed .sneat-brand-link,
+.nav.nav--collapsed .sneat-brand-link {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+
+/* Hide brand text (Mount Zion, Admin Panel) in collapsed rail */
+body.sneat-sidebar-collapsed .sneat-brand-text,
+.nav.nav--collapsed .sneat-brand-text,
+body.sneat-sidebar-collapsed .custom-logo-admin > div:nth-child(2),
+.nav.nav--collapsed .custom-logo-admin > div:nth-child(2) {
+  display: none !important;
+}
+
+/* Centered Crest Logo Badge - Fixed Size (Identical to expanded mode, never shrinks) */
+body.sneat-sidebar-collapsed .sneat-school-logo-badge,
+.nav.nav--collapsed .sneat-school-logo-badge {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 4px !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+  border-radius: 9px !important;
+}
+
+body.sneat-sidebar-collapsed .sneat-school-logo-img,
+.nav.nav--collapsed .sneat-school-logo-img {
+  height: 28px !important;
+  width: 28px !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+  display: block !important;
+}
+
+/* 3. Section Group Headers (Collections / Globals): Turn into subtle centered divider */
+body.sneat-sidebar-collapsed .nav-group,
+.nav.nav--collapsed .nav-group {
+  margin-top: 14px !important;
+  margin-bottom: 6px !important;
+  width: 100% !important;
+}
+
+body.sneat-sidebar-collapsed .nav-group__toggle,
+.nav.nav--collapsed .nav-group__toggle {
+  padding: 0 !important;
+  justify-content: center !important;
+  width: 100% !important;
+  cursor: default !important;
+}
+
+body.sneat-sidebar-collapsed .nav-group__label,
+.nav.nav--collapsed .nav-group__label,
+body.sneat-sidebar-collapsed .nav__group-label,
+.nav.nav--collapsed .nav__group-label {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: transparent !important;
+  height: 1px !important;
+  width: 24px !important;
+  min-width: 24px !important;
+  max-width: 24px !important;
+  margin: 8px auto !important;
+  background: rgba(140, 155, 165, 0.35) !important;
+  display: block !important;
+}
+
+body.sneat-sidebar-collapsed .nav-group__label::after,
+.nav.nav--collapsed .nav-group__label::after,
+body.sneat-sidebar-collapsed .nav-group__indicator,
+.nav.nav--collapsed .nav-group__indicator {
+  display: none !important;
+}
+
+/* 4. Navigation Links in Collapsed Rail Mode */
+body.sneat-sidebar-collapsed .nav__wrap,
+.nav.nav--collapsed .nav__wrap {
+  width: 72px !important;
+  max-width: 72px !important;
+  padding: 0 0 24px 0 !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+body.sneat-sidebar-collapsed .nav__link,
+.nav.nav--collapsed .nav__link {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  margin: 4px auto !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 8px !important;
+  position: relative !important;
+}
+
+/* Hide Link Text & Right Chevrons */
+body.sneat-sidebar-collapsed .nav__link-label,
+.nav.nav--collapsed .nav__link-label,
+body.sneat-sidebar-collapsed .sneat-link-chevron,
+.nav.nav--collapsed .sneat-link-chevron,
+body.sneat-sidebar-collapsed .sneat-badge,
+.nav.nav--collapsed .sneat-badge {
+  display: none !important;
+}
+
+/* Center the Icon in the 44x44 Link Pill */
+body.sneat-sidebar-collapsed .nav__link::before,
+.nav.nav--collapsed .nav__link::before {
+  margin-right: 0 !important;
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px !important;
+  min-height: 22px !important;
+}
+
+/* Active Link in Collapsed Rail */
+body.sneat-sidebar-collapsed div.nav__link,
+.nav.nav--collapsed div.nav__link,
+body.sneat-sidebar-collapsed .nav__link:has(.nav__link-indicator),
+.nav.nav--collapsed .nav__link:has(.nav__link-indicator),
+body.sneat-sidebar-collapsed .nav__link.sneat-active,
+.nav.nav--collapsed .nav__link.sneat-active {
+  background: var(--brand-active-bg, rgba(3, 89, 78, 0.12)) !important;
+}
+
+/* Active Right Indicator in Collapsed Rail */
+body.sneat-sidebar-collapsed .nav__link-indicator,
+.nav.nav--collapsed .nav__link-indicator,
+body.sneat-sidebar-collapsed div.nav__link::after,
+.nav.nav--collapsed div.nav__link::after,
+body.sneat-sidebar-collapsed .nav__link:has(.nav__link-indicator)::after,
+.nav.nav--collapsed .nav__link:has(.nav__link-indicator)::after {
+  right: -14px !important;
+  width: 4px !important;
+  height: 100% !important;
 }
 
 

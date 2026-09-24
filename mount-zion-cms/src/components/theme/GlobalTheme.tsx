@@ -25,7 +25,7 @@ export const GlobalTheme: React.FC<GlobalThemeProps> = ({ customTheme }) => {
   }
 
   const css = `
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
 
     :root {
       /* Shared Brand Accents & Typography */
@@ -57,6 +57,11 @@ export const GlobalTheme: React.FC<GlobalThemeProps> = ({ customTheme }) => {
       --theme-accent: ${theme.primary};
       --theme-accent-hover: ${theme.primaryHover};
       --theme-success-500: ${theme.primary};
+
+      --brand-active-bg: rgba(45, 212, 191, 0.16);
+      --brand-active-hover-bg: rgba(45, 212, 191, 0.24);
+      --brand-active-color: #2dd4bf;
+      --brand-active-bar: #2dd4bf;
     }
 
     /* Dark Mode (Payload attribute or system dark) */
@@ -77,6 +82,11 @@ export const GlobalTheme: React.FC<GlobalThemeProps> = ({ customTheme }) => {
       --theme-elevation-200: ${theme.dark.border};
       --theme-text: ${theme.dark.text};
       --theme-border-color: ${theme.dark.border};
+
+      --brand-active-bg: rgba(45, 212, 191, 0.16);
+      --brand-active-hover-bg: rgba(45, 212, 191, 0.24);
+      --brand-active-color: #2dd4bf;
+      --brand-active-bar: #2dd4bf;
     }
 
     /* Light Mode (Payload attribute) */
@@ -97,6 +107,11 @@ export const GlobalTheme: React.FC<GlobalThemeProps> = ({ customTheme }) => {
       --theme-elevation-200: ${theme.light.border};
       --theme-text: ${theme.light.text};
       --theme-border-color: ${theme.light.border};
+
+      --brand-active-bg: rgba(3, 89, 78, 0.10);
+      --brand-active-hover-bg: rgba(3, 89, 78, 0.16);
+      --brand-active-color: ${theme.primary};
+      --brand-active-bar: ${theme.primary};
     }
 
     body {

@@ -26,9 +26,42 @@ export interface ThemeColors {
   borderRadius: string
 }
 
-export type ThemePresetKey = 'school' | 'restaurant' | 'shop'
+export type ThemePresetKey = 'school' | 'restaurant' | 'shop' | 'sneat'
 
 export const themePresets: Record<ThemePresetKey, ThemeColors> = {
+  // Preset: Sneat Modern Admin
+  sneat: {
+    name: 'sneat',
+    primary: '#696cff',       // Sneat Royal Purple
+    primaryHover: '#5f61e6',
+    accent: '#ff3e1d',        // Sneat Vibrant Red (Badge)
+    accentHover: '#e6381a',
+
+    dark: {
+      bg: '#232333',          // Sneat Dark Canvas
+      surface: '#2b2c40',     // Sneat Dark Card / Surface
+      surfaceHover: '#323249',
+      sidebarBg: '#2b2c40',   // Sneat Dark Sidebar
+      border: '#363852',
+      text: '#cbcbe2',
+      textMuted: '#7983bb',
+    },
+
+    light: {
+      bg: '#f5f5f9',          // Sneat Light Canvas
+      surface: '#ffffff',     // Pure White Surface
+      surfaceHover: 'rgba(67, 89, 113, 0.04)',
+      sidebarBg: '#ffffff',   // Crisp White Sidebar
+      border: '#e7e7e8',
+      text: '#566a7f',
+      textMuted: '#a1acb8',
+    },
+
+    fontFamily: "'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    headingFont: "'Public Sans', sans-serif",
+    borderRadius: '6px',
+  },
+
   // Preset 1: School / Academic (Mount Zion default)
   school: {
     name: 'Mount Zion School',
@@ -131,10 +164,9 @@ export const themePresets: Record<ThemePresetKey, ThemeColors> = {
 
 /**
  * ACTIVE THEME SELECTION:
- * Change this key to 'school', 'restaurant', or 'shop' to switch themes,
- * or customize the preset values above.
+ * 'sneat' provides the exact Sneat admin sidebar and color scheme.
  */
-export const activePresetKey: ThemePresetKey = 'restaurant'
+export const activePresetKey: ThemePresetKey = 'school'
 
 export const activeTheme: ThemeColors = {
   ...themePresets[activePresetKey],

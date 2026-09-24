@@ -13,7 +13,12 @@ interface TopHeaderProps {
 
 export function TopHeader({ data }: TopHeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [openMobileSubmenus, setOpenMobileSubmenus] = useState<Record<number, boolean>>({})
   const pathname = usePathname()
+
+  const toggleMobileSubmenu = (idx: number) => {
+    setOpenMobileSubmenus((prev) => ({ ...prev, [idx]: !prev[idx] }))
+  }
 
   // If topbar is explicitly hidden in CMS, do not render
   if (data?.showTopBar === false) {
@@ -86,9 +91,10 @@ export function TopHeader({ data }: TopHeaderProps) {
         {navItems.length > 0 && (
           <nav className="hidden lg:flex items-center">
             {navItems.map((item, idx) => {
-              const isItemActive = Boolean(item.isActive || (item.url !== '#' && pathname === item.url))
+              const isItemActive = Boolean(item.isActive || (item.url && item.url !== '#' && pathname === item.url))
               const hasSubmenu = Boolean(item.children && item.children.length > 0)
               const showVectorIcon = Boolean(item.showExpandIcon ?? hasSubmenu)
+              const isNavigable = Boolean(item.url && item.url !== '#' && item.url !== '/')
 
               if (hasSubmenu) {
                 return (
@@ -96,14 +102,24 @@ export function TopHeader({ data }: TopHeaderProps) {
                     key={`${item.label}-${idx}`}
                     className="relative group h-[42px] px-[20px] py-[10px] inline-flex items-center justify-center gap-[10px] cursor-pointer select-none"
                   >
-                    <Link
-                      href={item.url}
-                      className={`font-['Inter'] text-[18px] leading-none tracking-normal text-[#0F172A] hover:opacity-80 transition-opacity ${
-                        isItemActive ? 'font-bold' : 'font-normal'
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
+                    {isNavigable ? (
+                      <Link
+                        href={item.url}
+                        className={`font-['Inter'] text-[18px] leading-none tracking-normal text-[#0F172A] hover:opacity-80 transition-opacity ${
+                          isItemActive ? 'font-bold' : 'font-normal'
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                    ) : (
+                      <span
+                        className={`font-['Inter'] text-[18px] leading-none tracking-normal text-[#0F172A] hover:opacity-80 transition-opacity ${
+                          isItemActive ? 'font-bold' : 'font-normal'
+                        }`}
+                      >
+                        {item.label}
+                      </span>
+                    )}
 
                     {showVectorIcon && (
                       <svg
@@ -127,15 +143,23 @@ export function TopHeader({ data }: TopHeaderProps) {
 
                     {/* Dropdown Menu */}
                     <div className="absolute top-full left-0 mt-1 hidden group-hover:block bg-white text-slate-800 shadow-xl rounded-xl py-2 px-2 min-w-[200px] border border-slate-100 z-50 animate-in fade-in-50 duration-150">
-                      {item.children?.map((sub, sIdx) => (
-                        <Link
-                          key={`${sub.label}-${sIdx}`}
-                          href={sub.url}
-                          className="block px-3 py-2 text-sm font-medium text-slate-700 hover:text-[#0F172A] hover:bg-amber-50 rounded-lg transition-colors"
-                        >
-                          {sub.label}
-                        </Link>
-                      ))}
+                      {item.children?.map((sub, sIdx) => {
+                        const isSubNavigable = Boolean(sub.url && sub.url !== '#')
+                        return (
+                          <Link
+                            key={`${sub.label}-${sIdx}`}
+                            href={sub.url || '#'}
+                            onClick={(e) => {
+                              if (!isSubNavigable) {
+                                e.preventDefault()
+                              }
+                            }}
+                            className="block px-3 py-2 text-sm font-medium text-slate-700 hover:text-[#0F172A] hover:bg-amber-50 rounded-lg transition-colors"
+                          >
+                            {sub.label}
+                          </Link>
+                        )
+                      })}
                     </div>
                   </div>
                 )
@@ -147,7 +171,12 @@ export function TopHeader({ data }: TopHeaderProps) {
                   className="h-[42px] px-[20px] py-[10px] inline-flex items-center justify-center gap-[10px]"
                 >
                   <Link
-                    href={item.url}
+                    href={item.url || '#'}
+                    onClick={(e) => {
+                      if (!item.url || item.url === '#') {
+                        e.preventDefault()
+                      }
+                    }}
                     className={`font-['Inter'] text-[18px] leading-none tracking-normal text-[#0F172A] hover:opacity-80 transition-opacity ${
                       isItemActive ? 'font-bold' : 'font-normal'
                     }`}
@@ -183,8 +212,9 @@ export function TopHeader({ data }: TopHeaderProps) {
         {/* Mobile Hamburger Button */}
         {navItems.length > 0 && (
           <button
+            type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-1.5 rounded-md hover:bg-black/10 transition-colors text-[#0F172A]"
+            className="lg:hidden p-1.5 rounded-md hover:bg-black/10 transition-colors text-[#0F172A] cursor-pointer"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -196,51 +226,82 @@ export function TopHeader({ data }: TopHeaderProps) {
       {mobileMenuOpen && navItems.length > 0 && (
         <div className="lg:hidden bg-[#EAB308] border-t border-black/10 px-6 py-4 space-y-3 font-['Inter']">
           {navItems.map((item, idx) => {
-            const isItemActive = Boolean(item.isActive || (item.url !== '#' && pathname === item.url))
-            const showVectorIcon = Boolean(item.showExpandIcon ?? (item.children && item.children.length > 0))
+            const isItemActive = Boolean(item.isActive || (item.url && item.url !== '#' && pathname === item.url))
+            const hasSubmenu = Boolean(item.children && item.children.length > 0)
+            const showVectorIcon = Boolean(item.showExpandIcon ?? hasSubmenu)
+            const isSubmenuOpen = openMobileSubmenus[idx] ?? false
 
             return (
               <div key={`mobile-${item.label}-${idx}`}>
                 <div className="flex items-center justify-between py-1.5">
-                  <Link
-                    href={item.url}
-                    className={`text-[17px] text-[#0F172A] ${isItemActive ? 'font-bold' : 'font-normal'}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                  {showVectorIcon && (
-                    <svg
-                      width="10"
-                      height="6"
-                      viewBox="0 0 10 6"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-[10px] h-[6px] shrink-0"
+                  {hasSubmenu ? (
+                    <button
+                      type="button"
+                      onClick={() => toggleMobileSubmenu(idx)}
+                      className={`text-[17px] text-[#0F172A] text-left flex items-center justify-between w-full cursor-pointer ${
+                        isItemActive ? 'font-bold' : 'font-normal'
+                      }`}
                     >
-                      <path
-                        d="M1 1.25L5 5.25L9 1.25"
-                        stroke="#0F172A"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                      <span>{item.label}</span>
+                      {showVectorIcon && (
+                        <svg
+                          width="10"
+                          height="6"
+                          viewBox="0 0 10 6"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className={`w-[10px] h-[6px] shrink-0 transition-transform duration-200 ${
+                            isSubmenuOpen ? 'rotate-180' : ''
+                          }`}
+                        >
+                          <path
+                            d="M1 1.25L5 5.25L9 1.25"
+                            stroke="#0F172A"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      )}
+                    </button>
+                  ) : (
+                    <Link
+                      href={item.url || '#'}
+                      className={`text-[17px] text-[#0F172A] ${isItemActive ? 'font-bold' : 'font-normal'}`}
+                      onClick={(e) => {
+                        if (!item.url || item.url === '#') {
+                          e.preventDefault()
+                        } else {
+                          setMobileMenuOpen(false)
+                        }
+                      }}
+                    >
+                      {item.label}
+                    </Link>
                   )}
                 </div>
 
-                {item.children && item.children.length > 0 && (
+                {hasSubmenu && isSubmenuOpen && (
                   <div className="pl-4 space-y-1.5 mt-1 border-l-2 border-black/15">
-                    {item.children.map((sub, sIdx) => (
-                      <Link
-                        key={`mob-sub-${sub.label}-${sIdx}`}
-                        href={sub.url}
-                        className="block py-1 text-sm font-medium text-slate-800 hover:text-[#0F172A]"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {sub.label}
-                      </Link>
-                    ))}
+                    {item.children?.map((sub, sIdx) => {
+                      const isSubNavigable = Boolean(sub.url && sub.url !== '#')
+                      return (
+                        <Link
+                          key={`mob-sub-${sub.label}-${sIdx}`}
+                          href={sub.url || '#'}
+                          className="block py-1 text-sm font-medium text-slate-800 hover:text-[#0F172A]"
+                          onClick={(e) => {
+                            if (!isSubNavigable) {
+                              e.preventDefault()
+                            } else {
+                              setMobileMenuOpen(false)
+                            }
+                          }}
+                        >
+                          {sub.label}
+                        </Link>
+                      )
+                    })}
                   </div>
                 )}
               </div>

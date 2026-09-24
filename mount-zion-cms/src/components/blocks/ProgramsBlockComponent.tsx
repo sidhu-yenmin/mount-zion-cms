@@ -67,7 +67,8 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = (props) 
 
   return (
     <section
-      className="relative w-full bg-cover bg-center overflow-hidden py-16 sm:py-20 lg:py-24 transition-colors duration-300"
+      id="education"
+      className="relative w-full bg-cover bg-center overflow-hidden py-16 sm:py-20 lg:py-24 transition-colors duration-300 scroll-mt-16"
       style={{
         backgroundColor: sectionBgColor,
         backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,
@@ -136,7 +137,12 @@ export const ProgramsBlockComponent: React.FC<Partial<ProgramsProps>> = (props) 
             {/* Explore Academics Button */}
             <div>
               <Link
-                href={resolvedButtonUrl}
+                href={resolvedButtonUrl || '#'}
+                onClick={(e) => {
+                  if (!resolvedButtonUrl || resolvedButtonUrl === '#') {
+                    e.preventDefault()
+                  }
+                }}
                 target={openInNewTab ? '_blank' : undefined}
                 rel={openInNewTab ? 'noopener noreferrer' : undefined}
                 className="inline-flex items-center justify-center gap-3 min-h-[54px] sm:min-h-[58px] px-8 sm:px-10 rounded-full border border-[#919191] bg-white hover:bg-neutral-100 text-[#353535] font-medium text-[17px] sm:text-[18px] transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 cursor-pointer select-none"

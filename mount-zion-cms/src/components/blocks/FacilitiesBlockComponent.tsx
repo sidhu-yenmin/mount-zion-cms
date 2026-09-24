@@ -126,7 +126,8 @@ export const FacilitiesBlockComponent: React.FC<Partial<FacilitiesProps>> = ({
 
   return (
     <section
-      className="relative w-full py-14 sm:py-20 lg:py-24 overflow-hidden transition-colors duration-300 bg-cover bg-center"
+      id="facilities"
+      className="relative w-full py-14 sm:py-20 lg:py-24 overflow-hidden transition-colors duration-300 bg-cover bg-center scroll-mt-16"
       style={{
         backgroundColor: sectionBgColor,
         backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,

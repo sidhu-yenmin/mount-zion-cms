@@ -82,7 +82,13 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
       const pageSlug = typeof item.page === 'object' ? item.page.slug : ''
       return pageSlug === 'home' ? '/' : `/${pageSlug}`
     }
-    return item?.customUrl || item?.url || '/'
+    if (item?.customUrl && typeof item.customUrl === 'string' && item.customUrl.trim()) {
+      return item.customUrl.trim()
+    }
+    if (item?.url && typeof item.url === 'string' && item.url.trim()) {
+      return item.url.trim()
+    }
+    return '#'
   }
 
   const resolveLinkLabel = (item: any): string => {
@@ -218,7 +224,12 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
                     {col1Links.map((link, idx) => (
                       <Link
                         key={`${link.label}-${idx}`}
-                        href={link.url}
+                        href={link.url || '#'}
+                        onClick={(e) => {
+                          if (!link.url || link.url === '#') {
+                            e.preventDefault()
+                          }
+                        }}
                         target={link.openInNewTab ? '_blank' : undefined}
                         rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
                         className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[20.59px] text-white/80 hover:text-white transition-colors duration-200"
@@ -234,7 +245,12 @@ export const FooterComponent: React.FC<FooterComponentProps> = ({ footer }) => {
                       {col2Links.map((link, idx) => (
                         <Link
                           key={`${link.label}-${idx}`}
-                          href={link.url}
+                          href={link.url || '#'}
+                          onClick={(e) => {
+                            if (!link.url || link.url === '#') {
+                              e.preventDefault()
+                            }
+                          }}
                           target={link.openInNewTab ? '_blank' : undefined}
                           rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
                           className="font-['Roboto',sans-serif] font-normal text-[14px] leading-[20.59px] text-white/80 hover:text-white transition-colors duration-200"

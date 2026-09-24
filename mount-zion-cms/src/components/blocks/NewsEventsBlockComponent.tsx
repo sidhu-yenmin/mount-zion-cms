@@ -111,7 +111,8 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = (pro
 
   return (
     <section
-      className="relative w-full py-16 sm:py-20 lg:py-24 overflow-hidden transition-colors duration-300 bg-cover bg-center"
+      id="news"
+      className="relative w-full py-16 sm:py-20 lg:py-24 overflow-hidden transition-colors duration-300 bg-cover bg-center scroll-mt-16"
       style={{
         backgroundColor: sectionBgColor,
         backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,
@@ -133,7 +134,12 @@ export const NewsEventsBlockComponent: React.FC<Partial<NewsEventsProps>> = (pro
 
           {resolvedExploreUrl && (
             <Link
-              href={resolvedExploreUrl}
+              href={resolvedExploreUrl || '#'}
+              onClick={(e) => {
+                if (!resolvedExploreUrl || resolvedExploreUrl === '#') {
+                  e.preventDefault()
+                }
+              }}
               target={exploreOpenInNewTab ? '_blank' : undefined}
               rel={exploreOpenInNewTab ? 'noopener noreferrer' : undefined}
               className="inline-flex items-center justify-center gap-[10px] w-[233px] h-[58px] rounded-[100px] border border-[#919191] bg-white text-[#353535] font-['Roboto',sans-serif] font-medium text-[20px] transition-all duration-300 hover:border-black hover:bg-slate-50 hover:shadow-md shrink-0 self-start md:self-end group mb-1 md:mb-0"

@@ -213,7 +213,8 @@ export const ToppersBlockComponent: React.FC<ToppersBlockProps> = ({
 
   return (
     <section
-      className="relative w-full py-16 md:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden transition-colors duration-300"
+      id="toppers"
+      className="relative w-full py-16 md:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden transition-colors duration-300 scroll-mt-16"
       style={{
         backgroundColor: sectionBgColor,
         backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : "url('/images/academics-bg-color.png')",

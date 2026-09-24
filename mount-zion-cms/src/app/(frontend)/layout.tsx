@@ -56,7 +56,16 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         const pageSlug = typeof item.page === 'object' ? item.page.slug : ''
         return pageSlug === 'home' ? '/' : `/${pageSlug}`
       }
-      return item.customUrl || '/'
+      if (item.customUrl && typeof item.customUrl === 'string' && item.customUrl.trim()) {
+        return item.customUrl.trim()
+      }
+      if (item.url && typeof item.url === 'string' && item.url.trim()) {
+        return item.url.trim()
+      }
+      if (item.link && typeof item.link === 'string' && item.link.trim()) {
+        return item.link.trim()
+      }
+      return '#'
     }
 
     let navItems: any[] = []
@@ -68,6 +77,17 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         children: item.submenuItems?.map((sub: any) => ({
           label: sub.label,
           url: resolveItemUrl(sub),
+        })),
+      }))
+    } else if ((header as any)?.navItems && (header as any).navItems.length > 0) {
+      navItems = (header as any).navItems.map((item: any) => ({
+        label: item.label,
+        url: item.link || item.url || resolveItemUrl(item),
+        isActive: item.isActive,
+        showExpandIcon: item.showExpandIcon,
+        children: (item.subItems || item.children)?.map((sub: any) => ({
+          label: sub.label,
+          url: sub.link || sub.url || resolveItemUrl(sub),
         })),
       }))
     }

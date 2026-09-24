@@ -48,7 +48,7 @@ export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = (props
   const bannerBgColor = backgroundColor || '#03594E'
 
   return (
-    <section className="relative w-full overflow-visible pt-16 sm:pt-20 lg:pt-[84px]">
+    <section id="contact" className="relative w-full overflow-visible pt-16 sm:pt-20 lg:pt-[84px] scroll-mt-16">
       {/* Background Split: Top half matches light page background, bottom half matches banner background color */}
       {/* 84px (top padding) + 186px (half banner) = 270px */}
       <div className="absolute inset-x-0 top-0 h-[250px] sm:h-[266px] lg:h-[270px] bg-[#f4f6f8] pointer-events-none" />
@@ -95,6 +95,8 @@ export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = (props
               alt=""
               width={263}
               height={284}
+              priority
+              loading="eager"
               unoptimized
               className="w-full h-full object-contain"
             />
@@ -123,7 +125,12 @@ export const CtaBannerBlockComponent: React.FC<Partial<CtaBannerProps>> = (props
             {/* Get Started Button (Figma: width 215px, height 58px, top 216px, left 820px in 1120 frame) */}
             <div className="mt-8 lg:mt-0 lg:absolute lg:right-[85px] lg:top-[216px]">
               <Link
-                href={resolvedButtonUrl}
+                href={resolvedButtonUrl || '#'}
+                onClick={(e) => {
+                  if (!resolvedButtonUrl || resolvedButtonUrl === '#') {
+                    e.preventDefault()
+                  }
+                }}
                 target={openInNewTab ? '_blank' : undefined}
                 rel={openInNewTab ? 'noopener noreferrer' : undefined}
                 className="inline-flex items-center justify-center gap-[10px] w-[215px] h-[58px] rounded-[100px] bg-[#F8C62F] border border-[#F8C62F] text-black font-['Roboto',sans-serif] font-medium text-[20px] transition-all duration-300 hover:brightness-105 hover:shadow-xl active:scale-95 group"

@@ -123,7 +123,8 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
 
   return (
     <section
-      className="relative w-full pt-[60px] pb-[80px] overflow-hidden transition-colors duration-300 bg-cover bg-center"
+      id="student-life"
+      className="relative w-full pt-[60px] pb-[80px] overflow-hidden transition-colors duration-300 bg-cover bg-center scroll-mt-16"
       style={{
         backgroundColor: sectionBgColor,
         backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,
@@ -145,7 +146,12 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
 
           {resolvedViewMoreUrl && (
             <Link
-              href={resolvedViewMoreUrl}
+              href={resolvedViewMoreUrl || '#'}
+              onClick={(e) => {
+                if (!resolvedViewMoreUrl || resolvedViewMoreUrl === '#') {
+                  e.preventDefault()
+                }
+              }}
               target={viewMoreOpenInNewTab ? '_blank' : undefined}
               rel={viewMoreOpenInNewTab ? 'noopener noreferrer' : undefined}
               className="inline-flex items-center justify-center gap-[10px] w-[199px] h-[58px] rounded-[100px] border border-[#919191] bg-white text-[#353535] font-['Roboto',sans-serif] font-medium text-[20px] transition-all duration-300 hover:border-black hover:bg-slate-50 hover:shadow-md shrink-0 self-start md:self-end group mb-1 md:mb-0"
@@ -291,7 +297,12 @@ export const CampusLifeBlockComponent: React.FC<Partial<CampusLifeBlockProps>> =
 
                 {/* Apply Now Button: 199 x 58px, #F8C62F, rounded-full */}
                 <Link
-                  href={ctaButtonUrl}
+                  href={ctaButtonUrl || '#'}
+                  onClick={(e) => {
+                    if (!ctaButtonUrl || ctaButtonUrl === '#') {
+                      e.preventDefault()
+                    }
+                  }}
                   target={ctaOpenInNewTab ? '_blank' : undefined}
                   rel={ctaOpenInNewTab ? 'noopener noreferrer' : undefined}
                   className="inline-flex items-center justify-center gap-[10px] w-[199px] h-[58px] rounded-[100px] bg-[#F8C62F] border border-[#F8C62F] text-black font-['Roboto',sans-serif] font-medium text-[20px] transition-all duration-300 hover:brightness-105 hover:shadow-lg shrink-0 group"

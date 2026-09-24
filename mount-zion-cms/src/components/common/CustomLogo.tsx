@@ -32,11 +32,40 @@ export const CustomLogo: React.FC<CustomLogoProps> = ({
   const [imageError, setImageError] = useState(false)
 
   // Determine default image source (only school uses default school image)
-  const defaultSrc = activePresetKey === 'school' ? '/images/school-logo.png' : null
+  const defaultSrc = activePresetKey === 'school' ? '/images/Logo 1.png' : null
   const src = logoUrl || defaultSrc
 
   // Render Preset Emblem Icon (Used as fallback or in 'icon' variant)
   const renderEmblem = (size = 32) => {
+    if (activePresetKey === 'sneat') {
+      // Sneat curved ribbon S icon with vivid purple-blue gradient
+      return (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 32 32"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ flexShrink: 0 }}
+        >
+          <path
+            d="M22 6C22 6 14 6 10.5 9.5C7 13 7.5 16.5 12 16.5H20C24.5 16.5 25 20 21.5 23.5C18 27 10 27 10 27"
+            stroke="url(#sneat-logo-grad)"
+            strokeWidth="5.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <defs>
+            <linearGradient id="sneat-logo-grad" x1="6" y1="5" x2="26" y2="28" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#787bff" />
+              <stop offset="0.6" stopColor="#696cff" />
+              <stop offset="1" stopColor="#5558e6" />
+            </linearGradient>
+          </defs>
+        </svg>
+      )
+    }
+
     if (activePresetKey === 'restaurant') {
       // Restaurant Fork & Knife / Chef badge
       return (
@@ -80,21 +109,48 @@ export const CustomLogo: React.FC<CustomLogoProps> = ({
       )
     }
 
-    // Default: School Crest / Graduation Cap Emblem
+    // Mount Zion School Crest & Shield (Default / school)
     return (
       <svg
         width={size}
         height={size}
-        viewBox="0 0 24 24"
+        viewBox="0 0 32 32"
         fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        style={{ color: 'var(--brand-accent, #EAB308)', flexShrink: 0 }}
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ flexShrink: 0 }}
       >
-        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-        <path d="M6 12v5c3 3 9 3 12 0v-5" />
+        <rect width="32" height="32" rx="8" fill="url(#mz-crest-grad)" />
+        {/* Shield Outline */}
+        <path
+          d="M16 5.5L8 8.8V15C8 19.8 11.4 24.2 16 25.5C20.6 24.2 24 19.8 24 15V8.8L16 5.5Z"
+          stroke="#EAB308"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        {/* Graduation Cap */}
+        <path
+          d="M16 10.5L10.5 13.2L16 15.9L21.5 13.2L16 10.5Z"
+          fill="#EAB308"
+        />
+        <path
+          d="M12.5 14.5V17.5C12.5 18.9 14 20 16 20C18 20 19.5 18.9 19.5 17.5V14.5"
+          stroke="#EAB308"
+          strokeWidth="1.3"
+          strokeLinecap="round"
+        />
+        <path
+          d="M21.5 13.2V17.8"
+          stroke="#EAB308"
+          strokeWidth="1.3"
+          strokeLinecap="round"
+        />
+        <defs>
+          <linearGradient id="mz-crest-grad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#03594E" />
+            <stop offset="1" stopColor="#01362f" />
+          </linearGradient>
+        </defs>
       </svg>
     )
   }
@@ -108,24 +164,31 @@ export const CustomLogo: React.FC<CustomLogoProps> = ({
           display: 'inline-flex',
           alignItems: 'center',
           justifyContent: 'center',
-          width: '24px',
-          height: '24px',
-          minWidth: '24px',
-          minHeight: '24px',
-          maxWidth: '24px',
-          maxHeight: '24px',
-          borderRadius: '6px',
-          background: 'linear-gradient(135deg, var(--brand-primary, #03594E), var(--brand-surface, #0f171e))',
-          border: '1px solid var(--brand-border, #1e2b36)',
-          boxShadow: '0 1px 4px rgba(0, 0, 0, 0.25)',
+          width: '32px',
+          height: '32px',
+          minWidth: '32px',
+          minHeight: '32px',
+          borderRadius: '8px',
+          background: 'linear-gradient(135deg, #03594E 0%, #013831 100%)',
+          border: '1.5px solid rgba(234, 179, 8, 0.45)',
+          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.2)',
           boxSizing: 'border-box',
           flexShrink: 0,
           overflow: 'hidden',
           ...style,
         }}
-        title={brandName}
+        title="Mount Zion International School"
       >
-        {renderEmblem(14)}
+        <img
+          src="/images/Logo 1.png"
+          alt="Mount Zion"
+          style={{
+            height: '24px',
+            width: 'auto',
+            objectFit: 'contain',
+            display: 'block',
+          }}
+        />
       </div>
     )
   }
@@ -139,66 +202,66 @@ export const CustomLogo: React.FC<CustomLogoProps> = ({
           display: 'flex',
           alignItems: 'center',
           gap: '12px',
-          padding: '6px 0',
+          padding: '4px 0',
           textDecoration: 'none',
           ...style,
         }}
       >
-        {!imageError && src ? (
-          <div style={{ position: 'relative', height: '42px', minWidth: '42px', display: 'flex', alignItems: 'center' }}>
-            <Image
-              src={src}
-              alt={brandName}
-              width={160}
-              height={42}
-              priority
-              unoptimized
-              onError={() => setImageError(true)}
-              style={{ maxHeight: '42px', width: 'auto', objectFit: 'contain' }}
-            />
-          </div>
-        ) : (
-          <div
+        <div
+          className="sneat-school-logo-badge"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'linear-gradient(135deg, #03594E 0%, #013831 100%)',
+            padding: '4px',
+            width: '40px',
+            height: '40px',
+            borderRadius: '10px',
+            boxShadow: '0 3px 10px rgba(3, 89, 78, 0.35)',
+            border: '1.5px solid rgba(234, 179, 8, 0.45)',
+            flexShrink: 0,
+            overflow: 'hidden',
+          }}
+        >
+          <img
+            src="/images/Logo 1.png"
+            alt="Mount Zion International School"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '40px',
-              height: '40px',
-              borderRadius: '10px',
-              background: 'linear-gradient(135deg, var(--brand-primary, #03594E), var(--brand-surface, #0f171e))',
-              border: '1px solid var(--brand-border, #1e2b36)',
-              boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+              height: '30px',
+              width: 'auto',
+              maxHeight: '32px',
+              objectFit: 'contain',
+              display: 'block',
             }}
-          >
-            {renderEmblem(22)}
-          </div>
-        )}
+          />
+        </div>
 
         {showText && (
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <span
               style={{
-                fontSize: '15px',
-                fontWeight: 700,
-                color: 'var(--brand-text, #f1f5f9)',
-                lineHeight: 1.2,
-                letterSpacing: '-0.01em',
+                fontSize: '17px',
+                fontWeight: 750,
+                color: 'var(--brand-text, #0f172a)',
+                lineHeight: 1.15,
+                letterSpacing: '-0.02em',
+                fontFamily: 'var(--brand-font)',
               }}
             >
-              {brandName}
+              Mount Zion
             </span>
             <span
               style={{
-                fontSize: '11px',
-                fontWeight: 600,
-                color: 'var(--brand-accent, #EAB308)',
-                letterSpacing: '0.05em',
+                fontSize: '10.5px',
+                fontWeight: 700,
+                color: 'var(--brand-primary, #03594E)',
+                letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                marginTop: '2px',
+                marginTop: '3px',
               }}
             >
-              {tagline || 'Admin Panel'}
+              Admin Panel
             </span>
           </div>
         )}
