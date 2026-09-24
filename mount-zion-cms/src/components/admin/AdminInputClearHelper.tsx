@@ -49,9 +49,13 @@ export const AdminInputClearHelper: React.FC = () => {
         }
       }
 
-      // If already processed or parent is our wrapper, skip
+      // If already processed, marked no-clear, or inside header search, skip
       if (
         field.dataset.hasClearButton === 'true' ||
+        field.dataset.noClear === 'true' ||
+        field.classList.contains('sneat-search-input') ||
+        field.closest('.sneat-proper-search') ||
+        field.closest('.sneat-header-controls') ||
         field.parentElement?.classList.contains('payload-clear-input-wrapper')
       ) {
         return

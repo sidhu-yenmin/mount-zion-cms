@@ -23,6 +23,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     components: {
+      actions: ['@/components/admin/AdminHeaderActions#AdminHeaderActions'],
+      beforeDashboard: ['@/components/admin/AdminDashboardOverview#AdminDashboardOverview'],
       beforeNavLinks: ['@/components/admin/AdminSidebarHeader#AdminSidebarHeader'],
       graphics: {
         Logo: '@/components/admin/AdminLogo#AdminLogo',
