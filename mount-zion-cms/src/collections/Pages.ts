@@ -7,6 +7,7 @@ import { ToppersBlock } from '../blocks/ToppersBlock'
 import { CampusLifeBlock } from '../blocks/CampusLifeBlock'
 import { TestimonialsBlock } from '../blocks/TestimonialsBlock'
 import { NewsEventsBlock } from '../blocks/NewsEventsBlock'
+import { colorField } from '../fields/colorField'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -71,16 +72,15 @@ export const Pages: CollectionConfig = {
         description: 'Optionally override default navigation with a specific Menu Group on this page.',
       },
     },
-    {
+    colorField({
       name: 'backgroundColor',
-      type: 'text',
       label: 'Page Background Color (Hex / CSS)',
       defaultValue: '#FFFFFF',
       admin: {
         position: 'sidebar',
         description: 'e.g. #FFFFFF, #F8FAFC, #03594E',
       },
-    },
+    }),
     {
       name: 'backgroundImage',
       type: 'upload',

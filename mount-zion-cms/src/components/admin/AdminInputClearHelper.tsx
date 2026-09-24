@@ -73,14 +73,24 @@ export const AdminInputClearHelper: React.FC = () => {
         }
       }
 
-      // If already processed, marked no-clear, or inside header search, skip
+      // If already processed, marked no-clear, or inside header search / select dropdowns, skip
       if (
         field.dataset.hasClearButton === 'true' ||
         field.dataset.noClear === 'true' ||
         field.classList.contains('sneat-search-input') ||
         field.closest('.sneat-proper-search') ||
         field.closest('.sneat-header-controls') ||
-        field.parentElement?.classList.contains('payload-clear-input-wrapper')
+        field.parentElement?.classList.contains('payload-clear-input-wrapper') ||
+        field.closest('.rs__control') ||
+        field.closest('.rs__value-container') ||
+        field.closest('.rs__input-container') ||
+        field.closest('[class*="react-select"]') ||
+        field.closest('[class*="rs__"]') ||
+        field.closest('.react-select') ||
+        field.hasAttribute('aria-autocomplete') ||
+        field.id?.includes('react-select') ||
+        field.className?.includes('rs-input') ||
+        field.className?.includes('rs__input')
       ) {
         return
       }
