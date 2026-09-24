@@ -12,6 +12,8 @@ export const AdminAutoLogin: React.FC = () => {
   const attemptedRef = useRef(false)
 
   useEffect(() => {
+    // Auto-login bypassed so the login screen logic is restored
+    /*
     if (pathname && pathname.includes('/admin/login') && !attemptedRef.current) {
       attemptedRef.current = true
       fetch('/api/users/login', {
@@ -31,6 +33,7 @@ export const AdminAutoLogin: React.FC = () => {
           // ignore
         })
     }
+    */
   }, [pathname])
 
   return null

@@ -1,9 +1,22 @@
 'use client'
 
 import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 export const AdminInputClearHelper: React.FC = () => {
+  const pathname = usePathname()
+
   useEffect(() => {
+    // Never run on login or logout pages to prevent React DOM reconciliation errors during auth validation
+    if (
+      (pathname && (pathname.includes('/admin/login') || pathname.includes('/admin/logout'))) ||
+      (typeof window !== 'undefined' &&
+        (window.location.pathname.includes('/admin/login') ||
+          window.location.pathname.includes('/admin/logout')))
+    ) {
+      return
+    }
+
     // Native setters to trigger React 18/19 controlled input state update
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
       window.HTMLInputElement.prototype,
@@ -30,6 +43,16 @@ export const AdminInputClearHelper: React.FC = () => {
     }
 
     const attachClearButton = (field: HTMLInputElement | HTMLTextAreaElement) => {
+      // Never touch login or auth forms
+      if (
+        window.location.pathname.includes('/admin/login') ||
+        field.closest('.template-minimal') ||
+        field.closest('.login') ||
+        field.closest('[class*="login"]')
+      ) {
+        return
+      }
+
       // Ignore hidden, checkbox, radio, file, submit, button, date, color inputs
       if (field instanceof HTMLInputElement) {
         const type = field.type?.toLowerCase()
@@ -43,7 +66,8 @@ export const AdminInputClearHelper: React.FC = () => {
           type === 'range' ||
           type === 'color' ||
           type === 'date' ||
-          type === 'time'
+          type === 'time' ||
+          type === 'password'
         ) {
           return
         }
