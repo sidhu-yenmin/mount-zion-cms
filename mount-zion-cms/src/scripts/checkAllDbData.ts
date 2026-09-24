@@ -26,15 +26,26 @@ async function run() {
     })
     console.log(`\n🖼️ [MEDIA Collection] - Total: ${media.totalDocs} uploaded files`)
 
-    // 3. Globals
-    const menu = await payload.findGlobal({ slug: 'menu', draft: true })
+    // 3. Menu Groups
+    const menuGroups = await payload.find({
+      collection: 'menu-groups',
+      draft: true,
+      limit: 100,
+    })
+    console.log(`\n📂 [MENU GROUPS Collection] - Total: ${menuGroups.totalDocs}`)
+    menuGroups.docs.forEach((mg, idx) => {
+      console.log(`  ${idx + 1}. Title: "${mg.title}" | Slug: "${mg.slug}" | Menus count: ${(mg as any).menus?.length || 0}`)
+    })
+
+    // 4. Globals
     const header = await payload.findGlobal({ slug: 'header', draft: true })
     const footer = await payload.findGlobal({ slug: 'footer', draft: true })
+    const theme = await payload.findGlobal({ slug: 'theme', draft: true })
 
     console.log(`\n🌐 [GLOBALS]`)
-    console.log(`  - Menu: ${(menu as any)?.menuItems?.length || 0} navigation items | Status: ${(menu as any)._status || 'published'}`)
     console.log(`  - Header: Phone "${header?.topBar?.phone || ''}" | Status: ${(header as any)._status || 'published'}`)
-    console.log(`  - Footer: Contact "${footer?.contactInfo?.phone || ''}" | ${(footer?.quickLinks || []).length} Quick Links | ${(footer?.socialLinks || []).length} Social Links | Status: ${(footer as any)._status || 'published'}`)
+    console.log(`  - Footer: Contact "${footer?.contactInfo?.phone || ''}" | Status: ${(footer as any)._status || 'published'}`)
+    console.log(`  - Theme: Primary Color "${(theme as any)?.primaryColor || ''}" | Heading Font: "${(theme as any)?.headingFont || ''}"`)
 
     console.log('\n======================================')
     process.exit(0)

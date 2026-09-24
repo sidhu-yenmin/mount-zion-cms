@@ -1,4 +1,5 @@
 import { ColorPickerField as ColorPickerField_7ba94625f44f4529e0b43251f166e349 } from '../../../components/admin/ColorPickerField'
+import { CustomPreviewButton as CustomPreviewButton_05d642fad1661c5c86ddf0b0d53f8e65 } from '../../../components/admin/CustomPreviewButton'
 import { AdminIcon as AdminIcon_b80a86fce1072afc84cd6a430a965697 } from '@/components/admin/AdminLogo'
 import { AdminLogo as AdminLogo_b80a86fce1072afc84cd6a430a965697 } from '@/components/admin/AdminLogo'
 import { AdminHeaderActions as AdminHeaderActions_fabe3dd7f216a35de3a3f77105e82da0 } from '@/components/admin/AdminHeaderActions'
@@ -9,6 +10,7 @@ import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } f
 /** @type import('payload').ImportMap */
 export const importMap = {
   "/components/admin/ColorPickerField#ColorPickerField": ColorPickerField_7ba94625f44f4529e0b43251f166e349,
+  "/components/admin/CustomPreviewButton#CustomPreviewButton": CustomPreviewButton_05d642fad1661c5c86ddf0b0d53f8e65,
   "@/components/admin/AdminLogo#AdminIcon": AdminIcon_b80a86fce1072afc84cd6a430a965697,
   "@/components/admin/AdminLogo#AdminLogo": AdminLogo_b80a86fce1072afc84cd6a430a965697,
   "@/components/admin/AdminHeaderActions#AdminHeaderActions": AdminHeaderActions_fabe3dd7f216a35de3a3f77105e82da0,

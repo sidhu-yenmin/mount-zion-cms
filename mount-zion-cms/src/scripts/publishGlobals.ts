@@ -28,15 +28,15 @@ async function run() {
     })
     console.log('✓ Footer global published!')
 
-    // 3. Publish Menu
+    // 3. Publish Theme
     await payload.updateGlobal({
-      slug: 'menu',
+      slug: 'theme',
       data: {
         _status: 'published',
       } as any,
       draft: false,
     })
-    console.log('✓ Menu global published!')
+    console.log('✓ Theme global published!')
 
     console.log('\n🎉 ALL GLOBALS ARE PUBLISHED!')
     process.exit(0)
