@@ -9,6 +9,8 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     font-size: var(--font-size-base, 16px);
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
   body {
@@ -17,6 +19,8 @@
     font-family: var(--font-body, 'Plus Jakarta Sans', system-ui, sans-serif);
     background-color: var(--color-page-bg, #F8FAFC);
     color: var(--color-text-main, #0F172A);
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
   h1, h2, h3, h4, h5, h6 {
