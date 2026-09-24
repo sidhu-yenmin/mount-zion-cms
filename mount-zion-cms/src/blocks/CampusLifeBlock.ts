@@ -1,0 +1,125 @@
+import type { Block } from 'payload'
+import { createButtonField } from '../fields/buttonField'
+import { colorField } from '../fields/colorField'
+
+export const CampusLifeBlock: Block = {
+  slug: 'campusLife',
+  labels: {
+    singular: 'Campus Life & Gallery Grid',
+    plural: 'Campus Life & Gallery Grids',
+  },
+  fields: [
+    {
+      name: 'hideSection',
+      type: 'checkbox',
+      label: 'Hide this section on frontend?',
+      defaultValue: false,
+      admin: {
+        description: 'Check to temporarily hide this section from the live page without deleting it',
+      },
+    },
+    {
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Content',
+          fields: [
+            {
+              name: 'badge',
+              type: 'text',
+              label: 'Badge / Tagline',
+              defaultValue: 'OUR GALLERY',
+            },
+            {
+              name: 'heading',
+              type: 'text',
+              label: 'Section Heading',
+              defaultValue: 'Empowering Future Leaders Around the World',
+              required: true,
+            },
+            createButtonField({
+              name: 'viewMoreButton',
+              label: 'View More Button',
+              defaultText: 'View More',
+              defaultUrl: '/gallery',
+              defaultLinkType: 'page',
+            }),
+            {
+              name: 'galleryImages',
+              type: 'array',
+              label: 'Bento Grid Images (6 Images Recommended)',
+              minRows: 1,
+              fields: [
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: true,
+                },
+                {
+                  name: 'caption',
+                  type: 'text',
+                  label: 'Optional Caption / Alt Text',
+                },
+              ],
+            },
+            {
+              name: 'ctaBar',
+              type: 'group',
+              label: 'High School CTA Bar (Bottom)',
+              fields: [
+                {
+                  name: 'showCtaBar',
+                  type: 'checkbox',
+                  label: 'Show CTA Bar below gallery?',
+                  defaultValue: true,
+                },
+                {
+                  name: 'tagline',
+                  type: 'text',
+                  label: 'CTA Tagline (e.g. Looking for the Right School?)',
+                  defaultValue: 'Looking for the Right School?',
+                },
+                {
+                  name: 'heading',
+                  type: 'text',
+                  label: 'CTA Heading',
+                  defaultValue: "Start Your Child's Journey with Us",
+                },
+                {
+                  name: 'studentImage',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Student Graphic / Photo',
+                },
+                createButtonField({
+                  name: 'button',
+                  label: 'CTA Bar Action Button',
+                  defaultText: 'Apply Now',
+                  defaultUrl: '/admissions',
+                  defaultLinkType: 'page',
+                }),
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Design & Media',
+          fields: [
+            colorField({
+              name: 'backgroundColor',
+              label: 'Section Background Color',
+              defaultValue: '#FFFFFF',
+            }),
+            {
+              name: 'backgroundImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Section Background Image (Optional full section background / pattern)',
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}

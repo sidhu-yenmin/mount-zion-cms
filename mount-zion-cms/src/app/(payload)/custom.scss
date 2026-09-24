@@ -1,0 +1,69 @@
+/* Payload Admin Custom Styles */
+
+.payload-clear-input-wrapper {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+}
+
+.payload-clear-btn {
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  background: rgba(148, 163, 184, 0.25) !important;
+  color: #94a3b8 !important;
+  border: none !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+}
+
+.payload-clear-btn:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  transform: translateY(-50%) scale(1.1) !important;
+}
+
+.payload-clear-btn:active {
+  transform: translateY(-50%) scale(0.95) !important;
+}
+
+/* Textarea clear button positioning */
+.payload-clear-btn.textarea-clear-btn {
+  top: 12px !important;
+  right: 14px !important;
+  transform: none !important;
+}
+
+.payload-clear-btn.textarea-clear-btn:hover {
+  transform: scale(1.1) !important;
+}
+
+.payload-clear-btn.textarea-clear-btn:active {
+  transform: scale(0.95) !important;
+}
+
+/* Add padding to prevent text from overlapping the clear button */
+input[type="text"][data-has-clear-button="true"],
+input[type="email"][data-has-clear-button="true"],
+input[type="url"][data-has-clear-button="true"],
+input[type="tel"][data-has-clear-button="true"],
+input[type="number"][data-has-clear-button="true"] {
+  padding-right: 36px !important;
+}
+
+textarea[data-has-clear-button="true"] {
+  padding-right: 38px !important;
+}

@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    pages: Page;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,17 +79,28 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    menu: Menu;
+    header: Header;
+    footer: Footer;
+    theme: Theme;
+  };
+  globalsSelect: {
+    menu: MenuSelect<false> | MenuSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    theme: ThemeSelect<false> | ThemeSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -122,7 +134,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -147,7 +159,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -163,10 +175,297 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * e.g. "home" for landing page, "about-us", etc.
+   */
+  slug: string;
+  headerVariant?: ('transparent' | 'solid-green' | 'solid-white' | 'hidden') | null;
+  /**
+   * e.g. #FFFFFF, #F8FAFC, #03594E
+   */
+  backgroundColor?: string | null;
+  backgroundImage?: (number | null) | Media;
+  layout?:
+    | (
+        | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
+            /**
+             * Optional additional background images to display as a rotating carousel in the hero banner
+             */
+            carouselImages?:
+              | {
+                  image: number | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            headerCtaButton?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
+            badge?: string | null;
+            heading: string;
+            primaryButton?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
+            secondaryButton?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
+            /**
+             * Link to YouTube, Vimeo, or video modal
+             */
+            videoUrl?: string | null;
+            stats?:
+              | {
+                  icon?: ('book' | 'students' | 'teacher' | 'trophy') | null;
+                  value: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            backgroundColor?: string | null;
+            backgroundImage: number | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
+            badge?: string | null;
+            heading: string;
+            description?: string | null;
+            button?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
+            imageOne?: (number | null) | Media;
+            imageTwo?: (number | null) | Media;
+            floatingBadgeLine1?: string | null;
+            floatingBadgeLine2?: string | null;
+            floatingBadgeIcon?: (number | null) | Media;
+            stat1Value?: string | null;
+            stat1Label?: string | null;
+            stat1Icon?: (number | null) | Media;
+            stat2Value?: string | null;
+            stat2Label?: string | null;
+            stat2Icon?: (number | null) | Media;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'aboutUs';
+          }
+        | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
+            badge?: string | null;
+            heading: string;
+            description?: string | null;
+            button?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
+            bannerText?: string | null;
+            imageOne?: (number | null) | Media;
+            imageTwo?: (number | null) | Media;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'programs';
+          }
+        | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
+            badge?: string | null;
+            heading: string;
+            description?: string | null;
+            tabs?:
+              | {
+                  tabName: string;
+                  images?:
+                    | {
+                        image: number | Media;
+                        caption?: string | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'facilities';
+          }
+        | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
+            badge?: string | null;
+            heading: string;
+            academicYears?:
+              | {
+                  year: string;
+                  rankHolders?:
+                    | {
+                        studentName: string;
+                        rank: string;
+                        score: string;
+                        standard?: string | null;
+                        photo?: (number | null) | Media;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'toppers';
+          }
+        | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
+            badge?: string | null;
+            heading: string;
+            viewMoreButton?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
+            galleryImages?:
+              | {
+                  image: number | Media;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            ctaBar?: {
+              showCtaBar?: boolean | null;
+              tagline?: string | null;
+              heading?: string | null;
+              studentImage?: (number | null) | Media;
+              button?: {
+                text?: string | null;
+                linkType?: ('page' | 'custom') | null;
+                page?: (number | null) | Page;
+                customUrl?: string | null;
+                openInNewTab?: boolean | null;
+              };
+            };
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'campusLife';
+          }
+        | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
+            badge?: string | null;
+            heading: string;
+            testimonials?:
+              | {
+                  cardStyle?: ('green' | 'yellow') | null;
+                  rating?: number | null;
+                  quote: string;
+                  authorName: string;
+                  authorRole: string;
+                  authorPhoto?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonials';
+          }
+        | {
+            /**
+             * Check to temporarily hide this section from the live page without deleting it
+             */
+            hideSection?: boolean | null;
+            badge?: string | null;
+            heading: string;
+            exploreMoreButton?: {
+              text?: string | null;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+            };
+            items?:
+              | {
+                  date: string;
+                  title: string;
+                  image?: (number | null) | Media;
+                  linkType?: ('page' | 'custom') | null;
+                  page?: (number | null) | Page;
+                  customUrl?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            backgroundColor?: string | null;
+            backgroundImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'newsEvents';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -183,20 +482,24 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -206,10 +509,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -229,7 +532,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -277,6 +580,282 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  headerVariant?: T;
+  backgroundColor?: T;
+  backgroundImage?: T;
+  layout?:
+    | T
+    | {
+        hero?:
+          | T
+          | {
+              hideSection?: T;
+              carouselImages?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
+              headerCtaButton?:
+                | T
+                | {
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                  };
+              badge?: T;
+              heading?: T;
+              primaryButton?:
+                | T
+                | {
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                  };
+              secondaryButton?:
+                | T
+                | {
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                  };
+              videoUrl?: T;
+              stats?:
+                | T
+                | {
+                    icon?: T;
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              backgroundColor?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        aboutUs?:
+          | T
+          | {
+              hideSection?: T;
+              badge?: T;
+              heading?: T;
+              description?: T;
+              button?:
+                | T
+                | {
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                  };
+              imageOne?: T;
+              imageTwo?: T;
+              floatingBadgeLine1?: T;
+              floatingBadgeLine2?: T;
+              floatingBadgeIcon?: T;
+              stat1Value?: T;
+              stat1Label?: T;
+              stat1Icon?: T;
+              stat2Value?: T;
+              stat2Label?: T;
+              stat2Icon?: T;
+              backgroundColor?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        programs?:
+          | T
+          | {
+              hideSection?: T;
+              badge?: T;
+              heading?: T;
+              description?: T;
+              button?:
+                | T
+                | {
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                  };
+              bannerText?: T;
+              imageOne?: T;
+              imageTwo?: T;
+              backgroundColor?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        facilities?:
+          | T
+          | {
+              hideSection?: T;
+              badge?: T;
+              heading?: T;
+              description?: T;
+              tabs?:
+                | T
+                | {
+                    tabName?: T;
+                    images?:
+                      | T
+                      | {
+                          image?: T;
+                          caption?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              backgroundColor?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        toppers?:
+          | T
+          | {
+              hideSection?: T;
+              badge?: T;
+              heading?: T;
+              academicYears?:
+                | T
+                | {
+                    year?: T;
+                    rankHolders?:
+                      | T
+                      | {
+                          studentName?: T;
+                          rank?: T;
+                          score?: T;
+                          standard?: T;
+                          photo?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              backgroundColor?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        campusLife?:
+          | T
+          | {
+              hideSection?: T;
+              badge?: T;
+              heading?: T;
+              viewMoreButton?:
+                | T
+                | {
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                  };
+              galleryImages?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              ctaBar?:
+                | T
+                | {
+                    showCtaBar?: T;
+                    tagline?: T;
+                    heading?: T;
+                    studentImage?: T;
+                    button?:
+                      | T
+                      | {
+                          text?: T;
+                          linkType?: T;
+                          page?: T;
+                          customUrl?: T;
+                          openInNewTab?: T;
+                        };
+                  };
+              backgroundColor?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        testimonials?:
+          | T
+          | {
+              hideSection?: T;
+              badge?: T;
+              heading?: T;
+              testimonials?:
+                | T
+                | {
+                    cardStyle?: T;
+                    rating?: T;
+                    quote?: T;
+                    authorName?: T;
+                    authorRole?: T;
+                    authorPhoto?: T;
+                    id?: T;
+                  };
+              backgroundColor?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        newsEvents?:
+          | T
+          | {
+              hideSection?: T;
+              badge?: T;
+              heading?: T;
+              exploreMoreButton?:
+                | T
+                | {
+                    text?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    openInNewTab?: T;
+                  };
+              items?:
+                | T
+                | {
+                    date?: T;
+                    title?: T;
+                    image?: T;
+                    linkType?: T;
+                    page?: T;
+                    customUrl?: T;
+                    id?: T;
+                  };
+              backgroundColor?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -314,6 +893,342 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu".
+ */
+export interface Menu {
+  id: number;
+  menuItems?:
+    | {
+        label: string;
+        linkType?: ('page' | 'custom') | null;
+        page?: (number | null) | Page;
+        customUrl?: string | null;
+        openInNewTab?: boolean | null;
+        hasSubmenu?: boolean | null;
+        submenuItems?:
+          | {
+              label: string;
+              linkType?: ('page' | 'custom') | null;
+              page?: (number | null) | Page;
+              customUrl?: string | null;
+              openInNewTab?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  topBar?: {
+    showTopBar?: boolean | null;
+    phone?: string | null;
+    email?: string | null;
+    backgroundColor?: string | null;
+    textColor?: string | null;
+  };
+  logo?: (number | null) | Media;
+  navBackgroundColor?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  description?: string | null;
+  contactInfo?: {
+    phone?: string | null;
+    phoneIcon?: (number | null) | Media;
+    email?: string | null;
+    emailIcon?: (number | null) | Media;
+    address?: string | null;
+    addressIcon?: (number | null) | Media;
+  };
+  quickLinks?:
+    | {
+        linkType?: ('page' | 'custom') | null;
+        page?: (number | null) | Page;
+        customUrl?: string | null;
+        label?: string | null;
+        openInNewTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  socialLinks?:
+    | {
+        platform: 'facebook' | 'instagram' | 'youtube' | 'twitter' | 'linkedin' | 'other';
+        icon?: (number | null) | Media;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  copyright?: string | null;
+  ctaBanner: {
+    showCtaBanner?: boolean | null;
+    tagline?: string | null;
+    heading: string;
+    description?: string | null;
+    button?: {
+      text?: string | null;
+      linkType?: ('page' | 'custom') | null;
+      page?: (number | null) | Page;
+      customUrl?: string | null;
+      openInNewTab?: boolean | null;
+    };
+    backgroundColor?: string | null;
+    backgroundImage?: (number | null) | Media;
+  };
+  logo?: (number | null) | Media;
+  backgroundColor?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme".
+ */
+export interface Theme {
+  id: number;
+  siteName: string;
+  tagline?: string | null;
+  logo?: (number | null) | Media;
+  footerLogo?: (number | null) | Media;
+  favicon?: (number | null) | Media;
+  headingFont?:
+    | (
+        | 'Plus Jakarta Sans'
+        | 'Poppins'
+        | 'Montserrat'
+        | 'Inter'
+        | 'Roboto'
+        | 'Lato'
+        | 'Outfit'
+        | 'DM Sans'
+        | 'Oswald'
+        | 'Bebas Neue'
+        | 'Raleway'
+        | 'Nunito'
+        | 'Arial'
+        | 'Calibri'
+        | 'Times New Roman'
+        | 'Georgia'
+        | 'Verdana'
+        | 'Trebuchet MS'
+        | 'Cambria'
+        | 'Impact'
+        | 'EB Garamond'
+        | 'Playfair Display'
+        | 'Merriweather'
+        | 'Lora'
+        | 'Bitter'
+        | 'Spectral'
+        | 'Cinzel'
+        | 'Cormorant Garamond'
+        | 'PT Serif'
+        | 'Lexend'
+        | 'Roboto Slab'
+        | 'Source Sans 3'
+        | 'Comfortaa'
+        | 'Caveat'
+        | 'Pacifico'
+        | 'Courier New'
+        | 'system-ui'
+      )
+    | null;
+  bodyFont?:
+    | (
+        | 'Plus Jakarta Sans'
+        | 'Poppins'
+        | 'Inter'
+        | 'Roboto'
+        | 'Open Sans'
+        | 'Lato'
+        | 'DM Sans'
+        | 'Nunito Sans'
+        | 'Outfit'
+        | 'Arial'
+        | 'Calibri'
+        | 'Times New Roman'
+        | 'Georgia'
+        | 'Verdana'
+        | 'Trebuchet MS'
+        | 'Lexend'
+        | 'Source Sans 3'
+        | 'EB Garamond'
+        | 'Merriweather'
+        | 'Lora'
+        | 'Bitter'
+        | 'Spectral'
+        | 'Courier New'
+        | 'system-ui'
+      )
+    | null;
+  baseFontSize?:
+    ('12px' | '13px' | '14px' | '15px' | '16px' | '17px' | '18px' | '19px' | '20px' | '22px' | '24px') | null;
+  headingWeight?: ('100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900') | null;
+  primaryColor?: string | null;
+  accentColor?: string | null;
+  backgroundColor?: string | null;
+  textColor?: string | null;
+  headerNavBackground?: string | null;
+  footerBackground?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu_select".
+ */
+export interface MenuSelect<T extends boolean = true> {
+  menuItems?:
+    | T
+    | {
+        label?: T;
+        linkType?: T;
+        page?: T;
+        customUrl?: T;
+        openInNewTab?: T;
+        hasSubmenu?: T;
+        submenuItems?:
+          | T
+          | {
+              label?: T;
+              linkType?: T;
+              page?: T;
+              customUrl?: T;
+              openInNewTab?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  topBar?:
+    | T
+    | {
+        showTopBar?: T;
+        phone?: T;
+        email?: T;
+        backgroundColor?: T;
+        textColor?: T;
+      };
+  logo?: T;
+  navBackgroundColor?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  description?: T;
+  contactInfo?:
+    | T
+    | {
+        phone?: T;
+        phoneIcon?: T;
+        email?: T;
+        emailIcon?: T;
+        address?: T;
+        addressIcon?: T;
+      };
+  quickLinks?:
+    | T
+    | {
+        linkType?: T;
+        page?: T;
+        customUrl?: T;
+        label?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        icon?: T;
+        url?: T;
+        id?: T;
+      };
+  copyright?: T;
+  ctaBanner?:
+    | T
+    | {
+        showCtaBanner?: T;
+        tagline?: T;
+        heading?: T;
+        description?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              linkType?: T;
+              page?: T;
+              customUrl?: T;
+              openInNewTab?: T;
+            };
+        backgroundColor?: T;
+        backgroundImage?: T;
+      };
+  logo?: T;
+  backgroundColor?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "theme_select".
+ */
+export interface ThemeSelect<T extends boolean = true> {
+  siteName?: T;
+  tagline?: T;
+  logo?: T;
+  footerLogo?: T;
+  favicon?: T;
+  headingFont?: T;
+  bodyFont?: T;
+  baseFontSize?: T;
+  headingWeight?: T;
+  primaryColor?: T;
+  accentColor?: T;
+  backgroundColor?: T;
+  textColor?: T;
+  headerNavBackground?: T;
+  footerBackground?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
