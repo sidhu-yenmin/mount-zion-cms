@@ -13,7 +13,6 @@ interface TopHeaderProps {
 
 export function TopHeader({ data }: TopHeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-<<<<<<< HEAD
   const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({})
   const pathname = usePathname()
 
@@ -35,13 +34,6 @@ export function TopHeader({ data }: TopHeaderProps) {
       ...prev,
       [menuKey]: !prev[menuKey],
     }))
-=======
-  const [openMobileSubmenus, setOpenMobileSubmenus] = useState<Record<number, boolean>>({})
-  const pathname = usePathname()
-
-  const toggleMobileSubmenu = (idx: number) => {
-    setOpenMobileSubmenus((prev) => ({ ...prev, [idx]: !prev[idx] }))
->>>>>>> feat/custom-admin-panel-ui
   }
 
   // If topbar is explicitly hidden in CMS, do not render
@@ -236,16 +228,10 @@ export function TopHeader({ data }: TopHeaderProps) {
         {/* Mobile Hamburger Button */}
         {navItems.length > 0 && (
           <button
-<<<<<<< HEAD
-            onClick={() => setMobileMenuOpen(true)}
-            className="lg:hidden p-1.5 rounded-md hover:bg-black/10 transition-colors text-[#0F172A]"
-            aria-label="Open navigation menu"
-=======
             type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => setMobileMenuOpen(true)}
             className="lg:hidden p-1.5 rounded-md hover:bg-black/10 transition-colors text-[#0F172A] cursor-pointer"
-            aria-label="Toggle navigation menu"
->>>>>>> feat/custom-admin-panel-ui
+            aria-label="Open navigation menu"
           >
             <Menu className="w-6 h-6" />
           </button>
@@ -283,8 +269,7 @@ export function TopHeader({ data }: TopHeaderProps) {
         {/* Drawer Nav Items List (Scrollable, Submenus Collapsed by Default) */}
         <div className="flex-1 overflow-y-auto px-5 py-3 space-y-1">
           {navItems.map((item, idx) => {
-<<<<<<< HEAD
-            const isItemActive = Boolean(item.isActive || (item.url !== '#' && pathname === item.url))
+            const isItemActive = Boolean(item.isActive || (item.url && item.url !== '#' && pathname === item.url))
             const hasSubmenu = Boolean(item.children && item.children.length > 0)
             const menuKey = `menu-${item.label}-${idx}`
             const isExpanded = Boolean(expandedMenus[menuKey])
