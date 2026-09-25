@@ -1428,7 +1428,7 @@ header.list-header {
 .doc-header,
 .document-header {
   margin-top: 4px !important;
-  margin-bottom: 18px !important;
+  margin-bottom: 8px !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
   box-sizing: border-box !important;
@@ -1493,14 +1493,81 @@ h1.doc-header__title {
   vertical-align: middle !important;
 }
 
-/* Doc Controls Bar (Status, Save Draft, Publish Changes) */
+/* Doc Controls Bar & Document Fields Spacing (Collapse excess empty space above 1st input box) */
 .doc-controls {
-  margin-bottom: 20px !important;
+  margin-top: 0 !important;
+  margin-bottom: 6px !important;
+  min-height: unset !important;
 }
 
 .doc-controls__wrapper {
   padding-left: 0 !important;
   padding-right: 0 !important;
+  height: auto !important;
+  min-height: 38px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
+.doc-controls__content {
+  padding: 4px 0 !important;
+}
+
+.collection-edit,
+.collection-edit__main-wrapper,
+.collection-edit__main,
+.global-edit,
+[class*="global-edit"],
+.document-edit,
+.render-globals {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.document-fields {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.document-fields__main {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.document-fields__edit,
+.document-fields__edit.gutter--left,
+.document-fields__edit.gutter--right {
+  padding-top: 6px !important;
+  margin-top: 0 !important;
+}
+
+.document-fields__sidebar-fields {
+  padding-top: 6px !important;
+  margin-top: 0 !important;
+}
+
+.document-fields__fields,
+.render-fields.document-fields__fields {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.document-fields__fields > .field-type:first-child,
+.render-fields > .field-type:first-child,
+.document-fields__edit > *:first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Upload / Dropzone compact spacing for Media section */
+.file-field {
+  margin-top: 0 !important;
+  margin-bottom: 16px !important;
+}
+
+.file-field .dropzone {
+  padding-block: 18px !important;
+  min-height: unset !important;
 }
 
 /* Header Controls & Search */
